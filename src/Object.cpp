@@ -1,17 +1,18 @@
-/* 
- * File:   Object.cpp
- * Author: jamie
- * 
- * Created on 22 December 2011, 05:09
- */
+#include "Object.hpp"
 
-#include "Object.h"
+#include <cstring>
+#include "Engine/ServiceLocator.hpp"
 
-Object::Object(float x, float y, GameState* state, EntityType entType, Rotation rot):Entity(x,y,state,entType,rot)
+//TODO Improve this
+Object::Object( Vector const& pos, char const* texture )
+:Entity( pos )
 {
+    if( !strcmp( texture, "" ) )
+    {
+        _texture = ServiceLocator::getRender()->getTexture( texture );
+    }
 }
 
 Object::~Object() 
 {
-}
-
+} 

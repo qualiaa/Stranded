@@ -5,17 +5,18 @@
  * Created on 17 December 2011, 18:12
  */
 
-#include "Mover.h"
+#include "Mover.hpp"
 
-Mover::Mover(float x, float y, GameState* state, EntityType entType, Rotation rot):Entity(x,y,state,entType, rot)
+Mover::Mover(Vector const& pos )
+:Entity( pos )
 {
-    _vel = Vector(0,0);
+    _vel = {0,0};
     _speed = 2;
 }
 
 Mover::~Mover() {}
 
-void Mover::Update()
+void Mover::update()
 {    
     if(_vel.x != 0)
     {
@@ -34,10 +35,10 @@ void Mover::Update()
         _movingY = false;
     }
     
-    Move1();
+    move1();
 }
 
-void Mover::Move1()
+void Mover::move1()
 {
     _lastPos = _pos;
     

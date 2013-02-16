@@ -1,17 +1,16 @@
-/* 
- * File:   MainState.cpp
- * Author: jamie
- * 
- * Created on 25 December 2011, 07:50
- */
-
-#include "MainState.h"
+#include "MainState.hpp"
 
 #include <iostream>
+#include "Engine/ServiceLocator.hpp"
+#include "Room.hpp"
+#include "Player.hpp"
+#include "Tile.hpp"
 
-MainState::MainState() 
-{
-}
+//TODO Put this in a global settings class or load from Tiled
+#define MAP_WIDTH 4
+#define MAP_HEIGHT 4
+
+MainState::MainState() { }
 
 MainState::~MainState()
 {
@@ -23,70 +22,101 @@ MainState::~MainState()
     _rooms.clear();
 }
 
-int MainState::Load()
+bool MainState::initialize()
 {
-    if(!_loaded)
+    std::cout << "Loading main state" << std::endl;
+    if(!_initialized)
     {
-        _loaded = true;
-        
-        _player = new Player(8*64,8*64,this);
+        /* Load graphics */
+        IRender* render = ServiceLocator::getRender();
+
+        bool imageError = false;
+
+        imageError |= !render->loadImage( "font"      , "res/Font.png"           );
+        imageError |= !render->loadImage( "fontsmall" , "res/FontSmall.png"      );
+        imageError |= !render->loadImage( "grass"     , "res/GrassTiles.png"     );
+        imageError |= !render->loadImage( "sand"      , "res/SandTiles.png"      );
+        imageError |= !render->loadImage( "sandwater" , "res/SandWaterTiles.png" );
+        imageError |= !render->loadImage( "water"     , "res/WaterTiles.png"     );
+        imageError |= !render->loadImage( "player"    , "res/Player.png"         );
+        imageError |= !render->loadImage( "smalltree" , "res/SmallTree.png"      );
+        imageError |= !render->loadImage( "largetree" , "res/LargeTree.png"      );
+        imageError |= !render->loadImage( "oceanrock" , "res/OceanRock.png"      );
+        imageError |= !render->loadImage( "bamboo"    , "res/Bamboo.png"         );
+        imageError |= !render->loadImage( "palmtree"  , "res/PalmTree.png"       );
+        imageError |= !render->loadImage( "smallrock" , "res/SmallRock.png"          );
+        imageError |= !render->loadImage( "largerock" , "res/LargeRock.png"      );
+
+        if( imageError )
+        {
+            std::cout << "Returning false" << std::endl;
+            return false;
+        } 
+
+        _player = new Player( { ( double )8*Tile::TILE_SIZE,( double )8*Tile::TILE_SIZE } );
+
+        //TODO Find out what I did here
+        _player->setState( this );
 
         std::cout << "Loading World..." << std::endl;
-        if(!LoadRooms())
+        if(!loadRooms())
         {
             std::cout << "Loading World failed." << std::endl;
-            return 0;
+            return false;
         }
         std::cout << "Loaded world successfully." << std::endl;
         _currentRoom = _rooms[0];
+
+        _initialized = true;
     }
 
-    return 1;
+    return _initialized;
 }
 
-int MainState::LoadRooms()
+bool MainState::loadRooms()
 {
     _rooms.reserve(MAP_WIDTH*MAP_HEIGHT);
 
-        Vector coords(0,0);
+    Vector coords({0,0});
 
-        for(int i = 0; i < MAP_HEIGHT; i++)
+    for(int i = 0; i < MAP_HEIGHT; i++)
+    {
+        coords.y = i;
+        for(int j = 0; j < MAP_WIDTH; j++)
         {
-            coords.y = i;
-            for(int j = 0; j < MAP_WIDTH; j++)
+            coords.x = j;
+            _rooms[i*MAP_WIDTH+j] = new Room(coords,_player);
+            if(!_rooms[i*MAP_WIDTH+j]->load(this))
             {
-                coords.x = j;
-                _rooms[i*MAP_WIDTH+j] = new Room(coords,_player);
-                if(!_rooms[i*MAP_WIDTH+j]->Load(this))
-                {
-                    std::cout << "Loading Room (" << coords.x << ", " << coords.y << ") failed." << std::endl;
-                    return 0;
-                }
+                std::cout << "Loading Room (" << coords.x << ", " << coords.y << ") failed." << std::endl;
+                return false;
             }
         }
-    return 1;
+    }
+
+    return true;
 }
 
-void MainState::ChangeRoom(Vector coords)
+void MainState::changeRoom(Vector const& coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
-    
+
     std::cout << _rooms.size() << std::endl;
-    
+
     std::cout << coords.y << ", " << coords.x << std::endl;
-    
+
     _currentRoom = _rooms[coords.y*MAP_WIDTH + coords.x];
-    
+
     std::cout << "Room changed." << std::endl;
-    std::cout << "Co-ordinates: (" << coords.x << ", " << coords.y << ")" << std::endl;
+    std::cout << "Coordinates: (" << coords.x << ", " << coords.y << ")" << std::endl;
 }
 
-Room const* const MainState::CurrentRoom()
+Room const* const MainState::currentRoom()
 {
     return _currentRoom;
 }
 
-void MainState::Pause()
+void MainState::pause()
 {
     if(_paused)
     {
@@ -98,28 +128,29 @@ void MainState::Pause()
     }
 }
 
-void MainState::HandleEvents(SDL_KeyboardEvent* ke)
-{    
+void MainState::handleEvents(SDL_KeyboardEvent *const ke)
+{
     if(ke->type == SDL_KEYDOWN)
     {
         switch(ke->keysym.sym)
         {
+            //TODO Improve this
             case SDLK_w:
-                _player->Move(ROT_UP, true);
+                _player->move(0, true);
                 break;
             case SDLK_s:
-                _player->Move(ROT_DOWN, true);
+                _player->move(2, true);
                 break;
             case SDLK_a:
-                _player->Move(ROT_LEFT, true);
+                _player->move(3, true);
                 break;
             case SDLK_d:
-                _player->Move(ROT_RIGHT, true);
+                _player->move(1, true);
                 break;
             case SDLK_p:
-                Pause();
+                pause();
                 break;
-            default: 
+            default:
                 break;
         }
     }
@@ -128,56 +159,59 @@ void MainState::HandleEvents(SDL_KeyboardEvent* ke)
         switch(ke->keysym.sym)
         {
             case SDLK_w:
-                _player->Move(ROT_UP, false);
+                _player->move(0, false);
                 break;
             case SDLK_s:
-                _player->Move(ROT_DOWN, false);
+                _player->move(2, false);
                 break;
             case SDLK_a:
-                _player->Move(ROT_LEFT, false);
+                _player->move(3, false);
                 break;
             case SDLK_d:
-                _player->Move(ROT_RIGHT, false);
+                _player->move(1, false);
                 break;
-            default: 
+            default:
                 break;
         }
     }
-    
+
 }
 
-void MainState::Update()
+void MainState::update()
 {
     if(!_paused)
     {
-        _currentRoom->Update();
+        _currentRoom->update();
 
+        /*
         for(unsigned int i = 0; i < _currentRoom->GetTiles().size(); i++)
         {
-            CheckCollisions(_player,_currentRoom->GetTiles()[i]);
+            //CheckCollisions(_player,_currentRoom->GetTiles()[i]);
         }
         for(unsigned int i = 0; i < _currentRoom->GetEntities().size(); i++)
         {
-            CheckCollisions(_player,_currentRoom->GetEntities()[i]);
+            //CheckCollisions(_player,_currentRoom->GetEntities()[i]);
         }
+        */
 
-        GameState::Update();
+        GameState::update();
     }
 }
 
-void MainState::Draw()
+void MainState::draw(IRender *const render)
 {
-    _currentRoom->Draw();
-    GameState::Draw();
+    GameState::draw(render);
+    _currentRoom->draw(render);
 }
 
-void MainState::CheckCollisions(Entity* entA, Entity* entB)
+//TODO Move into Entity
+void MainState::checkCollisions(Entity* entA, Entity* entB)
 {
     if (entA == entB) return;
-    
-    SDL_Rect A = entA->GetHitBox();
-    SDL_Rect B = entB->GetHitBox();
-    
+
+    Rect const& A = entA->getHitBox();
+    Rect const& B = entB->getHitBox();
+
     int leftA = A.x;
     int leftB = B.x;
     int rightA = A.x + A.w;
@@ -186,12 +220,12 @@ void MainState::CheckCollisions(Entity* entA, Entity* entB)
     int topB = B.y;
     int bottomA = A.y + A.h;
     int bottomB = B.y + B.h;
-    
+
     if(leftA > rightB) return;
     if(topA > bottomB) return;
     if(rightA < leftB) return;
     if(bottomA < topB) return;
-    
-    entA->IsInside(entB);
-    entB->IsInside(entA);
+
+    entA->isInside(entB);
+    entB->isInside(entA);
 }

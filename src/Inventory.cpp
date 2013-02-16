@@ -1,11 +1,4 @@
-/* 
- * File:   Inventory.cpp
- * Author: jamie
- * 
- * Created on 12 January 2012, 15:00
- */
-
-#include "Inventory.h"
+#include "Inventory.hpp"
 
 Inventory::Inventory(GameState *state) 
 {
@@ -20,12 +13,13 @@ Inventory::~Inventory()
     
 }
 
-void Inventory::AddItem(Items item)
+void Inventory::addItem(Items item)
 {
     _items[item]++;
 }
 
-void Inventory::Draw()
+/*
+void Inventory::draw()
 {
     for (int i = 0; i < NUM_ITEMS; i++)
     {
@@ -45,3 +39,4 @@ void Inventory::Draw()
         }
     }
 }
+*/

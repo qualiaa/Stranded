@@ -1,13 +1,54 @@
-#include "Tile.h"
+#include "Tile.hpp"
 
-Tile::Tile(float x, float y, GameState* state, EntityType entType, Rotation rot):Entity(x,y, state, entType, rot)
+#include <iostream>
+#include "Engine/ServiceLocator.hpp"
+
+const int Tile::TILE_SIZE = 64;
+
+Tile::Tile(Vector const& pos, int tileID, int rotation )
+:Entity( pos )
 {
-    _tilePos = _pos;
-    _pos *= 64;
+    _tilePos  = _pos;
+    _pos     *=  TILE_SIZE;
     _hitBox.x = _pos.x;
     _hitBox.y = _pos.y;
+    _hitBox.w = _hitBox.h = TILE_SIZE;
+
+    std::string texture = "";
+
+    switch( tileID )
+    {
+        case 100:
+            texture = "grass";
+            break;
+        case 200:
+            texture = "woodland";
+            break;
+        case 300:
+            texture = "sand";
+            break;
+        case 400:
+            texture = "sandwater";
+            break;
+        case 500:
+            texture = "water";
+            break;
+        default:
+            break;
+    }
+
+    _texture = ServiceLocator::getRender()->getTexture( texture.c_str() );
+    _tile = Animation( _texture, { TILE_SIZE, TILE_SIZE} );
+    _tile.setTexture( ServiceLocator::getRender()->getTexture( texture.c_str() ) );
+    _tile.add( "tile", { rotation }, 0 );
+    _tile.play( "tile", false );
 }
 
-void Tile::Update()
+/*void Tile::Update()
 {
+}*/
+
+void Tile::draw(IRender *const render)
+{
+    _tile.draw( render, _pos );
 }

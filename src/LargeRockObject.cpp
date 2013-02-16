@@ -5,15 +5,16 @@
  * Created on 11 January 2012, 14:52
  */
 
-#include "LargeRockObject.h"
+#include "LargeRockObject.hpp"
 
-LargeRockObject::LargeRockObject(float x, float y, GameState* state):Object(x,y,state,ENT_ROCK_LARGE,ROT_NONE)
+LargeRockObject::LargeRockObject( Vector const& pos )
+:Entity( pos )
 {
     _hitBox.h = 32;
     _hitBox.y += 12;
     _hitBox.w = 42;
     _hitBox.x += 12;
-    _impediment = true;
+    _solid = true;
 }
 
 LargeRockObject::~LargeRockObject() {

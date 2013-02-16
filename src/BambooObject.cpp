@@ -5,15 +5,15 @@
  * Created on 06 January 2012, 01:35
  */
 
-#include "BambooObject.h"
+#include "BambooObject.hpp"
 
-BambooObject::BambooObject(float x, float y, GameState* state):Object(x,y,state,ENT_BAMBOO,ROT_NONE)
+BambooObject::BambooObject(Vector const& pos):Entity( pos )
 {
     _hitBox.x += 14;
     _hitBox.w = 24;
     _hitBox.y += 42;
     _hitBox.h = 8;
-    _impediment = true;
+    _solid = true;
 }
 
 BambooObject::~BambooObject()
@@ -21,9 +21,9 @@ BambooObject::~BambooObject()
     
 }
 
-void BambooObject::IsInside(Entity* ent)
+void BambooObject::isInside(Entity* ent)
 {
-    switch(ent->GetEntType())
+    /*switch(ent->GetEntType())
     {
         case ENT_PLAYER:
             _rotation = ROT_UP;
@@ -31,5 +31,5 @@ void BambooObject::IsInside(Entity* ent)
             break;
         default:
             break;
-    }
+    }*/
 }

@@ -18,5 +18,7 @@ if(Warn)
     set (CMAKE_CXX_FLAGS "-Wall -Werror -Wno-padded ${CMAKE_CXX_FLAGS}")
 endif(Warn)
 
+set ( CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}" )
+
 add_subdirectory(src)
 add_subdirectory(res)

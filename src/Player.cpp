@@ -1,92 +1,90 @@
-#include "Player.h"
-#include "GameState.h"
+#include "Player.hpp"
 
 #include <iostream>
+#include "Engine/ServiceLocator.hpp"
+#include "MainState.hpp"
+#include "Room.hpp"
+#include "TextObject.hpp"
 
-Player::Player(float x, float y,MainState* state):Mover(x,y,state,ENT_PLAYER, ROT_DOWN)
+Player::Player(Vector const& pos )
+:Mover( pos ), 
+    _rotation( 1 ), 
+    _mapPos( {0, 0} ), 
+    _mState( NULL )
 {
-    _frame = 6;
-    _animTime = 100;
+    _texture = ServiceLocator::getRender()->getTexture( "player" );
     _hitBox.w = 21;
     _hitBox.h = 5;
     _hitBox.x = _pos.x + 21;
     _hitBox.y = _pos.y + 58;
 
-    _mapPos = Vector(0,0);
-    
-    _mState = state;
+    _anim = Animation( _texture, { 64, 64 } );
+    _anim.add( "up",    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },           100 );
+    _anim.add( "right", { 11, 12, 13, 14, 15, 16, 17, 18, 19 },         100 );
+    _anim.add( "down",  { 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 }, 100 );
+    _anim.add( "left",  { 31, 32, 33, 34, 35, 36, 37, 38, 39 },         100 );
 }
 
 Player::~Player() {}
 
-void Player::Update()
+void Player::update()
 {
-    Mover::Update();
+    Mover::update();
     _hitBox.x = _pos.x + 21;
     _hitBox.y = _pos.y + 58;
-    
+
     if(_vel.x > 0)
     {
-        _rotation = ROT_RIGHT;
+        _rotation = 1;
     }
     else if(_vel.x < 0)
     {
-        _rotation = ROT_LEFT;
+        _rotation = 2;
     }
     if(_vel.y > 0)
     {
-        _rotation = ROT_DOWN;
+        _rotation = 3;
     }
     else if(_vel.y < 0)
     {
-        _rotation = ROT_UP;
+        _rotation = 0;
     }
     if(_movingX || _movingY)
     {
-	if(_movingX)
-	{
-		_numFrames = 8;
-                if(_frame > 8)
-                {
-                    _frame = 1;
-                }
-	}
-        if(_movingY)
-	{
-		_numFrames = 10;
-	}
-
-        Animate();
-        if(_frame == 0)
-	{
-            _frame = 1;
-	}
+        switch( _rotation )
+        {
+            case 0: _anim.play( "up" );
+            case 1: _anim.play( "right" );
+            case 2: _anim.play( "down" );
+            case 3: _anim.play( "left" );
+            default: break;
+        }
     }
     else
     {
-        _frame = 0;
+        _anim.stop();
     }
-    
-    CheckSides();
+
+    checkSides();
 }
 
-void Player::Move(Rotation rot, bool moving)
-{        
+void Player::move(int rotation, bool moving)
+{
     if(moving)
     {
-        switch(rot)
+        switch(rotation)
         {
-            case ROT_UP:
+            case 0:
                 _vel.y -= _speed;
                 break;
-            case ROT_DOWN:
+            case 1:
+                _vel.x += _speed;
+                break;
+            case 2:
                 _vel.y += _speed;
                 break;
-            case ROT_LEFT:
+            case 3:
                 _vel.x -=  _speed;
-                break;
-            case ROT_RIGHT:
-                _vel.x += _speed;
                 break;
             default:
                 break;
@@ -94,38 +92,39 @@ void Player::Move(Rotation rot, bool moving)
     }
     else
     {
-        switch(rot)
+        _vel = {0, 0};
+        /*switch(rot)
         {
-            case ROT_UP:
+            case 0:
                 _vel.y += _speed;
                 break;
-            case ROT_DOWN:
+            case 1:
+                _vel.x -= _speed;
+                break;
+            case 2:
                 _vel.y -= _speed;
                 break;
-            case ROT_LEFT:
+            case 3:
                 _vel.x += _speed;
-                break;
-            case ROT_RIGHT:
-                _vel.x -= _speed;
                 break;
             default:
                 break;
-        }
+        }*/
     }
 }
 
-void Player::CheckSides()
+void Player::checkSides()
 {
     if(_hitBox.x < 0)
     {
         if(_mapPos.x > 0)
         {
             _mapPos.x = _mapPos.x - 1;
-	    _pos.x = 576 + 21;
+	        _pos.x = 576 + 21;
             _lastPos.x = 700;
-	    _hitBox.x = _pos.x + 21;
+	        _hitBox.x = _pos.x + 21;
 
-            _mState->ChangeRoom(_mapPos);
+            _mState->changeRoom(_mapPos);
         }
         else
         {
@@ -142,7 +141,7 @@ void Player::CheckSides()
             _lastPos.x = -100;
 	    _hitBox.x = _pos.x + 21;
 
-            _mState->ChangeRoom(_mapPos);
+            _mState->changeRoom(_mapPos);
         }
         else
         {
@@ -157,9 +156,9 @@ void Player::CheckSides()
             _mapPos.y = _mapPos.y - 1;
             _pos.y = 640 - 64;
             _lastPos.y = 700;
-	    _hitBox.y = _pos.y + 58;
+            _hitBox.y = _pos.y + 58;
 
-            _mState->ChangeRoom(_mapPos);
+            _mState->changeRoom(_mapPos);
         }
         else
         {
@@ -174,9 +173,9 @@ void Player::CheckSides()
             _mapPos.y = _mapPos.y + 1;
             _pos.y = 0 - 58;
             _lastPos.y = -100;
-	    _hitBox.y = _pos.y + 58;
+            _hitBox.y = _pos.y + 58;
 
-            _mState->ChangeRoom(_mapPos);
+            _mState->changeRoom(_mapPos);
         }
         else
         {
@@ -186,19 +185,19 @@ void Player::CheckSides()
     }
 }
 
-void Player::IsInside(Entity* ent)
-{    
+void Player::isInside(Entity* ent)
+{
     int left = _hitBox.x;
     int right = _hitBox.x + _hitBox.w;
     int top = _hitBox.y;
     int bottom = _hitBox.y + _hitBox.h;
 
-    int entLeft = ent->GetHitBox().x;
-    int entRight = entLeft + ent->GetHitBox().w;
-    int entTop = ent->GetHitBox().y;
-    int entBottom = entTop + ent->GetHitBox().h;
+    int entLeft   =           ent->getHitBox().x;
+    int entRight  = entLeft + ent->getHitBox().w;
+    int entTop    =           ent->getHitBox().y;
+    int entBottom = entTop  + ent->getHitBox().h;
 
-    if(ent->IsImpediment())
+    if(ent->isSolid())
     {
         if(left < entRight)
         {
@@ -222,18 +221,18 @@ void Player::IsInside(Entity* ent)
         }
         std::cout << "Collision!" << std::endl;
     }
-    
-    switch(ent->GetEntType())
+
+    /*switch(ent->getEntType())
     {
-        case ENT_BAMBOO:
-            if(ent->GetRotation() == ROT_NONE)
-            {
-                _state->AddEntity(new TextObject(50,600, _state,ENT_TEXT_SMALL, "You found some bamboo!", 1000));
-            }
+        //case ENT_BAMBOO:
+            //if(ent->GetRotation() == ROT_NONE)
+            //{
+                //_state->addEntity(new TextObject(50,600, _state,ENT_TEXT_SMALL, "You found some bamboo!", 1000));
+            //}
             break;
         default:
             break;
-    }
-    
-    CheckSides();
+    }*/
+
+    checkSides();
 }

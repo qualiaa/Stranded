@@ -1,23 +1,24 @@
-#include "Text.h"
+#include "Text.hpp"
+
 #include <iostream>
 
-Text::Text(float x, float y, GameState* state, EntityType entType, std::string &pText):Entity(x,y,state,entType)
+Text::Text(Vector const& pos, std::string const& pText )
+:Entity( pos )
 {
-    _text = Render::Instance()->GenerateText(entType, pText);
 }
 
 Text::~Text()
 {
-    std::cout <<"Text destructor called"<<std::endl;
-    SDL_FreeSurface(_text);
 }
 
-void Text::Draw()
+void Text::draw(IRender *const render)
 {
-    Render::Instance()->DrawSurface(_text,_pos);
+    //Render::Instance()->DrawSurface(_text,_pos);
+    //TODO Make this work properly
+    render->drawText( _text.c_str(), _pos );
 }
 
-void Text::IsInside(Entity *ent)
+void Text::isInside(Entity *ent)
 {
-    
+
 }

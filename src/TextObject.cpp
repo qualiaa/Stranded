@@ -1,45 +1,43 @@
-#include "TextObject.h"
-#include <iostream>
+#include "TextObject.hpp"
 
-TextObject::TextObject(float x, float y, GameState* state, EntityType entType, char const* cText, 
-        Uint32 duration): Entity(x,y, state, entType, ROT_NONE)
+#include "Engine/Game.hpp"
+
+TextObject::TextObject(Vector const& pos,
+                       char const* cText,
+                       Uint32 duration)
+:Entity( pos ),
+    _duration( duration ),
+    _text( NULL )
 {
-    _text = NULL;
     std::string sText(cText);
-    _displayTimer.Start();
-    _text = new Text(x,y, state, entType,sText);
-    _duration = duration;
+    _displayTimer.start();
+    _text = new Text(pos,sText);
 }
 
 TextObject::~TextObject()
 {
-    std::cout <<"TextObject destructor called"<< std::endl;
     delete _text;
 }
 
-void TextObject::SetText(char* cText)
+void TextObject::setText(char* cText)
 {
 	std::string sText(cText);
 	if (_text != NULL)
 	{
 		delete _text;
 	}
-	_text = new Text(_pos.x,_pos.y,_state, _entType,sText);
+	_text = new Text(_pos,sText);
 }
 
-void TextObject::HandleInput(SDL_KeyboardEvent* ke)
+void TextObject::update()
 {
-}
-
-void TextObject::Update()
-{
-    if(_duration != 0 && _displayTimer.GetTicks() >= _duration)
+    if(_duration != 0 && _displayTimer.getTicks() >= _duration)
     {
-        Destroy();
+        _state->removeEntity( this );
     }
 }
 
-void TextObject::Draw()
+void TextObject::draw(IRender *const render)
 {
-    _text->Draw();
+    _text->draw(render);
 }
