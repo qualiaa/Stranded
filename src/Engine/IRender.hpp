@@ -25,6 +25,8 @@ public:
 
     virtual Texture const* getTexture( char const* name ) = 0;
     virtual bool           loadImage ( char const* name,  char const* fileName ) = 0;
+
+    virtual ~IRender() {}
 };
 
 class NullRender : public IRender
