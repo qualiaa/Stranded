@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 {
     if( Game::Instance()->initialize() )
     {
-        Game::Instance()->pushState( new MainState() ); 
+        Game::Instance()->pushState(new MainState()); 
         Game::Instance()->run();
     }
 

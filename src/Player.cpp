@@ -19,10 +19,11 @@ Player::Player(Vector const& pos )
     _hitBox.y = _pos.y + 58;
 
     _anim = Animation( _texture, { 64, 64 } );
-    _anim.add( "up",    { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },           100 );
-    _anim.add( "right", { 11, 12, 13, 14, 15, 16, 17, 18, 19 },         100 );
-    _anim.add( "down",  { 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 }, 100 );
-    _anim.add( "left",  { 31, 32, 33, 34, 35, 36, 37, 38, 39 },         100 );
+    _anim.add( "up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100 );
+    _anim.add( "right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100 );
+    _anim.add( "down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100 );
+    _anim.add( "left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },         100 );
+    _anim.play("up");
 }
 
 Player::~Player() {}
@@ -39,11 +40,11 @@ void Player::update()
     }
     else if(_vel.x < 0)
     {
-        _rotation = 2;
+        _rotation = 3;
     }
     if(_vel.y > 0)
     {
-        _rotation = 3;
+        _rotation = 2;
     }
     else if(_vel.y < 0)
     {
@@ -53,12 +54,14 @@ void Player::update()
     {
         switch( _rotation )
         {
-            case 0: _anim.play( "up" );
-            case 1: _anim.play( "right" );
-            case 2: _anim.play( "down" );
-            case 3: _anim.play( "left" );
+            case 0: _anim.play("up");    break; 
+            case 1: _anim.play("right"); break; 
+            case 2: _anim.play("down");  break; 
+            case 3: _anim.play("left");  break; 
             default: break;
         }
+
+        _anim.update();
     }
     else
     {
@@ -66,6 +69,11 @@ void Player::update()
     }
 
     checkSides();
+}
+
+void Player::draw(IRender *const render)
+{ 
+    _anim.draw(render, _pos);
 }
 
 void Player::move(int rotation, bool moving)
@@ -84,7 +92,7 @@ void Player::move(int rotation, bool moving)
                 _vel.y += _speed;
                 break;
             case 3:
-                _vel.x -=  _speed;
+                _vel.x -= _speed;
                 break;
             default:
                 break;
@@ -92,8 +100,7 @@ void Player::move(int rotation, bool moving)
     }
     else
     {
-        _vel = {0, 0};
-        /*switch(rot)
+        switch(rotation)
         {
             case 0:
                 _vel.y += _speed;
@@ -109,7 +116,7 @@ void Player::move(int rotation, bool moving)
                 break;
             default:
                 break;
-        }*/
+        }
     }
 }
 

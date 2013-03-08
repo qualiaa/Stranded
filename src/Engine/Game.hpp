@@ -31,7 +31,6 @@ private:
 
     SDL_Event _event;
 
-    IResources* _resources;
     IRender*    _render;
 
     GameState* _currentState;

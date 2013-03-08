@@ -46,7 +46,5 @@ protected:
 
     bool              _solid;
     bool              _visible; 
-};
-
-
+}; 
 #endif 

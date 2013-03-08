@@ -13,14 +13,17 @@
 class Animation
 {
 public:
-    void add     ( char const* name, std::initializer_list<int> frames, unsigned int frameTime);
-    void remove  ( char const* name );
-    void play    ( char const* name, bool loop = true, void (*callback)() = NULL );
-    void pause   ();
-    void resume  ();
-    void stop    ();
-    void update  ();
-    void draw    ( IRender *const, Vector const& pos );
+    void add   ( char const* name, std::initializer_list<int> frames, unsigned int frameTime);
+    void remove( char const* name );
+    void draw  ( IRender *const, Vector const& pos );
+    void play  ( char const* name, bool loop = true, void (*callback)() = NULL );
+    void pause ();
+    void resume();
+    void stop  ();
+    void update();
+    
+    bool playing() { return _currentAnimation; }
+    std::string currentAnimation() { return _currentAnimation->name; }
 
     void setTexture( Texture const*const );
     //Constructor and Destructor
@@ -28,25 +31,23 @@ public:
     Animation( Texture const*const t, Vector const& frameDims );
     ~Animation() {}
 private:
-    struct Anim
+    struct AnimationInfo
     {
-        std::string                name;
-        std::initializer_list<int> animation;
-        unsigned int               time;
+        std::string      name;
+        std::vector<int> frameList;          //TODO Find out if this is evil
+        unsigned int     time;
     };
 
-    Texture      const* _texture;
-    Anim         const* _currentAnim;
-    unsigned int        _currentFrame;
-    Timer               _animTimer;
-    unsigned int        _frameTime;
-    bool                _loop;
-    Vector              _frameDimensions;
-    void                ( *_callback )();
+    Texture       const* _texture;
+    AnimationInfo*       _currentAnimation;
+    unsigned int         _currentFrame;
+    Timer                _animTimer;
+    bool                 _loop;
+    Vector               _frameDimensions;
+    void                 ( *_callback )();
 
-    Rect                _clip;
+    Rect                 _clip;
 
-    std::vector<Anim>  _animations;
-
+    std::vector<AnimationInfo>  _animations;
 };
 #endif

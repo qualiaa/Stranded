@@ -3,7 +3,7 @@
 #define IRENDER_H
 
 #include <string>
-class IResources;
+
 struct Texture;
 struct Vector;
 struct Rect;

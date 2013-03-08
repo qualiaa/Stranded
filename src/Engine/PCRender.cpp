@@ -57,7 +57,7 @@ bool PCRender::initialize()
     return true;
 }
 
-void PCRender::draw( Texture const* texture, Vector const& pos )
+void PCRender::draw(Texture const* texture, Vector const& pos)
 {
     //Rect r = { 0, 0, texture.w, texture.h } ;
     //draw( texture, pos, r);
@@ -72,7 +72,7 @@ void PCRender::draw( Texture const* texture, Vector const& pos, Rect const& clip
 
     SDL_Surface* surface = _images[tName];
 
-    if( surface != NULL )
+    if(surface != NULL)
     {
         // Convert position to SDL_Rect
         SDL_Rect offset;
@@ -87,7 +87,7 @@ void PCRender::draw( Texture const* texture, Vector const& pos, Rect const& clip
         sdlClip.w = clip.w;
         sdlClip.h = clip.h;
 
-        SDL_BlitSurface( surface, &sdlClip, _screen, &offset );
+        SDL_BlitSurface(surface, &sdlClip, _screen, &offset);
     }
     else
     {
@@ -105,7 +105,7 @@ void PCRender::drawText(char const* text, Vector const& pos)
     SDL_Surface* font = _images["font"];
 
     char c; // character buffer
-    int length = strlen( text );
+    int length = strlen(text);
     int letterSize = font->h;
     int width = length*letterSize;
     //int height = ceil((float)width/maxWidth)*letterSize;
@@ -200,12 +200,12 @@ void PCRender::flipDisplay()
     return 1;
 }*/
 
-bool PCRender::loadImage( char const* name, char const* fileName )
+bool PCRender::loadImage(char const* name, char const* fileName)
 {
     SDL_Surface *temp = NULL;
     SDL_Surface *optimized = NULL;
 
-    temp = IMG_Load( fileName );
+    temp = IMG_Load(fileName);
 
     if(temp == NULL)
     {
@@ -225,16 +225,16 @@ bool PCRender::loadImage( char const* name, char const* fileName )
         return false;
     }
 
-    _images.insert( std::pair<std::string, SDL_Surface*>( name, optimized ) );
+    _images.insert( std::pair<std::string, SDL_Surface*>(name, optimized) );
 
     Texture t = { name, optimized->w, optimized->h };
 
-    _textures.insert( std::pair<std::string, Texture>( name, t ) );
+    _textures.insert( std::pair<std::string, Texture>(name, t) );
 
     return true;
 }
 
-Texture const* PCRender::getTexture( char const* name )
+Texture const* PCRender::getTexture(char const* name)
 {
     std::string strName = name;
 

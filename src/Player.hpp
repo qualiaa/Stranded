@@ -11,9 +11,10 @@ class Player : public Mover
 public:
     void move(int rotation, bool moving);
     void update();
+    virtual void draw( IRender *const );
     
     void isInside(Entity *ent);
-
+    
     Player(Vector const& pos );
     ~Player();
 private:

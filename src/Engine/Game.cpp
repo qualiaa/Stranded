@@ -74,9 +74,8 @@ void Game::run()
         _frameTimer.start();
 
         _currentState = NULL;
-        handleEvents();
 
-        if( _states.empty(  ) )
+        if(_states.empty())
         {
             std::cout << "No game state" << std::endl;
             _run = false;
@@ -85,13 +84,14 @@ void Game::run()
 
         _currentState = _states.top();
 
+        handleEvents();
 
         //Update current state
         _currentState->update();
 
         draw();
 
-        if( _deleteState )
+        if(_deleteState)
         {
             delete _currentState;
             _deleteState = false;
