@@ -27,14 +27,12 @@ PCRender::~PCRender()
 {
     std::cout << "PCRender engine shutting down" << std::endl;
 
-    /*
-    std::map<EntityType,SDL_Surface*>::iterator iter;
-    for(iter = _textures.begin(); iter != _textures.end(); iter++)
+    for(auto iter = _images.begin(); iter != _images.end(); iter++)
     {
         SDL_FreeSurface(iter->second);
     }
 
-    _textures.clear();*/
+    _textures.clear();
 }
 
 /* --------------------------------------- *

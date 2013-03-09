@@ -5,8 +5,8 @@
 
 const int Tile::TILE_SIZE = 64;
 
-Tile::Tile(Vector const& pos, int tileID, int rotation )
-:Entity( pos )
+Tile::Tile(Vector const& pos, int tileID, unsigned int rotation)
+:Entity(pos)
 {
     _tilePos  = _pos;
     _pos     *=  TILE_SIZE;
@@ -31,6 +31,7 @@ Tile::Tile(Vector const& pos, int tileID, int rotation )
             texture = "sandwater";
             break;
         case 500:
+            _solid = true;
             texture = "water";
             break;
         default:
@@ -39,16 +40,11 @@ Tile::Tile(Vector const& pos, int tileID, int rotation )
 
     _texture = ServiceLocator::getRender()->getTexture( texture.c_str() );
     _tile = Animation( _texture, { TILE_SIZE, TILE_SIZE} );
-    _tile.setTexture( ServiceLocator::getRender()->getTexture( texture.c_str() ) );
     _tile.add( "tile", { rotation }, 0 );
     _tile.play( "tile", false );
 }
 
-/*void Tile::Update()
-{
-}*/
-
 void Tile::draw(IRender *const render)
 {
-    _tile.draw( render, _pos );
+    _tile.draw(render, _pos);
 }

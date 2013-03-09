@@ -9,18 +9,18 @@ class Room;
 class MainState : public GameState
 {
 public:
-    virtual void     changeRoom(Vector const& coords);
+    void     changeRoom(Vector const& coords);
     
-    Room const*const currentRoom();
+    Room const*      currentRoom();
     
-    virtual void     handleEvents(SDL_KeyboardEvent *const);
-    virtual void     update();
-    virtual void     draw(IRender *const);
+    void     handleEvents(SDL_KeyboardEvent *const);
+    void     update();
+    void     draw(IRender *const);
     
-    virtual bool     initialize();
+    bool     initialize();
     
     MainState();
-    virtual ~MainState();
+    ~MainState();
 private:
     std::vector<Room*> _rooms;
 

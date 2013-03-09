@@ -22,7 +22,7 @@ Animation::Animation( Texture const* t, Vector const& frameDims )
 
 //{{{void Animation::add( char const* name,
 void Animation::add( char const* name,
-                     std::initializer_list<int> frames,
+                     std::vector<unsigned int> frames,
                      unsigned int time )
 {
     //Push back a POD-initialized AnimationInfo(name, numframes, time)
@@ -63,6 +63,7 @@ void Animation::play( char const* name, bool loop, void (*callback)() )
                 _currentAnimation = &(*iter); 
                 _animTimer.start();
 
+                _currentFrame = 0;
                 //Save play settings
                 _loop = loop;
                 _callback = callback;
@@ -168,8 +169,9 @@ void Animation::draw(IRender *const render, Vector const& pos)
 //}}}
 
 //{{{void Animation::setTexture(Texture const*const texture)
-void Animation::setTexture(Texture const*const texture)
+void Animation::setTexture(Texture const*const texture, Vector const& frameDims)
 {
+    _frameDimensions = frameDims;
     _texture = texture;
 } 
 //}}}

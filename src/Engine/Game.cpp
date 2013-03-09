@@ -1,9 +1,9 @@
 #include "Game.hpp"
 
+#include <iostream>
 #include "ServiceLocator.hpp"
 #include "PCRender.hpp"
 
-#include <cassert>
 #include "Window.hpp"
 
 #define FRAMES_PER_SECOND 60
@@ -12,10 +12,16 @@
  * Constructor and Destructor
  * ---------------------------- */
 
+//{{{Game::Game()
 Game::Game()
-: _initialized( false ),
-  _run ( true ) {}
+: _initialized (false),
+  _run         (true ),
+  _deleteState (false),
+  _render      (NULL ),
+  _currentState(NULL ) {}
+  //}}}
 
+//{{{Game::~Game()
 Game::~Game()
 {
     while( !_states.empty() )
@@ -26,12 +32,13 @@ Game::~Game()
 
     delete( _render );
     delete( Window::Instance() );
-}
+}//}}}
 
 /* ---------------------------- *
  * Initialization
  * ---------------------------- */
 
+//{{{bool Game::initialize()
 bool Game::initialize()
 {
     if( !_initialized )
@@ -60,20 +67,19 @@ bool Game::initialize()
     }
 
     return _initialized;
-}
+}//}}}
 
 /* ----------------------------------- *
  * Main Game Loop
  * ----------------------------------- */
 
+//{{{void Game::run()
 void Game::run()
 {
     std::cout << "Entering main loop" << std::endl;
     while(_run)
     {
         _frameTimer.start();
-
-        _currentState = NULL;
 
         if(_states.empty())
         {
@@ -102,8 +108,9 @@ void Game::run()
         {
         }
     }
-}
+}//}}}
 
+//{{{void Game::handleEvents()
 void Game::handleEvents()
 {
     //TODO Make this independent of SDL
@@ -136,23 +143,24 @@ void Game::handleEvents()
                 break;
         }
     }
-}
+}//}}}
 
+//{{{void Game::draw()
 void Game::draw()
 {
     //Draw current state
-    if( _currentState )
-        _currentState->draw(_render);
+    _currentState->draw(_render);
 
     //Update the screen
     _render->flipDisplay();
 
-}
+}//}}}
 
 /* ----------------------------------- *
  * State management
  * ----------------------------------- */
 
+//{{{bool Game::pushState( GameState* state )
 bool Game::pushState( GameState* state )
 {
     if( state->initialize() )
@@ -166,19 +174,21 @@ bool Game::pushState( GameState* state )
     std::cout << "Not pushing state" << std::endl;
 
     return false;
-}
+}//}}}
 
+//{{{void Game::popState()
 void Game::popState()
 {
     _deleteState = true;
     _states.pop();
-}
+}//}}}
 
 /* ----------------------------------- *
  * Singleton stuff
  * TODO Make this not a singleton
  * ----------------------------------- */
 
+//{{{Singleton
 Game *Game::_instance = NULL;
 Game *Game::Instance()
 {
@@ -188,6 +198,7 @@ Game *Game::Instance()
     }
     return _instance;
 }
+//}}}
 
 /* --------------------------- *
  * Update and draw functions

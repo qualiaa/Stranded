@@ -1,3 +1,4 @@
+//{{{Includes
 #include "MainState.hpp"
 
 #include <iostream>
@@ -5,23 +6,36 @@
 #include "Room.hpp"
 #include "Player.hpp"
 #include "Tile.hpp"
+//}}}
 
 //TODO Put this in a global settings class or load from Tiled
+//{{{Defines
 #define MAP_WIDTH 4
 #define MAP_HEIGHT 4
+//}}}
 
-MainState::MainState() { }
+MainState::MainState()
+:_currentRoom(NULL),
+ _player(NULL),
+ _paused(false) {}
 
+//{{{MainState::~MainState()
 MainState::~MainState()
 {
     std::cout << "Unloading World..." << std::endl;
-    for (unsigned int i = 0; i < _rooms.size(); i++)
+    std::cout << _rooms.size() << " rooms to delete..." << std::endl;
+
+    for (unsigned int i = 0; i < _rooms.size(); ++i)
     {
+        std::cout << "trying to delete room " << i << std::endl;
         delete(_rooms[i]);
     }
     _rooms.clear();
-}
 
+    delete _player;
+}//}}}
+
+//{{{bool MainState::initialize()
 bool MainState::initialize()
 {
     std::cout << "Loading main state" << std::endl;
@@ -44,19 +58,18 @@ bool MainState::initialize()
         imageError |= !render->loadImage( "oceanrock" , "res/OceanRock.png"      );
         imageError |= !render->loadImage( "bamboo"    , "res/Bamboo.png"         );
         imageError |= !render->loadImage( "palmtree"  , "res/PalmTree.png"       );
-        imageError |= !render->loadImage( "smallrock" , "res/SmallRock.png"          );
+        imageError |= !render->loadImage( "smallrock" , "res/SmallRock.png"      );
         imageError |= !render->loadImage( "largerock" , "res/LargeRock.png"      );
 
         if( imageError )
         {
-            std::cout << "Returning false" << std::endl;
+            std::cout << "Loading MainState failed" << std::endl;
             return false;
         } 
 
-        _player = new Player( { ( double )8*Tile::TILE_SIZE,( double )8*Tile::TILE_SIZE } );
-
-        //TODO Find out what I did here
-        _player->setState( this );
+        //Create a new player
+        _player = new Player( { (double) 8*Tile::TILE_SIZE, (double) 8*Tile::TILE_SIZE }, this ); 
+        addEntity(_player);
 
         std::cout << "Loading World..." << std::endl;
         if(!loadRooms())
@@ -71,8 +84,9 @@ bool MainState::initialize()
     }
 
     return _initialized;
-}
+}//}}}
 
+//{{{bool MainState::loadRooms()
 bool MainState::loadRooms()
 {
     _rooms.reserve(MAP_WIDTH*MAP_HEIGHT);
@@ -85,8 +99,9 @@ bool MainState::loadRooms()
         for(int j = 0; j < MAP_WIDTH; j++)
         {
             coords.x = j;
-            _rooms[i*MAP_WIDTH+j] = new Room(coords,_player);
-            if(!_rooms[i*MAP_WIDTH+j]->load(this))
+            //_rooms[i*MAP_WIDTH+j] = new Room(coords,_player);
+            _rooms.push_back( new Room(coords) );
+            if(!_rooms.back()->load(this))
             {
                 std::cout << "Loading Room (" << coords.x << ", " << coords.y << ") failed." << std::endl;
                 return false;
@@ -94,28 +109,30 @@ bool MainState::loadRooms()
         }
     }
 
+    std::cout << "Created " << _rooms.size() << " rooms" << std::endl;
     return true;
-}
+} //}}}
 
+//{{{void MainState::changeRoom(Vector const& coords)
 void MainState::changeRoom(Vector const& coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 
     std::cout << _rooms.size() << std::endl;
 
-    std::cout << coords.y << ", " << coords.x << std::endl;
-
     _currentRoom = _rooms[coords.y*MAP_WIDTH + coords.x];
 
     std::cout << "Room changed." << std::endl;
     std::cout << "Coordinates: (" << coords.x << ", " << coords.y << ")" << std::endl;
-}
+}//}}}
 
-Room const* const MainState::currentRoom()
+//{{{Room const* const MainState::currentRoom()
+Room const* MainState::currentRoom()
 {
     return _currentRoom;
-}
+}//}}}
 
+//{{{void MainState::pause()
 void MainState::pause()
 {
     if(_paused)
@@ -126,8 +143,9 @@ void MainState::pause()
     {
         _paused = true;
     }
-}
+}//}}}
 
+//{{{void MainState::handleEvents(SDL_KeyboardEvent *const ke)
 void MainState::handleEvents(SDL_KeyboardEvent *const ke)
 {
     if(ke->type == SDL_KEYDOWN)
@@ -173,10 +191,10 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
             default:
                 break;
         }
-    }
+    } 
+}//}}}
 
-}
-
+//{{{void MainState::update()
 void MainState::update()
 {
     if(!_paused)
@@ -196,15 +214,17 @@ void MainState::update()
 
         GameState::update();
     }
-}
+}//}}}
 
+//{{{void MainState::draw(IRender *const render)
 void MainState::draw(IRender *const render)
 {
-    GameState::draw(render);
     _currentRoom->draw(render);
-}
+    GameState::draw(render);
+}//}}}
 
 //TODO Move into Entity
+//{{{void MainState::checkCollisions(Entity* entA, Entity* entB)
 void MainState::checkCollisions(Entity* entA, Entity* entB)
 {
     if (entA == entB) return;
@@ -228,4 +248,4 @@ void MainState::checkCollisions(Entity* entA, Entity* entB)
 
     entA->isInside(entB);
     entB->isInside(entA);
-}
+}//}}}

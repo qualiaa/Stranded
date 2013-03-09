@@ -6,7 +6,7 @@
 GameState::GameState()
 : _initialized ( false ) { }
 
-GameState::~GameState(){}
+GameState::~GameState() { }
 
 void GameState::addEntity(Entity *const ent)
 {

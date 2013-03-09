@@ -6,11 +6,11 @@
 #include "Room.hpp"
 #include "TextObject.hpp"
 
-Player::Player(Vector const& pos )
-:Mover( pos ), 
-    _rotation( 1 ), 
-    _mapPos( {0, 0} ), 
-    _mState( NULL )
+Player::Player(Vector const& pos, MainState* mState)
+:Mover    (pos   ), 
+ _rotation(1     ), 
+ _mapPos  ({0, 0}), 
+ _mState  (mState)
 {
     _texture = ServiceLocator::getRender()->getTexture( "player" );
     _hitBox.w = 21;
@@ -22,11 +22,9 @@ Player::Player(Vector const& pos )
     _anim.add( "up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100 );
     _anim.add( "right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100 );
     _anim.add( "down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100 );
-    _anim.add( "left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },         100 );
+    _anim.add( "left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100 );
     _anim.play("up");
 }
-
-Player::~Player() {}
 
 void Player::update()
 {

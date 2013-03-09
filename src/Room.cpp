@@ -43,23 +43,24 @@ enum EntityType
     TILE_WATER = 500,
 };
 
-Room::Room(Vector const& coords, Entity *const player):_coords(coords)
+Room::Room(Vector const& coords)//, Entity *const player)
+:_coords(coords), _currentRoom(false)
 {
-    _entities.push_back(player);
+    //_entities.push_back(player);
 }
 
 Room::~Room()
 {
     std::cout << "Deleting Room..." << std::endl;
-    for(unsigned int i = 0; i < _tiles.size(); i++)
+    for(auto tile : _tiles)
     {
-        delete(_tiles[i]);
+        delete(tile);
     }
     _tiles.clear();
 
-    for(unsigned int j = 0; j < _entities.size(); j++)
+    for(auto ent : _entities)
     {
-        delete(_entities[j]);
+        delete(ent);
     }
 }
 
@@ -101,7 +102,7 @@ bool Room::load(GameState* state)
 
     for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; i++)
     {
-        std::cout << "Reading tile " << tilePos.x << ", " << tilePos.y << std::endl;
+        //std::cout << "Reading tile " << tilePos.x << ", " << tilePos.y << std::endl;
 
         float1    = i + 1; //WHAT THE FUCK
         tilePos.x = i % ROOM_SIZE;
