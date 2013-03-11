@@ -9,7 +9,7 @@
 #include "Tile.hpp"
 
 PalmTreeObject::PalmTreeObject( Vector const& pos )
-:Entity( pos )
+:Object( pos, "palmtree" )
 {
     _hitBox.h = 6;
     _hitBox.y += Tile::TILE_SIZE * 2 - 4 - _hitBox.h;

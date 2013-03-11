@@ -8,7 +8,7 @@
 #include "SmallRockObject.hpp"
 
 SmallRockObject::SmallRockObject(Vector const& pos )
-:Entity( pos )
+:Object( pos, "smallrock" )
 {
     _hitBox.h = 18;
     _hitBox.y += 30;

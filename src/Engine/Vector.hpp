@@ -33,7 +33,7 @@ struct Vector
     Vector operator-(float f){
         return {x-f,y-f};}
     
-    Vector &operator*=(float f)
+    Vector& operator*=(float f)
     {
         x *= f;
         y *= f;
@@ -41,7 +41,7 @@ struct Vector
         return *this;
     }
     
-    Vector &operator+=(Vector &vect)
+    Vector& operator+=(Vector &vect)
     {
         x += vect.x;
         y += vect.y;
@@ -49,7 +49,7 @@ struct Vector
         return *this;
     }
     
-    Vector &operator+=(float f)
+    Vector& operator+=(float f)
     {
         x += f;
         y += f;
@@ -57,7 +57,7 @@ struct Vector
         return *this;
     }
     
-    Vector &operator-=(Vector &vect)
+    Vector& operator-=(Vector &vect)
     {
         x -= vect.x;
         y -= vect.y;
@@ -65,7 +65,7 @@ struct Vector
         return *this;
     }
     
-    Vector &operator-=(float f)
+    Vector& operator-=(float f)
     {
         x -= f;
         y -= f;

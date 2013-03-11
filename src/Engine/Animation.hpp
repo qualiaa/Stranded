@@ -57,7 +57,7 @@ class Animation
 {
 public:
     void add   (char const* name,
-                std::vector<unsigned int> frames,
+                std::vector<unsigned int> const& frames,
                 unsigned int frameTime);
     void remove(char const* name);
 

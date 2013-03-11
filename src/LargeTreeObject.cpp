@@ -3,7 +3,7 @@
 #include "Tile.hpp"
 
 LargeTreeObject::LargeTreeObject(Vector const& pos )
-:Entity( pos )
+:Object( pos, "largetree" )
 {
     _hitBox.h = 9;
     _hitBox.y += Tile::TILE_SIZE * 2 - 8 - _hitBox.h;

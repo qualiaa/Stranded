@@ -7,7 +7,7 @@
 Object::Object( Vector const& pos, char const* texture )
 :Entity( pos )
 {
-    if( !strcmp( texture, "" ) )
+    if( strcmp( texture, "" ) )
     {
         _texture = ServiceLocator::getRender()->getTexture( texture );
     }

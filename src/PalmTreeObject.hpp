@@ -3,7 +3,7 @@
 
 #include "Object.hpp"
 
-class PalmTreeObject : public Entity
+class PalmTreeObject : public Object
 {
 public:
     virtual void update(){}

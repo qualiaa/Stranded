@@ -9,7 +9,7 @@
 #include "Tile.hpp"
 
 SmallTreeObject::SmallTreeObject( Vector const& pos )
-:Entity( pos )
+:Object( pos, "smalltree" )
 {
     _hitBox.h = 9;
     _hitBox.y += Tile::TILE_SIZE - 8 - _hitBox.h;

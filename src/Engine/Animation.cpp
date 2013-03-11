@@ -22,7 +22,7 @@ Animation::Animation( Texture const* t, Vector const& frameDims )
 
 //{{{void Animation::add( char const* name,
 void Animation::add( char const* name,
-                     std::vector<unsigned int> frames,
+                     std::vector<unsigned int> const& frames,
                      unsigned int time )
 {
     //Push back a POD-initialized AnimationInfo(name, numframes, time)

@@ -18,6 +18,7 @@
 #define ROOM_SIZE 10
 
 //TODO Replace this
+//{{{enum EntityType
 enum EntityType
 {
     NULL_ENTITY = 0,
@@ -41,14 +42,16 @@ enum EntityType
     TILE_SAND = 300,
     TILE_SAND_WATER = 400,
     TILE_WATER = 500,
-};
+};//}}}
 
+//{{{Room::Room(Vector const& coords)
 Room::Room(Vector const& coords)//, Entity *const player)
 :_coords(coords), _currentRoom(false)
 {
     //_entities.push_back(player);
-}
+}//}}}
 
+//{{{Room::~Room()
 Room::~Room()
 {
     std::cout << "Deleting Room..." << std::endl;
@@ -62,11 +65,12 @@ Room::~Room()
     {
         delete(ent);
     }
-}
+}//}}}
 
 /* Dear Christ this is a nightmare.
  * What the hell was I thinking? */
 
+//{{{bool Room::load(GameState* state)
 bool Room::load(GameState* state)
 {
     std::cout << "Loading Room..." << std::endl;
@@ -98,12 +102,10 @@ bool Room::load(GameState* state)
 
     _tiles.reserve( ROOM_SIZE*ROOM_SIZE );
 
-    Entity* obj  = NULL;
+    Object* obj  = NULL;
 
     for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; i++)
     {
-        //std::cout << "Reading tile " << tilePos.x << ", " << tilePos.y << std::endl;
-
         float1    = i + 1; //WHAT THE FUCK
         tilePos.x = i % ROOM_SIZE;
         tilePos.y = ceil(float1/ROOM_SIZE) - 1;
@@ -163,10 +165,11 @@ bool Room::load(GameState* state)
     roomFile.close();
 
     return true;
-}
+}//}}}
 
 void Room::handleInput(SDL_KeyboardEvent *const ke) { }
 
+//{{{void Room::update()
 void Room::update()
 {
     for (unsigned int i = 0; i < _tiles.size(); i++)
@@ -177,8 +180,9 @@ void Room::update()
     {
         _entities[i]->update();
     }
-}
+}//}}}
 
+//{{{void Room::draw(IRender *const render)
 void Room::draw(IRender *const render)
 {
     for (unsigned int i = 0; i < _tiles.size(); i++)
@@ -198,4 +202,4 @@ void Room::draw(IRender *const render)
             }
         } 
     }
-}
+}//}}}

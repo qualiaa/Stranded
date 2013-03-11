@@ -14,17 +14,17 @@ class PCRender : public IRender
 public:
     /* IRender method overrides */
     //Initialization
-    bool initialize  ();
+    virtual bool initialize  ();
 
     //Rendering
-    void draw        ( Texture const* texture,
+    virtual void draw        ( Texture const* texture,
                        Vector  const& position );
-    void draw        ( Texture const* texture, 
+    virtual void draw        ( Texture const* texture, 
                        Vector  const& position,
                        Rect    const& clip );
 
-    void drawText    ( char const* text, Vector const& position );
-    void flipDisplay ();
+    virtual void drawText    ( char const* text, Vector const& position );
+    virtual void flipDisplay ();
 
     //Image loading/retrieval
     virtual Texture const* getTexture( char const* name );

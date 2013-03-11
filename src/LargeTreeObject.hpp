@@ -10,7 +10,7 @@
 
 #include "Object.hpp"
 
-class LargeTreeObject: public Entity
+class LargeTreeObject: public Object
 {
 public:
     virtual void isInside( Entity* ){}

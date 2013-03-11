@@ -8,7 +8,7 @@ GameState::GameState()
 
 GameState::~GameState() { }
 
-void GameState::addEntity(Entity *const ent)
+void GameState::addEntity(Entity* ent)
 {
     for ( auto _ent : _entities )
     {
@@ -19,7 +19,7 @@ void GameState::addEntity(Entity *const ent)
         }
     }
 
-    ent->setState( this );
+    ent->setState(this);
     _entities.push_back(ent);
 }
 
@@ -39,7 +39,7 @@ void GameState::removeEntity(Entity *const ent)
 
 void GameState::update()
 {
-    for ( auto ent : _entities )
+    for (auto ent : _entities)
     {
         ent->update();
     }
@@ -47,7 +47,7 @@ void GameState::update()
 
 void GameState::draw(IRender *const render)
 {
-    for ( auto ent : _entities )
+    for (auto ent : _entities)
     {
         ent->draw(render);
     }

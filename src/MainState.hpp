@@ -13,14 +13,14 @@ public:
     
     Room const*      currentRoom();
     
-    void     handleEvents(SDL_KeyboardEvent *const);
-    void     update();
-    void     draw(IRender *const);
+    virtual void     handleEvents(SDL_KeyboardEvent *const);
+    virtual void     update();
+    virtual void     draw(IRender *const);
     
-    bool     initialize();
+    virtual bool     initialize();
     
     MainState();
-    ~MainState();
+    virtual ~MainState();
 private:
     std::vector<Room*> _rooms;
 
@@ -31,5 +31,8 @@ private:
     void checkCollisions(Entity*,Entity*);
     bool loadRooms();
     void pause();
+
+    MainState           (MainState const&);
+    MainState& operator=(MainState const&);
 }; 
 #endif

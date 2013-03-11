@@ -10,7 +10,7 @@
 
 #include "Object.hpp"
 
-class SmallRockObject : public Entity
+class SmallRockObject : public Object
 {
 public:
     virtual void isInside( Entity* ){}

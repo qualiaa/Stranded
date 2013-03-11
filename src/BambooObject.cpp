@@ -7,7 +7,8 @@
 
 #include "BambooObject.hpp"
 
-BambooObject::BambooObject(Vector const& pos):Entity( pos )
+BambooObject::BambooObject(Vector const& pos)
+:Object( pos, "bamboo" )
 {
     _hitBox.x += 14;
     _hitBox.w = 24;
