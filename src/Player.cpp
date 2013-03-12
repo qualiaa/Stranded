@@ -230,6 +230,8 @@ void Player::isInside(Entity* ent)
             _pos.y = _lastPos.y;
             //_vel.y = 0;
         }
+
+        _anim.stop();
     }
 
     /*switch(ent->getEntType())
