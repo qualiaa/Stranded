@@ -1,27 +1,22 @@
 #include "Entity.hpp"
 
+#include <cmath>
+#include <iostream>
 #include "GameState.hpp"
 
 int Entity::_numEnts = 0;
 
 Entity::Entity( Vector const& pos )
 : _actorID ( _numEnts++ ),
-  _pos     ( pos ),
-  _texture ( NULL ),
-  //_state   ( state ),
-  _solid   ( false ),
-  _visible ( true )
+  _pos     ( pos        ),
+  _texture ( NULL       ),
+  //_state   ( state    ),
+  _type    ( ""         ),
+  _solid   ( false      ),
+  _visible ( true       )
 {
-    //_actorID = _numEnts++;
-
-    //_pos = pos;
-    //_hitBox.x  = _pos.x;
-    //_hitBox.y  = _pos.y;
-
-    //_display = true;
-    //_solid = false;
-
-    //_state = state;
+    _hitBox = { static_cast<int>(round(_pos.x)),
+              static_cast<int>(round(_pos.y)) };
 }
 
 Entity::~Entity() { }
@@ -42,5 +37,8 @@ void Entity::setState( GameState *const state )
 
 void Entity::setPos( Vector const& pos )
 {
-    _pos = pos;
+    Vector dif = pos -_pos;
+    _pos += dif;
+    _hitBox.x += dif.x;
+    _hitBox.y += dif.y;
 }

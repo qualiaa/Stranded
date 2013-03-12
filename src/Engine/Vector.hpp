@@ -6,7 +6,7 @@
 
 struct Vector
 {
-    double x, y, z;
+    double x, y;
     
     double Magnitude()
     {
@@ -15,23 +15,9 @@ struct Vector
     
     Vector Versor()
     {
-        return { x/Magnitude(),y/Magnitude() };
+        const double mag = Magnitude();
+        return { x/mag,y/mag };
     }
-    
-    float operator*(Vector &vect){
-        return x*vect.x + y*vect.y;}
-    Vector operator*(float f){
-        return {x*f,y*f};}
-    
-    Vector operator+(Vector &vect){
-        return {x+vect.x, y+vect.y};}
-    Vector operator+(float f){
-        return {x+f, y+f};}
-    
-    Vector operator-(Vector &vect){
-        return {x-vect.x,y-vect.y};}
-    Vector operator-(float f){
-        return {x-f,y-f};}
     
     Vector& operator*=(float f)
     {
@@ -75,11 +61,16 @@ struct Vector
     
     bool operator==(const Vector &vect)
     {
-        if(x == vect.x && y == vect.y)
-        {
-            return true;
-        }
-        return false;
+        return x == vect.x && y == vect.y;
     }
+    
+    friend float  operator*(Vector const& a, Vector const& b);
+    friend Vector operator*(Vector const& vect, float f);
+    friend Vector operator+(Vector const& a, Vector const& b);
+    friend Vector operator+(Vector const& vect, float f);
+    friend Vector operator+(float f, Vector const& vect);
+    friend Vector operator-(Vector const& a, Vector const& b);
+    friend Vector operator-(Vector const& vect, float f);
+    friend Vector operator-(float f, Vector const& vect);
 }; 
 #endif

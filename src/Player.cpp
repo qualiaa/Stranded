@@ -24,6 +24,8 @@ Player::Player(Vector const& pos, MainState* mState)
     _anim.add( "down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100 );
     _anim.add( "left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100 );
     _anim.play("up");
+
+    std::cout << pos.x << ", " << std::endl;
 }
 
 void Player::update()
@@ -118,47 +120,48 @@ void Player::move(int rotation, bool moving)
     }
 }
 
+//TODO Remove magic numbers
 void Player::checkSides()
 {
     if(_hitBox.x < 0)
     {
         if(_mapPos.x > 0)
         {
-            _mapPos.x = _mapPos.x - 1;
-	        _pos.x = 576 + 21;
+            _mapPos.x = _mapPos.x - 1;//Move player to next room
+            _pos.x = 576 + 21;
             _lastPos.x = 700;
-	        _hitBox.x = _pos.x + 21;
+            _hitBox.x = _pos.x + 21;
 
             _mState->changeRoom(_mapPos);
         }
         else
         {
             _pos.x = _lastPos.x;
-            _vel.x = 0;
+            //_vel.x = 0;
         }
     }
     if(_hitBox.x + _hitBox.w >= 640)
     {
         if(_mapPos.x < 3)
         {
-            _mapPos.x = _mapPos.x + 1;
+            _mapPos.x = _mapPos.x + 1;//Move player to next room
             _pos.x = 0 - 21;
             _lastPos.x = -100;
-	    _hitBox.x = _pos.x + 21;
+            _hitBox.x = _pos.x + 21;
 
             _mState->changeRoom(_mapPos);
         }
         else
         {
             _pos.x = _lastPos.x;
-            _vel.x = 0;
+            //_vel.x = 0;
         }
     }
     if(_hitBox.y < 0)
     {
         if(_mapPos.y > 0)
         {
-            _mapPos.y = _mapPos.y - 1;
+            _mapPos.y = _mapPos.y - 1; //Move player to next room
             _pos.y = 640 - 64;
             _lastPos.y = 700;
             _hitBox.y = _pos.y + 58;
@@ -168,14 +171,14 @@ void Player::checkSides()
         else
         {
             _pos.y = _lastPos.y;
-            _vel.y = 0;
+            //_vel.y = 0;
         }
     }
     if(_hitBox.y + _hitBox.h >= 640)
     {
         if(_mapPos.y < 3)
         {
-            _mapPos.y = _mapPos.y + 1;
+            _mapPos.y = _mapPos.y + 1; //Move player to next room
             _pos.y = 0 - 58;
             _lastPos.y = -100;
             _hitBox.y = _pos.y + 58;
@@ -185,17 +188,17 @@ void Player::checkSides()
         else
         {
             _pos.y = _lastPos.y;
-            _vel.y = 0;
+            //_vel.y = 0;
         }
     }
 }
 
 void Player::isInside(Entity* ent)
 {
-    int left = _hitBox.x;
-    int right = _hitBox.x + _hitBox.w;
-    int top = _hitBox.y;
-    int bottom = _hitBox.y + _hitBox.h;
+    int left      = _hitBox.x;
+    int right     = _hitBox.x + _hitBox.w;
+    int top       = _hitBox.y;
+    int bottom    = _hitBox.y + _hitBox.h;
 
     int entLeft   =           ent->getHitBox().x;
     int entRight  = entLeft + ent->getHitBox().w;
@@ -207,24 +210,24 @@ void Player::isInside(Entity* ent)
         if(left < entRight)
         {
             _pos.x = _lastPos.x;
-            _vel.x = 0;
+            //_vel.x = 0;
         }
         else if(right > entLeft)
         {
             _pos.x = _lastPos.x;
-            _vel.x = 0;
+            //_vel.x = 0;
         }
         if(top < entBottom)
         {
             _pos.y = _lastPos.y;
-            _vel.y = 0;
+            //_vel.y = 0;
         }
         else if(bottom > entTop)
         {
             _pos.y = _lastPos.y;
-            _vel.y = 0;
+            //_vel.y = 0;
         }
-        std::cout << "Collision!" << std::endl;
+        std::cout << "Checking player-entity collision" << std::endl;
     }
 
     /*switch(ent->getEntType())

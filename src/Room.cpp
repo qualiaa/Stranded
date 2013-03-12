@@ -54,7 +54,6 @@ Room::Room(Vector const& coords)//, Entity *const player)
 //{{{Room::~Room()
 Room::~Room()
 {
-    std::cout << "Deleting Room..." << std::endl;
     for(auto tile : _tiles)
     {
         delete(tile);

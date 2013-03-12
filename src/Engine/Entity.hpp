@@ -19,16 +19,17 @@ public:
     virtual void isInside(Entity*) = 0;
     
     //Getters
-    Vector   const& getPos()      const { return _pos;     } 
-    Rect     const& getHitBox()   const { return _hitBox;  } 
-    bool            isSolid()     const { return _solid;   } 
+    Vector      const& getPos()     const { return _pos;     } 
+    Rect        const& getHitBox()  const { return _hitBox;  } 
+    bool               isSolid()    const { return _solid;   } 
 
-    int             getActorID()  const { return _actorID; } 
-    static int      getNumEnts()        { return _numEnts; } 
+    int                getActorID() const { return _actorID; } 
+    static int         getNumEnts()       { return _numEnts; } 
+    std::string const& getString()  const { return _type;    }
 
     //Setters
-    void setState( GameState      *const state );
-    void setPos  ( Vector    const&      pos );
+    void setState( GameState *const  state );
+    void setPos  ( Vector     const& pos   );
 
     /* ------------------------------ *
      * Constructor and Destructor
@@ -42,9 +43,10 @@ protected:
     Vector            _pos;
     Rect              _hitBox;
     Texture    const* _texture;
-    GameState*        _state;
-
+    std::string       _type;
     bool              _solid;
     bool              _visible; 
+
+    GameState*        _state; 
 }; 
 #endif 

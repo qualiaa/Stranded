@@ -23,11 +23,9 @@ MainState::MainState()
 MainState::~MainState()
 {
     std::cout << "Unloading World..." << std::endl;
-    std::cout << _rooms.size() << " rooms to delete..." << std::endl;
 
     for (unsigned int i = 0; i < _rooms.size(); ++i)
     {
-        std::cout << "trying to delete room " << i << std::endl;
         delete(_rooms[i]);
     }
     _rooms.clear();
@@ -41,27 +39,27 @@ bool MainState::initialize()
     std::cout << "Loading main state" << std::endl;
     if(!_initialized)
     {
+        _initialized = true;
+
         /* Load graphics */
         IRender* render = ServiceLocator::getRender();
 
-        bool imageError = false;
+        _initialized |= !render->loadImage( "font"      , "res/Font.png"           );
+        _initialized |= !render->loadImage( "fontsmall" , "res/FontSmall.png"      );
+        _initialized |= !render->loadImage( "grass"     , "res/GrassTiles.png"     );
+        _initialized |= !render->loadImage( "sand"      , "res/SandTiles.png"      );
+        _initialized |= !render->loadImage( "sandwater" , "res/SandWaterTiles.png" );
+        _initialized |= !render->loadImage( "water"     , "res/WaterTiles.png"     );
+        _initialized |= !render->loadImage( "player"    , "res/Player.png"         );
+        _initialized |= !render->loadImage( "smalltree" , "res/SmallTree.png"      );
+        _initialized |= !render->loadImage( "largetree" , "res/LargeTree.png"      );
+        _initialized |= !render->loadImage( "oceanrock" , "res/OceanRock.png"      );
+        _initialized |= !render->loadImage( "bamboo"    , "res/Bamboo.png"         );
+        _initialized |= !render->loadImage( "palmtree"  , "res/PalmTree.png"       );
+        _initialized |= !render->loadImage( "smallrock" , "res/SmallRock.png"      );
+        _initialized |= !render->loadImage( "largerock" , "res/LargeRock.png"      );
 
-        imageError |= !render->loadImage( "font"      , "res/Font.png"           );
-        imageError |= !render->loadImage( "fontsmall" , "res/FontSmall.png"      );
-        imageError |= !render->loadImage( "grass"     , "res/GrassTiles.png"     );
-        imageError |= !render->loadImage( "sand"      , "res/SandTiles.png"      );
-        imageError |= !render->loadImage( "sandwater" , "res/SandWaterTiles.png" );
-        imageError |= !render->loadImage( "water"     , "res/WaterTiles.png"     );
-        imageError |= !render->loadImage( "player"    , "res/Player.png"         );
-        imageError |= !render->loadImage( "smalltree" , "res/SmallTree.png"      );
-        imageError |= !render->loadImage( "largetree" , "res/LargeTree.png"      );
-        imageError |= !render->loadImage( "oceanrock" , "res/OceanRock.png"      );
-        imageError |= !render->loadImage( "bamboo"    , "res/Bamboo.png"         );
-        imageError |= !render->loadImage( "palmtree"  , "res/PalmTree.png"       );
-        imageError |= !render->loadImage( "smallrock" , "res/SmallRock.png"      );
-        imageError |= !render->loadImage( "largerock" , "res/LargeRock.png"      );
-
-        if( imageError )
+        if(!_initialized)
         {
             std::cout << "Loading MainState failed" << std::endl;
             return false;
@@ -74,13 +72,11 @@ bool MainState::initialize()
         std::cout << "Loading World..." << std::endl;
         if(!loadRooms())
         {
+            _initialized = false;
             std::cout << "Loading World failed." << std::endl;
-            return false;
         }
         std::cout << "Loaded world successfully." << std::endl;
         _currentRoom = _rooms[0];
-
-        _initialized = true;
     }
 
     return _initialized;
@@ -201,16 +197,14 @@ void MainState::update()
     {
         _currentRoom->update();
 
-        /*
-        for(unsigned int i = 0; i < _currentRoom->GetTiles().size(); i++)
+        for(unsigned int i = 0; i < _currentRoom->GetTiles().size(); ++i)
         {
-            //CheckCollisions(_player,_currentRoom->GetTiles()[i]);
+            checkCollisions(_player,_currentRoom->GetTiles()[i]);
         }
-        for(unsigned int i = 0; i < _currentRoom->GetEntities().size(); i++)
+        for(unsigned int i = 0; i < _currentRoom->GetEntities().size(); ++i)
         {
-            //CheckCollisions(_player,_currentRoom->GetEntities()[i]);
+            checkCollisions(_player,_currentRoom->GetEntities()[i]);
         }
-        */
 
         GameState::update();
     }
@@ -224,7 +218,7 @@ void MainState::draw(IRender *const render)
 }//}}}
 
 //TODO Move into Entity
-//{{{void MainState::checkCollisions(Entity* entA, Entity* entB)
+//{{{ void MainState::checkCollisions(Entity* entA, Entity* entB)
 void MainState::checkCollisions(Entity* entA, Entity* entB)
 {
     if (entA == entB) return;

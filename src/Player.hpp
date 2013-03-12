@@ -25,5 +25,4 @@ private:
 
     void checkSides();
 };
-
 #endif

@@ -6,10 +6,9 @@
 const int Tile::TILE_SIZE = 64;
 
 Tile::Tile(Vector const& pos, int tileID, unsigned int rotation)
-:Entity(pos)
+:Entity  (pos * TILE_SIZE                           ),
+ _tilePos(pos                                       )
 {
-    _tilePos  = _pos;
-    _pos     *=  TILE_SIZE;
     _hitBox.x = _pos.x;
     _hitBox.y = _pos.y;
     _hitBox.w = _hitBox.h = TILE_SIZE;
@@ -28,6 +27,7 @@ Tile::Tile(Vector const& pos, int tileID, unsigned int rotation)
             texture = "sand";
             break;
         case 400:
+            _solid = true;
             texture = "sandwater";
             break;
         case 500:

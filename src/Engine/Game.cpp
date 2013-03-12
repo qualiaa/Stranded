@@ -171,6 +171,9 @@ bool Game::pushState( GameState* state )
         return true;
     }
 
+    //This is sort of evil, but makes sense in the grand scheme:
+    delete state;
+
     std::cout << "Not pushing state" << std::endl;
 
     return false;
