@@ -7,11 +7,12 @@ int Entity::_numEnts = 0;
 
 Entity::Entity( Vector const& pos )
 : _actorID ( _numEnts++ ),
+  _layer   ( 0          ),
   _pos     ( pos        ),
   _hitBox  ( { static_cast<int>(round(_pos.x)),
                static_cast<int>(round(_pos.y)) } ),
   _texture ( NULL       ),
-  //_state   ( state    ),
+  //_state ( state      ),
   _type    ( ""         ),
   _solid   ( false      ),
   _visible ( true       )

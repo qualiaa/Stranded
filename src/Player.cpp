@@ -1,15 +1,15 @@
 #include "Player.hpp"
 
 #include "Engine/ServiceLocator.hpp"
+#include "Engine/Text.hpp"
 #include "MainState.hpp"
 #include "Room.hpp"
-#include "TextObject.hpp"
 
 //{{{Player::Player(Vector const& pos, MainState* mState)
 Player::Player(Vector const& pos, MainState* mState)
-:Mover    (pos   ), 
- _rotation(1     ), 
- _mapPos  ({0, 0}), 
+:Mover    (pos   ),
+ _rotation(1     ),
+ _mapPos  ({0, 0}),
  _mState  (mState)
 {
     _texture = ServiceLocator::getRender()->getTexture( "player" );
@@ -17,6 +17,8 @@ Player::Player(Vector const& pos, MainState* mState)
     _hitBox.h = 5;
     _hitBox.x = _pos.x + 21;
     _hitBox.y = _pos.y + 58;
+
+    _type = "player";
 
     _anim = Animation( _texture, { 64, 64 } );
     _anim.add( "up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100 );
@@ -234,17 +236,12 @@ void Player::isInside(Entity* ent)
         _anim.stop();
     }
 
-    /*switch(ent->getEntType())
+    if(ent->getType().compare("bamboo") == 0)
     {
-        //case ENT_BAMBOO:
-            //if(ent->GetRotation() == ROT_NONE)
-            //{
-                //_state->addEntity(new TextObject(50,600, _state,ENT_TEXT_SMALL, "You found some bamboo!", 1000));
-            //}
-            break;
-        default:
-            break;
-    }*/
+        /*_state->addEntity(new Text({50,600},
+                                   "You found some bamboo!",
+                                   1000));*/
+    }
 
-    checkSides();
+    //checkSides();
 }//}}}

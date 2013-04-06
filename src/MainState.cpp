@@ -66,8 +66,10 @@ bool MainState::initialize()
         } 
 
         //Create a new player
-        _player = new Player( { (double) 8*Tile::TILE_SIZE, (double) 8*Tile::TILE_SIZE }, this ); 
-        addEntity(_player);
+        _player = new Player({ static_cast<double>(8*Tile::TILE_SIZE), 
+                               static_cast<double>(8*Tile::TILE_SIZE) },
+                             this ); 
+        //addEntity(_player);
 
         std::cout << "Loading World..." << std::endl;
         if(!loadRooms())
@@ -96,7 +98,7 @@ bool MainState::loadRooms()
         {
             coords.x = j;
             //_rooms[i*MAP_WIDTH+j] = new Room(coords,_player);
-            _rooms.push_back( new Room(coords) );
+            _rooms.push_back( new Room(coords,_player) );
             if(!_rooms.back()->load(this))
             {
                 std::cout << "Loading Room (" << coords.x << ", " << coords.y << ") failed." << std::endl;

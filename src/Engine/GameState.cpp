@@ -8,27 +8,27 @@ GameState::GameState()
 
 GameState::~GameState() { }
 
-void GameState::addEntity(Entity* ent)
+void GameState::addEntity(Entity* entity)
 {
-    for ( auto _ent : _entities )
+    for ( auto existingEnt : _entities )
     {
-        if(ent == _ent)
+        if(entity == existingEnt)
         {
             std::cout<< "Entity already added." << std::endl;
             return;
         }
     }
 
-    ent->setState(this);
-    _entities.push_back(ent);
+    entity->setState(this);
+    _entities.push_back(entity);
 }
 
-void GameState::removeEntity(Entity *const ent)
+void GameState::removeEntity(Entity *const entity)
 {
-    //TODO Replaces with algo
+    //TODO Replace with algo
     for (unsigned int i = 0; i < _entities.size(); i++)
     {
-        if(ent == _entities[i])
+        if(entity == _entities[i])
         {
             std::vector<Entity*>::iterator iter = _entities.begin()+i;
             delete(_entities[i]);
@@ -39,16 +39,16 @@ void GameState::removeEntity(Entity *const ent)
 
 void GameState::update()
 {
-    for (auto ent : _entities)
+    for (auto entity : _entities)
     {
-        ent->update();
+        entity->update();
     }
 }
 
 void GameState::draw(IRender *const render)
 {
-    for (auto ent : _entities)
+    for (auto entity : _entities)
     {
-        ent->draw(render);
+        entity->draw(render);
     }
 }

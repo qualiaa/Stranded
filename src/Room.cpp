@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include "Engine/Vector.hpp"
+#include "Player.hpp"
 #include "Object.hpp"
 #include "LargeTreeObject.hpp"
 #include "SmallTreeObject.hpp"
@@ -44,11 +45,12 @@ enum EntityType
     TILE_WATER = 500,
 };//}}}
 
-//{{{Room::Room(Vector const& coords)
-Room::Room(Vector const& coords)//, Entity *const player)
+//{{{Room::Room(Vector const& coords, Player *const player)
+Room::Room(Vector const& coords, Player *const player)
 :_coords(coords), _currentRoom(false)
 {
-    //_entities.push_back(player);
+    _player = player;
+    _entities.push_back(player);
 }//}}}
 
 //{{{Room::~Room()
@@ -58,10 +60,10 @@ Room::~Room()
     {
         delete(tile);
     }
-    _tiles.clear();
 
     for(auto ent : _entities)
     {
+        if(ent == _player) continue; //Don't delete the player!
         delete(ent);
     }
 }//}}}
@@ -69,8 +71,8 @@ Room::~Room()
 /* Dear Christ this is a nightmare.
  * What the hell was I thinking? */
 
-//{{{bool Room::load(GameState* state)
-bool Room::load(GameState* state)
+//{{{bool Room::load(GameState *const state)
+bool Room::load(GameState *const state)
 {
     std::cout << "Loading Room..." << std::endl;
 
@@ -120,7 +122,7 @@ bool Room::load(GameState* state)
             return false;
         }
 
-        _tiles.push_back( new Tile( tilePos,tileID,rotation ) );
+        _tiles.push_back(new Tile( tilePos, tileID, rotation ));
 
         Vector objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
 

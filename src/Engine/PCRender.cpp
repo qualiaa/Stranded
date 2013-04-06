@@ -100,7 +100,7 @@ void PCRender::drawText(char const* text, Vector const& pos)
     //TODO Get this from screen width or elsewhere
     const int maxWidth = 600;
 
-    SDL_Surface* font = _images["font"];
+    SDL_Surface* font = _images["fontsmall"];
 
     char c; // character buffer
     int length = strlen(text);

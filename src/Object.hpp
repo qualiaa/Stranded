@@ -12,7 +12,7 @@ public:
     
     virtual void isInside(Entity*) {}
     
-    Object( Vector const& pos, char const* texture );
+    Object(Vector const& pos, char const* texture);
     virtual ~Object();
 protected:
 };
