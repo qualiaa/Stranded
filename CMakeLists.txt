@@ -2,11 +2,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 project(Stranded)
 
-set( CMAKE_MAKE_PROGRAM "ninja" )
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 if (NOT MSVC)
-    set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 endif(NOT MSVC)
 
 set(CMAKE_BUILD_TYPE Debug)
@@ -16,10 +15,10 @@ if(NOT MSVC)
 endif(NOT MSVC)
 
 if(Warn)
-    set (CMAKE_CXX_FLAGS "-Wall -Werror -Wno-padded ${CMAKE_CXX_FLAGS}")
+    set (CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS}")
 endif(Warn)
 
-set ( CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}" )
+set (CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}" )
 
 add_subdirectory(src)
-add_subdirectory(res)
+file(COPY "res" DESTINATION ${CMAKE_BINARY_DIR})

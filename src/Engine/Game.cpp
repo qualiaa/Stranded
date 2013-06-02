@@ -15,23 +15,23 @@
 //{{{Game::Game()
 Game::Game()
 : _initialized (false),
-  _run         (true ),
+  _run         (true),
   _deleteState (false),
-  _render      (NULL ),
-  _currentState(NULL ) {}
+  _render      (NULL),
+  _currentState(NULL) {}
   //}}}
 
 //{{{Game::~Game()
 Game::~Game()
 {
-    while( !_states.empty() )
+    while(!_states.empty())
     {
-        delete( _states.top() );
+        delete(_states.top());
         _states.pop();
     }
 
-    delete( _render );
-    delete( Window::Instance() );
+    delete(_render);
+    delete(Window::Instance());
 }//}}}
 
 /* ---------------------------- *
@@ -41,7 +41,7 @@ Game::~Game()
 //{{{bool Game::initialize()
 bool Game::initialize()
 {
-    if( !_initialized )
+    if(!_initialized)
     {
         _initialized = true;
 
@@ -56,9 +56,9 @@ bool Game::initialize()
 
         _render = new PCRender();
 
-        ServiceLocator::provide ( _render ); //Make render available on request
+        ServiceLocator::provide (_render); //Make render available on request
 
-        if( !_render->initialize() )
+        if(!_render->initialize())
         {
             _initialized = false;
         }
@@ -113,23 +113,24 @@ void Game::run()
 //{{{void Game::handleEvents()
 void Game::handleEvents()
 {
+    SDL_Event event;
     //TODO Make this independent of SDL
-    while(SDL_PollEvent(&_event))
+    while(SDL_PollEvent(&event))
     {
-        switch(_event.type)
+        switch(event.type)
         {
             case SDL_KEYUP:
             case SDL_KEYDOWN:
 
-                if((_event.key.keysym.sym == SDLK_F4 && _event.key.keysym.mod & KMOD_ALT)
-                || (_event.key.keysym.sym == SDLK_w  && _event.key.keysym.mod & KMOD_CTRL))
+                if((event.key.keysym.sym == SDLK_F4 && event.key.keysym.mod & KMOD_ALT)
+                || (event.key.keysym.sym == SDLK_w  && event.key.keysym.mod & KMOD_CTRL))
                 {
                         _run = false;
                         break;
                 }
-                if( _currentState )
+                if(_currentState)
                 {
-                    _currentState->handleEvents(&_event.key);
+                    _currentState->handleEvents(&event.key);
                 }
 
                 break;
@@ -145,34 +146,23 @@ void Game::handleEvents()
     }
 }//}}}
 
-//{{{void Game::draw()
-void Game::draw()
-{
-    //Draw current state
-    _currentState->draw(_render);
-
-    //Update the screen
-    _render->flipDisplay();
-
-}//}}}
-
 /* ----------------------------------- *
  * State management
  * ----------------------------------- */
 
 //{{{bool Game::pushState( GameState* state )
-bool Game::pushState( GameState* state )
+bool Game::addState(GameState* state)
 {
-    if( state->initialize() )
+    if(state->initialize())
     {
         std::cout << "Loaded state successfully" << std::endl;
-        _states.push( state );
+        _states.push(state);
 
         return true;
     }
 
-    //This is sort of evil, but makes sense in the grand scheme:
-    delete state;
+    //This is sort of evil, but makes sense in the grand scheme of things:
+    delete(state);
 
     std::cout << "Not pushing state" << std::endl;
 
@@ -211,3 +201,14 @@ Game *Game::Instance()
 void Game::update()
 {
 }
+
+//{{{void Game::draw()
+void Game::draw()
+{
+    //Draw current state
+    _currentState->draw(_render);
+
+    //Update the screen
+    _render->flipDisplay();
+
+}//}}}

@@ -18,8 +18,8 @@ public:
     bool initialize();
     void run();
 
-    bool pushState( GameState* );
-    void popState ();
+    bool addState(GameState*);
+    void popState();
 
     GameState* state();
 private:
@@ -29,9 +29,7 @@ private:
     //Hacky hacky hacky
     bool _deleteState;
 
-    SDL_Event _event;
-
-    IRender*    _render;
+    IRender*   _render;
 
     GameState* _currentState;
     std::stack<GameState*> _states;
