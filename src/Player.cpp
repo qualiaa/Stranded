@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-#include "Engine/ServiceLocator.hpp"
-#include "Engine/Text.hpp"
+#include "Engine/System/ServiceLocator.hpp"
+#include "Engine/Graphics/Text.hpp"
 #include "MainState.hpp"
 #include "Room.hpp"
 

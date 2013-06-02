@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define	PLAYER_H
 
-#include "Engine/Animation.hpp"
+#include "Engine/Graphics/Animation.hpp"
 #include "Mover.hpp"
 
 class MainState;

@@ -2,7 +2,7 @@
 #ifndef OBJECT_H
 #define	OBJECT_H
 
-#include "Engine/Entity.hpp"
+#include "Engine/System/Entity.hpp"
 #include <string>
 
 class Object : public Entity

@@ -3,8 +3,8 @@
 #define	ROOM_H
 
 #include <vector>
-#include "Engine/Vector.hpp"
-#include "Engine/GameState.hpp"
+#include "Engine/Utility/Vector.hpp"
+#include "Engine/System/GameState.hpp"
 #include "Tile.hpp"
 
 class Player;

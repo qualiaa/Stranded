@@ -1,7 +1,7 @@
 #ifndef MAINSTATE_H
 #define	MAINSTATE_H
 
-#include "Engine/GameState.hpp"
+#include "Engine/System/GameState.hpp"
 
 class Player;
 class Room;

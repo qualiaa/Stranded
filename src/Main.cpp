@@ -8,7 +8,7 @@
  */
 
 #include <iostream>
-#include "Engine/Game.hpp"
+#include "Engine/System/Game.hpp"
 #include "MainState.hpp"
 
 int main(int argc, char** argv)

@@ -8,7 +8,7 @@
 #ifndef MOVER_H
 #define	MOVER_H
 
-#include "Engine/Entity.hpp"
+#include "Engine/System/Entity.hpp"
 
 class Mover : public Entity
 {

@@ -8,7 +8,7 @@
 #ifndef BAMBOOOBJECT_H
 #define	BAMBOOOBJECT_H
 
-#include "Engine/Animation.hpp"
+#include "Engine/Graphics/Animation.hpp"
 #include "Object.hpp"
 
 class BambooObject : public Object

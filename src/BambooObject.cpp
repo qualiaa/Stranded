@@ -1,7 +1,7 @@
 #include "BambooObject.hpp"
 
-#include "Engine/GameState.hpp"
-#include "Engine/Text.hpp"
+#include "Engine/System/GameState.hpp"
+#include "Engine/Graphics/Text.hpp"
 #include "Tile.hpp"
 
 BambooObject::BambooObject(Vector const& pos)

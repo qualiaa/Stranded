@@ -1,8 +1,8 @@
 #ifndef TILE_H
 #define	TILE_H
 
-#include "Engine/Entity.hpp"
-#include "Engine/Animation.hpp"
+#include "Engine/System/Entity.hpp"
+#include "Engine/Graphics/Animation.hpp"
 
 class Tile : public Entity
 {

@@ -1,7 +1,7 @@
 #include "Object.hpp"
 
 #include <cstring>
-#include "Engine/ServiceLocator.hpp"
+#include "Engine/System/ServiceLocator.hpp"
 
 //TODO Improve this
 Object::Object( Vector const& pos, char const* texture )
