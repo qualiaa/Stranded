@@ -6,8 +6,7 @@
 const int Tile::TILE_SIZE = 64;
 
 Tile::Tile(Vector const& pos, int tileID, unsigned int rotation)
-:Entity  (pos * TILE_SIZE                           ),
- _tilePos(pos                                       )
+    :Entity(pos * TILE_SIZE), _tilePos(pos)
 {
     _hitBox.x = _pos.x;
     _hitBox.y = _pos.y;
@@ -38,10 +37,11 @@ Tile::Tile(Vector const& pos, int tileID, unsigned int rotation)
             break;
     }
 
-    _texture = ServiceLocator::getRender()->getTexture( texture.c_str() );
-    _tile = Animation( _texture, { TILE_SIZE, TILE_SIZE} );
-    _tile.add( "tile", { rotation }, 0 );
-    _tile.play( "tile", false );
+    _texture = ServiceLocator::getRender()->getTexture(texture.c_str());
+
+    _tile = Animation(_texture, { TILE_SIZE, TILE_SIZE });
+    _tile.add("tile", { rotation }, 0);
+    _tile.select("tile", false );
 }
 
 void Tile::draw(IRender *const render)

@@ -25,7 +25,7 @@ Player::Player(Vector const& pos, MainState* mState)
     _anim.add( "right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100 );
     _anim.add( "down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100 );
     _anim.add( "left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100 );
-    _anim.play("up");
+    _anim.select("up");
 }//}}}
 
 //{{{void Player::update()
@@ -55,14 +55,14 @@ void Player::update()
     {
         switch( _rotation )
         {
-            case 0: _anim.play("up");    break; 
-            case 1: _anim.play("right"); break; 
-            case 2: _anim.play("down");  break; 
-            case 3: _anim.play("left");  break; 
+            case 0: _anim.select("up");    break; 
+            case 1: _anim.select("right"); break; 
+            case 2: _anim.select("down");  break; 
+            case 3: _anim.select("left");  break; 
             default: break;
         }
 
-        _anim.update();
+        _anim.play();
     }
     else
     {

@@ -17,7 +17,7 @@ BambooObject::BambooObject(Vector const& pos)
 
     _anim.add("normal", {0}, 0);
     _anim.add("taken",  {1}, 0);
-    _anim.play("normal",false); 
+    _anim.select("normal",false); 
 }
 
 BambooObject::~BambooObject()
@@ -29,7 +29,7 @@ void BambooObject::isInside(Entity* ent)
 {
     if(ent->getType().compare("player") == 0)
     {
-        _anim.play("taken",false);
+        _anim.select("taken",false);
         _type  = "bamboo_taken";
         if(_solid)
         {

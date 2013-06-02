@@ -103,9 +103,9 @@ bool Room::load(GameState *const state)
 
     _tiles.reserve( ROOM_SIZE*ROOM_SIZE );
 
-    Object* obj  = NULL;
+    Object* obj = NULL;
 
-    for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; i++)
+    for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; ++i)
     {
         float1    = i + 1; //WHAT THE FUCK
         tilePos.x = i % ROOM_SIZE;
@@ -121,8 +121,7 @@ bool Room::load(GameState *const state)
             roomFile.close();
             return false;
         }
-
-        _tiles.push_back(new Tile( tilePos, tileID, rotation ));
+        _tiles.push_back(new Tile(tilePos, tileID, rotation));
 
         Vector objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
 
