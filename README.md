@@ -1,6 +1,12 @@
 Stranded
 ========
 
-Stranded started as an entry for the Ludum Dare 48hr game design competition.
-One year later, I'm trying to finish it as a game, and improve the underlying
-engine for potential reuse (in simple projects)
+A small game, originally for [*LD #22 - Alone*](http://ludumdare.com "Ludum Dare"), currently being used to test the [Tank Engine](https://github.com/Gazok/Tank "Tank Engine").
+
+Installation
+============
+
+    git clone git@github.com:Gazok/Stranded.git
+    cd Stranded
+    git submodule init
+    git submodule update
