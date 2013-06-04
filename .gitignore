@@ -16,6 +16,7 @@
 *.gch
 *.pch
 
+build/
 # Vim temporary files
 *.swp
 *~
