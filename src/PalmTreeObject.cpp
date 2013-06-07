@@ -8,7 +8,7 @@
 #include "PalmTreeObject.hpp"
 #include "Tile.hpp"
 
-PalmTreeObject::PalmTreeObject( Vector const& pos )
+PalmTreeObject::PalmTreeObject( Vectorf const& pos )
 :Object( pos, "palmtree" )
 {
     _hitBox.h = 6;

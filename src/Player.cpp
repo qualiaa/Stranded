@@ -5,8 +5,8 @@
 #include "MainState.hpp"
 #include "Room.hpp"
 
-//{{{Player::Player(Vector const& pos, MainState* mState)
-Player::Player(Vector const& pos, MainState* mState)
+//{{{Player::Player(Vectorf const& pos, MainState* mState)
+Player::Player(Vectorf const& pos, MainState* mState)
 :Mover    (pos   ),
  _rotation(1     ),
  _mapPos  ({0, 0}),

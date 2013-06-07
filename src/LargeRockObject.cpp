@@ -7,8 +7,8 @@
 
 #include "LargeRockObject.hpp"
 
-LargeRockObject::LargeRockObject( Vector const& pos )
-:Object( pos, "largerock" )
+LargeRockObject::LargeRockObject(Vectorf const& pos)
+    :Object(pos, "largerock")
 {
     _hitBox.h = 32;
     _hitBox.y += 12;

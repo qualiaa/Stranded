@@ -66,8 +66,8 @@ bool MainState::initialize()
         } 
 
         //Create a new player
-        _player = new Player({ static_cast<double>(8*Tile::TILE_SIZE), 
-                               static_cast<double>(8*Tile::TILE_SIZE) },
+        _player = new Player({ static_cast<float>(8*Tile::TILE_SIZE), 
+                               static_cast<float>(8*Tile::TILE_SIZE) },
                              this ); 
         //addEntity(_player);
 
@@ -89,7 +89,7 @@ bool MainState::loadRooms()
 {
     _rooms.reserve(MAP_WIDTH*MAP_HEIGHT);
 
-    Vector coords({0,0});
+    Vectori coords({0,0});
 
     for(int i = 0; i < MAP_HEIGHT; i++)
     {
@@ -112,7 +112,7 @@ bool MainState::loadRooms()
 } //}}}
 
 //{{{void MainState::changeRoom(Vector const& coords)
-void MainState::changeRoom(Vector const& coords)
+void MainState::changeRoom(Vectori const& coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 

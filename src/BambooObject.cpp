@@ -4,10 +4,10 @@
 #include "Engine/Graphics/Text.hpp"
 #include "Tile.hpp"
 
-BambooObject::BambooObject(Vector const& pos)
+BambooObject::BambooObject(Vectorf const& pos)
 :Object( pos, "bamboo" ),
- _anim(_texture, { static_cast<double>(Tile::TILE_SIZE), 
-                   static_cast<double>(Tile::TILE_SIZE) })
+ _anim(_texture, { static_cast<float>(Tile::TILE_SIZE), 
+                   static_cast<float>(Tile::TILE_SIZE) })
 {
     _hitBox.x += 14;
     _hitBox.w = 24;

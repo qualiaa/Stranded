@@ -15,12 +15,12 @@ public:
     
     void isInside(Entity *ent);
     
-    Player(Vector const& pos, MainState*);
+    Player(Vectorf const& pos, MainState*);
 private:
     Animation    _anim;
     unsigned int _rotation;
     Rect         _lastHitBox;
-    Vector       _mapPos;
+    Vectori      _mapPos;
     MainState*   _mState;
 
     void checkSides();

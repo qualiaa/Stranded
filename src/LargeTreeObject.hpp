@@ -15,7 +15,7 @@ class LargeTreeObject: public Object
 public:
     virtual void isInside( Entity* ){}
     virtual void update(){}
-    LargeTreeObject( Vector const& pos );
+    LargeTreeObject(Vectorf const& pos);
     virtual ~LargeTreeObject();
 private:
 

@@ -12,11 +12,11 @@ public:
     
     virtual void isInside(Entity*) {};
     
-    Tile (Vector const& pos, int tileID, unsigned int rotation);
+    Tile (Vectorf const& pos, int tileID, unsigned int rotation);
 
     static const int TILE_SIZE;
 private:
     Animation _tile;
-    Vector    _tilePos; 
+    Vectorf    _tilePos; 
 }; 
 #endif

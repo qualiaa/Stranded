@@ -8,7 +8,7 @@
 #include "SmallTreeObject.hpp"
 #include "Tile.hpp"
 
-SmallTreeObject::SmallTreeObject( Vector const& pos )
+SmallTreeObject::SmallTreeObject( Vectorf const& pos )
 :Object( pos, "smalltree" )
 {
     _hitBox.h = 9;

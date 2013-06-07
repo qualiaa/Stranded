@@ -7,8 +7,8 @@
 
 #include "Mover.hpp"
 
-Mover::Mover(Vector const& pos )
-:Entity( pos )
+Mover::Mover(Vectorf const& pos)
+:Entity(pos)
 {
     _vel = {0,0};
     _speed = 2;

@@ -9,7 +9,7 @@ class Room;
 class MainState : public GameState
 {
 public:
-    void     changeRoom(Vector const& coords);
+    void     changeRoom(Vectori const& coords);
     
     Room const*      currentRoom();
     

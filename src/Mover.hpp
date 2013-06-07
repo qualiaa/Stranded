@@ -15,12 +15,12 @@ class Mover : public Entity
 public:
     virtual void update();
     
-    Mover(Vector const& pos );
+    Mover(Vectorf const& pos);
     virtual ~Mover();
 protected:
-    Vector _lastPos;
-    Vector _vel;
-    //Vector _acc;
+    Vectorf _lastPos;
+    Vectorf _vel;
+    //Vectorf _acc;
     
     float _speed;
     bool _movingX;

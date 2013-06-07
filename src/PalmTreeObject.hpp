@@ -8,7 +8,7 @@ class PalmTreeObject : public Object
 public:
     virtual void update(){}
     virtual void isInside( Entity* ){}
-    PalmTreeObject( Vector const& pos );
+    PalmTreeObject( Vectorf const& pos );
     virtual ~PalmTreeObject();
 private:
 

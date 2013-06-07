@@ -45,8 +45,8 @@ enum EntityType
     TILE_WATER = 500,
 };//}}}
 
-//{{{Room::Room(Vector const& coords, Player *const player)
-Room::Room(Vector const& coords, Player *const player)
+//{{{Room::Room(Vectori const& coords, Player *const player)
+Room::Room(Vectori const& coords, Player *const player)
 :_coords(coords), _currentRoom(false)
 {
     _player = player;
@@ -76,7 +76,7 @@ bool Room::load(GameState *const state)
 {
     std::cout << "Loading Room..." << std::endl;
 
-    Vector tilePos = {0,0};
+    Vectorf tilePos = {0,0};
     int tileID;
     int objectID;
     int rotation;
@@ -123,7 +123,7 @@ bool Room::load(GameState *const state)
         }
         _tiles.push_back(new Tile(tilePos, tileID, rotation));
 
-        Vector objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
+        Vectorf objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
 
         switch(objectID)
         {

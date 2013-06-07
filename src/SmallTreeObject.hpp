@@ -15,7 +15,7 @@ class SmallTreeObject : public Object
 public:
     virtual void isInside( Entity* ){}
     virtual void update(){}
-    SmallTreeObject( Vector const& pos );
+    SmallTreeObject( Vectorf const& pos );
     virtual ~SmallTreeObject();
 private:
 

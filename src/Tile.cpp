@@ -5,8 +5,8 @@
 
 const int Tile::TILE_SIZE = 64;
 
-Tile::Tile(Vector const& pos, int tileID, unsigned int rotation)
-    :Entity(pos * TILE_SIZE), _tilePos(pos)
+Tile::Tile(Vectorf const& pos, int tileID, unsigned int rotation)
+    :Entity(pos * static_cast<float>(TILE_SIZE)), _tilePos(pos)
 {
     _hitBox.x = _pos.x;
     _hitBox.y = _pos.y;

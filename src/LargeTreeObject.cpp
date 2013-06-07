@@ -2,7 +2,7 @@
 
 #include "Tile.hpp"
 
-LargeTreeObject::LargeTreeObject(Vector const& pos )
+LargeTreeObject::LargeTreeObject(Vectorf const& pos)
 :Object( pos, "largetree" )
 {
     _hitBox.h = 9;

@@ -15,7 +15,7 @@ class SmallRockObject : public Object
 public:
     virtual void isInside( Entity* ){}
     virtual void update(){}
-    SmallRockObject(Vector const& pos );
+    SmallRockObject(Vectorf const& pos );
     virtual ~SmallRockObject();
 private:
 

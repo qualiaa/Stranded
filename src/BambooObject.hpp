@@ -18,7 +18,7 @@ public:
     virtual void update(){}
     virtual void draw(IRender*);
 
-    BambooObject(Vector const& pos);
+    BambooObject(Vectorf const& pos);
     virtual ~BambooObject();
 private:
     Animation _anim; 

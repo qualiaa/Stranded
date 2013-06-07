@@ -4,7 +4,7 @@
 #include "Engine/System/ServiceLocator.hpp"
 
 //TODO Improve this
-Object::Object( Vector const& pos, char const* texture )
+Object::Object( Vectorf const& pos, char const* texture )
 :Entity( pos )
 {
     if( strcmp( texture, "" ) )

@@ -11,7 +11,7 @@
 #include "Engine/System/Game.hpp"
 #include "MainState.hpp"
 
-int main(int argc, char** argv)
+int main()
 {
     if( Game::Instance()->initialize() )
     {

@@ -15,7 +15,7 @@ class LargeRockObject : public Object
 public:
     virtual void isInside( Entity* ){}
     virtual void update(){}
-    LargeRockObject( Vector const& pos );
+    LargeRockObject( Vectorf const& pos );
     virtual ~LargeRockObject();
 private:
 

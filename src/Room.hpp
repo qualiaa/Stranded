@@ -21,11 +21,11 @@ public:
     std::vector<Tile*>   GetTiles()    { return _tiles; }
     std::vector<Entity*> GetEntities() { return _entities; }
 
-    Room(Vector const& coords, Player *const);
+    Room(Vectori const& coords, Player *const);
 
     ~Room();
 private:
-    Vector  _coords;
+    Vectori  _coords;
     bool    _currentRoom;
     Player* _player;
 

@@ -7,7 +7,7 @@
 
 #include "SmallRockObject.hpp"
 
-SmallRockObject::SmallRockObject(Vector const& pos )
+SmallRockObject::SmallRockObject(Vectorf const& pos )
 :Object( pos, "smallrock" )
 {
     _hitBox.h = 18;
