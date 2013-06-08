@@ -10,10 +10,7 @@
 LargeRockObject::LargeRockObject(Vectorf const& pos)
     :Object(pos, "largerock")
 {
-    _hitBox.h = 32;
-    _hitBox.y += 12;
-    _hitBox.w = 42;
-    _hitBox.x += 12;
+    _hitbox = { 12, 12, 42, 32 };
     _solid = true;
 }
 

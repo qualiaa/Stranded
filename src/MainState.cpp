@@ -228,15 +228,15 @@ void MainState::checkCollisions(Entity* entA, Entity* entB)
     Rect const& A = entA->getHitBox();
     Rect const& B = entB->getHitBox();
 
-    int leftA = A.x;
-    int leftB = B.x;
-    int rightA = A.x + A.w;
-    int rightB = B.x + B.w;
-    int topA = A.y;
-    int topB = B.y;
-    int bottomA = A.y + A.h;
-    int bottomB = B.y + B.h;
-
+    int leftA = A.x + entA->getPos().x;
+    int leftB = B.x + entB->getPos().x;
+    int rightA = A.x + A.w + entA->getPos().x;
+    int rightB = B.x + B.w + entB->getPos().x;
+    int topA = A.y + entA->getPos().y;
+    int topB = B.y + entB->getPos().y;
+    int bottomA = A.y + A.h + entA->getPos().y;
+    int bottomB = B.y + B.h + entB->getPos().y;
+   //Doesn't work
     if(leftA > rightB) return;
     if(topA > bottomB) return;
     if(rightA < leftB) return;

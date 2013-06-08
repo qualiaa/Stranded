@@ -13,10 +13,7 @@ Player::Player(Vectorf const& pos, MainState* mState)
  _mState  (mState)
 {
     _texture = ServiceLocator::getRender()->getTexture( "player" );
-    _hitBox.w = 21;
-    _hitBox.h = 5;
-    _hitBox.x = _pos.x + 21;
-    _hitBox.y = _pos.y + 58;
+    _hitbox = { 21, 58, 21, 5 };
 
     _type = "player";
 
@@ -32,8 +29,6 @@ Player::Player(Vectorf const& pos, MainState* mState)
 void Player::update()
 {
     Mover::update();
-    _hitBox.x = _pos.x + 21;
-    _hitBox.y = _pos.y + 58;
 
     if(_vel.x > 0)
     {
@@ -127,14 +122,13 @@ void Player::move(int rotation, bool moving)
 //{{{void Player::checkSides()
 void Player::checkSides()
 {
-    if(_hitBox.x < 0)
+    if(_pos.x + _hitbox.x < 0)
     {
         if(_mapPos.x > 0)
         {
             _mapPos.x = _mapPos.x - 1;//Move player to next room
             _pos.x = 576 + 21;
             _lastPos.x = 700;
-            _hitBox.x = _pos.x + 21;
 
             _mState->changeRoom(_mapPos);
         }
@@ -144,14 +138,13 @@ void Player::checkSides()
             //_vel.x = 0;
         }
     }
-    if(_hitBox.x + _hitBox.w >= 640)
+    if(_pos.x + _hitbox.x + _hitbox.w >= 640)
     {
         if(_mapPos.x < 3)
         {
             _mapPos.x = _mapPos.x + 1;//Move player to next room
             _pos.x = 0 - 21;
             _lastPos.x = -100;
-            _hitBox.x = _pos.x + 21;
 
             _mState->changeRoom(_mapPos);
         }
@@ -161,14 +154,13 @@ void Player::checkSides()
             //_vel.x = 0;
         }
     }
-    if(_hitBox.y < 0)
+    if(_pos.y + _hitbox.y < 0)
     {
         if(_mapPos.y > 0)
         {
             _mapPos.y = _mapPos.y - 1; //Move player to next room
             _pos.y = 640 - 64;
             _lastPos.y = 700;
-            _hitBox.y = _pos.y + 58;
 
             _mState->changeRoom(_mapPos);
         }
@@ -178,14 +170,13 @@ void Player::checkSides()
             //_vel.y = 0;
         }
     }
-    if(_hitBox.y + _hitBox.h >= 640)
+    if(_pos.y + _hitbox.y + _hitbox.h >= 640)
     {
         if(_mapPos.y < 3)
         {
             _mapPos.y = _mapPos.y + 1; //Move player to next room
             _pos.y = 0 - 58;
             _lastPos.y = -100;
-            _hitBox.y = _pos.y + 58;
 
             _mState->changeRoom(_mapPos);
         }
@@ -200,10 +191,10 @@ void Player::checkSides()
 //{{{void Player::isInside(Entity* ent)
 void Player::isInside(Entity* ent)
 {
-    int left      = _hitBox.x;
-    int right     = _hitBox.x + _hitBox.w;
-    int top       = _hitBox.y;
-    int bottom    = _hitBox.y + _hitBox.h;
+    int left      = _hitbox.x;
+    int right     = _hitbox.x + _hitbox.w;
+    int top       = _hitbox.y;
+    int bottom    = _hitbox.y + _hitbox.h;
 
     int entLeft   =           ent->getHitBox().x;
     int entRight  = entLeft + ent->getHitBox().w;
@@ -234,14 +225,6 @@ void Player::isInside(Entity* ent)
         }
 
         _anim.stop();
-    }
-
-    if(ent->getType().compare("bamboo") == 0)
-    {
-        /*_state->addEntity(new Text({50,600},
-                                   "You found some bamboo!",
-                                   1000));*/
-    }
-
+    } 
     //checkSides();
 }//}}}

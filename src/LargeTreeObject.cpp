@@ -5,10 +5,7 @@
 LargeTreeObject::LargeTreeObject(Vectorf const& pos)
 :Object( pos, "largetree" )
 {
-    _hitBox.h = 9;
-    _hitBox.y += Tile::TILE_SIZE * 2 - 8 - _hitBox.h;
-    _hitBox.w = 28;
-    _hitBox.x += 18;
+    _hitbox = { 18, _hitbox.y = Tile::TILE_SIZE * 2 - 8 - _hitbox.h, 28, 9 };
     _solid = true;
 }
 

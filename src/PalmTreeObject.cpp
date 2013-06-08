@@ -11,10 +11,8 @@
 PalmTreeObject::PalmTreeObject( Vectorf const& pos )
 :Object( pos, "palmtree" )
 {
-    _hitBox.h = 6;
-    _hitBox.y += Tile::TILE_SIZE * 2 - 4 - _hitBox.h;
-    _hitBox.w = 16;
-    _hitBox.x += 30;
+    _hitbox = { 30, Tile::TILE_SIZE * 2 - 4, 16, 6 };
+    _hitbox.y -= _hitbox.h;
     _solid = true;
 }
 

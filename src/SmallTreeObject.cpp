@@ -11,10 +11,8 @@
 SmallTreeObject::SmallTreeObject( Vectorf const& pos )
 :Object( pos, "smalltree" )
 {
-    _hitBox.h = 9;
-    _hitBox.y += Tile::TILE_SIZE - 8 - _hitBox.h;
-    _hitBox.w = 28;
-    _hitBox.x += 18;
+    _hitbox = { 18, Tile::TILE_SIZE - 8, 28, 9 };
+    _hitbox.y -= _hitbox.h;
     _solid = true;
 }
 

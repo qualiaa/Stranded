@@ -9,10 +9,10 @@ BambooObject::BambooObject(Vectorf const& pos)
  _anim(_texture, { static_cast<float>(Tile::TILE_SIZE), 
                    static_cast<float>(Tile::TILE_SIZE) })
 {
-    _hitBox.x += 14;
-    _hitBox.w = 24;
-    _hitBox.y += 42;
-    _hitBox.h = 8;
+    _hitbox.x = 14;
+    _hitbox.w = 24;
+    _hitbox.y = 42;
+    _hitbox.h = 8;
     _solid = true;
 
     _anim.add("normal", {0}, 0);
