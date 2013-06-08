@@ -195,7 +195,6 @@ void Room::draw(IRender *const render)
     {
         for(auto entity : _entities )
         {
-            //TODO Check this works
             if(entity->getPos().y + entity->getHitBox().y == ( int ) i)
             {
                 entity->draw(render);

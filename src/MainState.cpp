@@ -219,7 +219,6 @@ void MainState::draw(IRender *const render)
     GameState::draw(render);
 }//}}}
 
-//TODO Move into Entity
 //{{{ void MainState::checkCollisions(Entity* entA, Entity* entB)
 void MainState::checkCollisions(Entity* entA, Entity* entB)
 {
@@ -236,7 +235,7 @@ void MainState::checkCollisions(Entity* entA, Entity* entB)
     int topB = B.y + entB->getPos().y;
     int bottomA = A.y + A.h + entA->getPos().y;
     int bottomB = B.y + B.h + entB->getPos().y;
-   //Doesn't work
+
     if(leftA > rightB) return;
     if(topA > bottomB) return;
     if(rightA < leftB) return;
