@@ -8,3 +8,4 @@ link_directories( ${STRANDED_BINARY_DIR}/src/Engine )
 add_executable("stranded" ${sources})
 
 target_link_libraries("stranded" engine)
+cotire(stranded)

@@ -3,6 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 project(Stranded)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+include(cotire)
 
 if (NOT MSVC)
     set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")

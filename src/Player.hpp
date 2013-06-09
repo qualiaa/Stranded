@@ -2,18 +2,16 @@
 #define	PLAYER_H
 
 #include "Engine/Graphics/Animation.hpp"
-#include "Mover.hpp"
+#include "Engine/System/Entity.hpp"
 
 class MainState;
 
-class Player : public Mover
+class Player : public Entity
 {
 public:
     void move(int rotation, bool moving);
     void update();
     virtual void draw( IRender *const );
-    
-    void isInside(Entity *ent) {}
     
     Player(Vectorf const& pos, MainState*);
 private:
@@ -24,6 +22,9 @@ private:
     Vectori      _mapPos;
     MainState*   _mState;
 
+    Vectorf      _vel;
+    Vectorf      _lastPos;
+    float      _speed;
     void checkSides();
 };
 #endif

@@ -8,46 +8,52 @@
 
 //{{{Player::Player(Vectorf const& pos, MainState* mState)
 Player::Player(Vectorf const& pos, MainState* mState)
-:Mover    (pos   ),
- _rotation(1     ),
- _mapPos  ({0, 0}),
- _mState  (mState)
+    :Entity(pos),
+    _rotation(1),
+    _mapPos({0, 0}),
+    _mState(mState)
 {
-    _texture = ServiceLocator::getRender()->getTexture( "player" );
+    _texture = ServiceLocator::getRender()->getTexture("player");
     _hitbox = { 21, 58, 21, 5 };
 
     _type = "player";
+    _speed = 5;
 
     _anim = Animation( _texture, { 64, 64 } );
-    _anim.add( "up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100 );
-    _anim.add( "right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100 );
-    _anim.add( "down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100 );
-    _anim.add( "left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100 );
+    _anim.add("up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100);
+    _anim.add("right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100);
+    _anim.add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100);
+    _anim.add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100);
     _anim.select("up");
 }//}}}
 
 //{{{void Player::update()
 void Player::update()
 {
-    Mover::update();
+    //Mover::update();
 
+    bool moving = false;
     if(_vel.x > 0)
     {
         _rotation = 1;
+        moving = true;
     }
     else if(_vel.x < 0)
     {
         _rotation = 3;
+        moving = true;
     }
     if(_vel.y > 0)
     {
         _rotation = 2;
+        moving = true;
     }
     else if(_vel.y < 0)
     {
         _rotation = 0;
+        moving = true;
     }
-    if(_movingX || _movingY)
+    if(moving)
     {
         switch( _rotation )
         {
@@ -64,6 +70,11 @@ void Player::update()
     {
         _anim.stop();
     }
+
+    _lastPos = _pos;
+    
+    _pos += _vel;
+
 
     handleCollisions();
     checkSides();
