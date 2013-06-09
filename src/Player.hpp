@@ -13,10 +13,11 @@ public:
     void update();
     virtual void draw( IRender *const );
     
-    void isInside(Entity *ent);
+    void isInside(Entity *ent) {}
     
     Player(Vectorf const& pos, MainState*);
 private:
+    void handleCollisions();
     Animation    _anim;
     unsigned int _rotation;
     Rect         _lastHitBox;

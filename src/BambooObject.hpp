@@ -14,12 +14,10 @@
 class BambooObject : public Object
 {
 public:
-    virtual void isInside(Entity*);
-    virtual void update(){}
+    virtual void update();
     virtual void draw(IRender*);
 
     BambooObject(Vectorf const& pos);
-    virtual ~BambooObject();
 private:
     Animation _anim; 
 };

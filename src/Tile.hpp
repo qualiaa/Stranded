@@ -7,10 +7,7 @@
 class Tile : public Entity
 {
 public:
-    virtual void update() {}
     virtual void draw(IRender *const);
-    
-    virtual void isInside(Entity*) {};
     
     Tile (Vectorf const& pos, int tileID, unsigned int rotation);
 

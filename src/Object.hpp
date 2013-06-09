@@ -10,8 +10,6 @@ class Object : public Entity
 public:
     virtual void update() {}
     
-    virtual void isInside(Entity*) {}
-    
     Object(Vectorf const& pos, char const* texture);
     virtual ~Object();
 protected:

@@ -2,6 +2,7 @@
 #include "MainState.hpp"
 
 #include <iostream>
+#include <algorithm>
 #include "Engine/System/ServiceLocator.hpp"
 #include "Room.hpp"
 #include "Player.hpp"
@@ -31,6 +32,7 @@ MainState::~MainState()
     _rooms.clear();
 
     delete _player;
+    _entities.clear();
 }//}}}
 
 //{{{bool MainState::initialize()
@@ -63,12 +65,12 @@ bool MainState::initialize()
         {
             std::cout << "Loading MainState failed" << std::endl;
             return false;
-        } 
+        }
 
         //Create a new player
-        _player = new Player({ static_cast<float>(8*Tile::TILE_SIZE), 
+        _player = new Player({ static_cast<float>(8*Tile::TILE_SIZE),
                                static_cast<float>(8*Tile::TILE_SIZE) },
-                             this ); 
+                             this );
         //addEntity(_player);
 
         std::cout << "Loading World..." << std::endl;
@@ -78,7 +80,7 @@ bool MainState::initialize()
             std::cout << "Loading World failed." << std::endl;
         }
         std::cout << "Loaded world successfully." << std::endl;
-        _currentRoom = _rooms[0];
+        changeRoom({0,0});
     }
 
     return _initialized;
@@ -98,7 +100,7 @@ bool MainState::loadRooms()
         {
             coords.x = j;
             //_rooms[i*MAP_WIDTH+j] = new Room(coords,_player);
-            _rooms.push_back( new Room(coords,_player) );
+            _rooms.push_back(new Room(coords));
             if(!_rooms.back()->load(this))
             {
                 std::cout << "Loading Room (" << coords.x << ", " << coords.y << ") failed." << std::endl;
@@ -116,12 +118,16 @@ void MainState::changeRoom(Vectori const& coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 
-    std::cout << _rooms.size() << std::endl;
-
     _currentRoom = _rooms[coords.y*MAP_WIDTH + coords.x];
 
-    std::cout << "Room changed." << std::endl;
-    std::cout << "Coordinates: (" << coords.x << ", " << coords.y << ")" << std::endl;
+    std::vector<Entity*>& ents = _currentRoom->GetEntities();
+    std::vector<Tile*>& tiles = _currentRoom->GetTiles();
+
+    _entities.clear();
+    _entities.reserve(ents.size() + tiles.size());
+    _entities.insert(_entities.end(), tiles.begin(), tiles.end());
+    _entities.insert(_entities.end(), ents.begin(), ents.end());
+    addEntity(_player);
 }//}}}
 
 //{{{Room const* const MainState::currentRoom()
@@ -189,11 +195,11 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
             default:
                 break;
         }
-    } 
+    }
 }//}}}
 
 //{{{void MainState::update()
-void MainState::update()
+/*void MainState::update()
 {
     if(!_paused)
     {
@@ -208,39 +214,33 @@ void MainState::update()
             checkCollisions(_player,_currentRoom->GetEntities()[i]);
         }
 
-        GameState::update();
+        //GameState::update();
     }
-}//}}}
+}*///}}}
 
-//{{{void MainState::draw(IRender *const render)
-void MainState::draw(IRender *const render)
+void MainState::draw(IRender* render)
 {
-    _currentRoom->draw(render);
-    GameState::draw(render);
-}//}}}
+    //Find first non-tile element in (hopefully) sorted list
+    auto firstEnt = std::partition_point(_entities.begin(), _entities.end(),
+                                         [](Entity* ent)
+    {
+        return ent->getType() == "tile";
+    });
 
-//{{{ void MainState::checkCollisions(Entity* entA, Entity* entB)
-void MainState::checkCollisions(Entity* entA, Entity* entB)
-{
-    if (entA == entB) return;
+    auto depthTest = [](Entity* A, Entity* B)
+    {
+        return A->getPos().y + A->getHitBox().y <
+               B->getPos().y + B->getHitBox().y;
+    };
 
-    Rect const& A = entA->getHitBox();
-    Rect const& B = entB->getHitBox();
+    //Sort all non-tile elements by bottom edge of hitbox
+    if(!std::is_sorted(firstEnt, _entities.end(), depthTest))
+    {
+        std::sort(firstEnt, _entities.end(), depthTest);
+    }
 
-    int leftA = A.x + entA->getPos().x;
-    int leftB = B.x + entB->getPos().x;
-    int rightA = A.x + A.w + entA->getPos().x;
-    int rightB = B.x + B.w + entB->getPos().x;
-    int topA = A.y + entA->getPos().y;
-    int topB = B.y + entB->getPos().y;
-    int bottomA = A.y + A.h + entA->getPos().y;
-    int bottomB = B.y + B.h + entB->getPos().y;
-
-    if(leftA > rightB) return;
-    if(topA > bottomB) return;
-    if(rightA < leftB) return;
-    if(bottomA < topB) return;
-
-    entA->isInside(entB);
-    entB->isInside(entA);
-}//}}}
+    for(auto entity : _entities )
+    {
+        entity->draw(render);
+    }
+}

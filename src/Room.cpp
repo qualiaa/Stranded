@@ -45,17 +45,13 @@ enum EntityType
     TILE_WATER = 500,
 };//}}}
 
-//{{{Room::Room(Vectori const& coords, Player *const player)
-Room::Room(Vectori const& coords, Player *const player)
-:_coords(coords), _currentRoom(false)
-{
-    _player = player;
-    _entities.push_back(player);
-}//}}}
+Room::Room(Vectori const& coords)
+:_coords(coords), _currentRoom(false) { }
 
 //{{{Room::~Room()
 Room::~Room()
 {
+    //TODO this will totally segfault right now
     for(auto tile : _tiles)
     {
         delete(tile);
@@ -63,7 +59,6 @@ Room::~Room()
 
     for(auto ent : _entities)
     {
-        if(ent == _player) continue; //Don't delete the player!
         delete(ent);
     }
 }//}}}

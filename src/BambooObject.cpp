@@ -14,20 +14,16 @@ BambooObject::BambooObject(Vectorf const& pos)
     _hitbox.y = 42;
     _hitbox.h = 8;
     _solid = true;
+    _type = "bamboo";
 
     _anim.add("normal", {0}, 0);
     _anim.add("taken",  {1}, 0);
     _anim.select("normal",false); 
 }
 
-BambooObject::~BambooObject()
+void BambooObject::update()
 {
-    
-}
-
-void BambooObject::isInside(Entity* ent)
-{
-    if(ent->getType().compare("player") == 0)
+    if(!collide("player").empty())
     {
         _anim.select("taken",false);
         _type  = "bamboo_taken";

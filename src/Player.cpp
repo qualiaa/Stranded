@@ -1,5 +1,6 @@
 #include "Player.hpp"
 
+#include <iostream>
 #include "Engine/System/ServiceLocator.hpp"
 #include "Engine/Graphics/Text.hpp"
 #include "MainState.hpp"
@@ -64,6 +65,7 @@ void Player::update()
         _anim.stop();
     }
 
+    handleCollisions();
     checkSides();
 }//}}}
 
@@ -188,43 +190,23 @@ void Player::checkSides()
     }
 }//}}}
 
-//{{{void Player::isInside(Entity* ent)
-void Player::isInside(Entity* ent)
-{
-    int left      = _hitbox.x;
-    int right     = _hitbox.x + _hitbox.w;
-    int top       = _hitbox.y;
-    int bottom    = _hitbox.y + _hitbox.h;
-
-    int entLeft   =           ent->getHitBox().x;
-    int entRight  = entLeft + ent->getHitBox().w;
-    int entTop    =           ent->getHitBox().y;
-    int entBottom = entTop  + ent->getHitBox().h;
-
-    if(ent->isSolid())
+//{{{void Player::handleCollisions()
+void Player::handleCollisions()
+{ 
+    if(!collide("bamboo").empty())
     {
-        if(left < entRight)
-        {
-            _pos.x = _lastPos.x;
-            //_vel.x = 0;
-        }
-        else if(right > entLeft)
-        {
-            _pos.x = _lastPos.x;
-            //_vel.x = 0;
-        }
-        if(top < entBottom)
-        {
-            _pos.y = _lastPos.y;
-            //_vel.y = 0;
-        }
-        else if(bottom > entTop)
-        {
-            _pos.y = _lastPos.y;
-            //_vel.y = 0;
-        }
+        std::cout << "Hit bamboo!" << std::endl;
+    }
 
-        _anim.stop();
+    std::vector<Entity*> collisionList = collide();
+
+    for(auto ent : collisionList)
+    {
+        if(ent->isSolid())
+        {
+            _pos = _lastPos;
+
+            _anim.stop();
+        }
     } 
-    //checkSides();
 }//}}}

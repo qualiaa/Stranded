@@ -18,16 +18,15 @@ public:
     void update();
     void draw(IRender *const render);
 
-    std::vector<Tile*>   GetTiles()    { return _tiles; }
-    std::vector<Entity*> GetEntities() { return _entities; }
+    std::vector<Tile*>&   GetTiles()    { return _tiles; }
+    std::vector<Entity*>& GetEntities() { return _entities; }
 
-    Room(Vectori const& coords, Player *const);
+    Room(Vectori const& coords);
 
     ~Room();
 private:
     Vectori  _coords;
     bool    _currentRoom;
-    Player* _player;
 
     std::vector<Tile*>   _tiles;
     std::vector<Entity*> _entities;

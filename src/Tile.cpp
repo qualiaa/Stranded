@@ -9,6 +9,7 @@ Tile::Tile(Vectorf const& pos, int tileID, unsigned int rotation)
     :Entity(pos * static_cast<float>(TILE_SIZE)), _tilePos(pos)
 {
     _hitbox = { 0, 0, TILE_SIZE, TILE_SIZE };
+    _type = "tile";
 
     std::string texture = "";
 

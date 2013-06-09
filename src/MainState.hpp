@@ -10,15 +10,14 @@ class MainState : public GameState
 {
 public:
     void     changeRoom(Vectori const& coords);
-    
+
     Room const*      currentRoom();
-    
+
     virtual void     handleEvents(SDL_KeyboardEvent *const);
-    virtual void     update();
-    virtual void     draw(IRender *const);
-    
+    virtual void     draw(IRender*);
+
     virtual bool     initialize();
-    
+
     MainState();
     virtual ~MainState();
 private:
@@ -27,12 +26,12 @@ private:
     Room*              _currentRoom;
     Player*            _player;
     bool               _paused;
-    
+
     void checkCollisions(Entity*,Entity*);
     bool loadRooms();
     void pause();
 
     MainState           (MainState const&);
     MainState& operator=(MainState const&);
-}; 
+};
 #endif
