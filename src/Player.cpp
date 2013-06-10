@@ -76,8 +76,8 @@ void Player::update()
     _pos += _vel;
 
 
-    handleCollisions();
     checkSides();
+    handleCollisions();
 }//}}}
 
 //{{{void Player::draw(IRender *const render)
