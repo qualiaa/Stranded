@@ -1,9 +1,9 @@
 //{{{Includes
 #include "MainState.hpp"
 
-#include <iostream>
 #include <algorithm>
 #include "Engine/System/ServiceLocator.hpp"
+#include "Engine/System/Game.hpp"
 #include "Room.hpp"
 #include "Player.hpp"
 #include "Tile.hpp"
@@ -16,29 +16,30 @@
 //}}}
 
 MainState::MainState()
-:_currentRoom(NULL),
- _player(NULL),
- _paused(false) {}
+:currentRoom_(NULL),
+ player_(NULL),
+ paused_(false){}
 
 //{{{MainState::~MainState()
 MainState::~MainState()
 {
-    std::cout << "Unloading World..." << std::endl;
+    Game::Instance()->log("Unloading World...");
 
-    for (unsigned int i = 0; i < _rooms.size(); ++i)
+    for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
-        delete(_rooms[i]);
+        delete(rooms_[i]);
     }
-    _rooms.clear();
+    rooms_.clear();
 
-    delete _player;
+    delete player_;
     _entities.clear();
 }//}}}
 
 //{{{bool MainState::initialize()
 bool MainState::initialize()
 {
-    std::cout << "Loading main state" << std::endl;
+    Game::Instance()->log("Loading main state");
+
     if(!_initialized)
     {
         _initialized = true;
@@ -63,23 +64,23 @@ bool MainState::initialize()
 
         if(!_initialized)
         {
-            std::cout << "Loading MainState failed" << std::endl;
+            Game::Instance()->log("Loading MainState failed");
             return false;
         }
 
         //Create a new player
-        _player = new Player({ static_cast<float>(8*Tile::TILE_SIZE),
+        player_ = new Player({ static_cast<float>(8*Tile::TILE_SIZE),
                                static_cast<float>(8*Tile::TILE_SIZE) },
                              this );
         //addEntity(_player);
 
-        std::cout << "Loading World..." << std::endl;
+        Game::Instance()->log("Loading World...");
         if(!loadRooms())
         {
             _initialized = false;
-            std::cout << "Loading World failed." << std::endl;
+            Game::Instance()->log("Loading World failed.");
         }
-        std::cout << "Loaded world successfully." << std::endl;
+        Game::Instance()->log("Loaded world successfully.");
         changeRoom({0,0});
     }
 
@@ -89,7 +90,7 @@ bool MainState::initialize()
 //{{{bool MainState::loadRooms()
 bool MainState::loadRooms()
 {
-    _rooms.reserve(MAP_WIDTH*MAP_HEIGHT);
+    rooms_.reserve(MAP_WIDTH*MAP_HEIGHT);
 
     Vectori coords({0,0});
 
@@ -100,16 +101,15 @@ bool MainState::loadRooms()
         {
             coords.x = j;
             //_rooms[i*MAP_WIDTH+j] = new Room(coords,_player);
-            _rooms.push_back(new Room(coords));
-            if(!_rooms.back()->load(this))
+            rooms_.push_back(new Room(coords));
+            if(!rooms_.back()->load(this))
             {
-                std::cout << "Loading Room (" << coords.x << ", " << coords.y << ") failed." << std::endl;
+                //TODO Make this work
+                //Game::Instance()->log("Loading Room (", coords.x, ", ", coords.y, ") failed.");
                 return false;
             }
         }
     }
-
-    std::cout << "Created " << _rooms.size() << " rooms" << std::endl;
     return true;
 } //}}}
 
@@ -118,34 +118,34 @@ void MainState::changeRoom(Vectori const& coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 
-    _currentRoom = _rooms[coords.y*MAP_WIDTH + coords.x];
+    currentRoom_ = rooms_[coords.y*MAP_WIDTH + coords.x];
 
-    std::vector<Entity*>& ents = _currentRoom->GetEntities();
-    std::vector<Tile*>& tiles = _currentRoom->GetTiles();
+    std::vector<Entity*>& ents = currentRoom_->GetEntities();
+    std::vector<Tile*>& tiles = currentRoom_->GetTiles();
 
     _entities.clear();
     _entities.reserve(ents.size() + tiles.size());
     _entities.insert(_entities.end(), tiles.begin(), tiles.end());
     _entities.insert(_entities.end(), ents.begin(), ents.end());
-    addEntity(_player);
+    addEntity(player_);
 }//}}}
 
 //{{{Room const* const MainState::currentRoom()
 Room const* MainState::currentRoom()
 {
-    return _currentRoom;
+    return currentRoom_;
 }//}}}
 
 //{{{void MainState::pause()
 void MainState::pause()
 {
-    if(_paused)
+    if(paused_)
     {
-        _paused = false;
+        paused_ = false;
     }
     else
     {
-        _paused = true;
+        paused_ = true;
     }
 }//}}}
 
@@ -158,16 +158,16 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
         {
             //TODO Improve this
             case SDLK_w:
-                _player->move(0, true);
+                player_->move(0, true);
                 break;
             case SDLK_s:
-                _player->move(2, true);
+                player_->move(2, true);
                 break;
             case SDLK_a:
-                _player->move(3, true);
+                player_->move(3, true);
                 break;
             case SDLK_d:
-                _player->move(1, true);
+                player_->move(1, true);
                 break;
             case SDLK_p:
                 pause();
@@ -181,16 +181,16 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
         switch(ke->keysym.sym)
         {
             case SDLK_w:
-                _player->move(0, false);
+                player_->move(0, false);
                 break;
             case SDLK_s:
-                _player->move(2, false);
+                player_->move(2, false);
                 break;
             case SDLK_a:
-                _player->move(3, false);
+                player_->move(3, false);
                 break;
             case SDLK_d:
-                _player->move(1, false);
+                player_->move(1, false);
                 break;
             default:
                 break;

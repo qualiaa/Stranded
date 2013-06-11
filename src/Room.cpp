@@ -1,10 +1,10 @@
 #include "Room.hpp"
 
-#include <iostream>
 #include <sstream>
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include "Engine/System/Game.hpp"
 #include "Engine/Utility/Vector.hpp"
 #include "Player.hpp"
 #include "Object.hpp"
@@ -67,9 +67,9 @@ Room::~Room()
  * What the hell was I thinking? */
 
 //{{{bool Room::load(GameState *const state)
-bool Room::load(GameState *const state)
+bool Room::load(State *const state)
 {
-    std::cout << "Loading Room..." << std::endl;
+    Game::Instance()->log("Loading Room...");
 
     Vectorf tilePos = {0,0};
     int tileID;
@@ -83,14 +83,14 @@ bool Room::load(GameState *const state)
     ss << "res/Room_" << x << "-" << y << ".roo";
     std::string path = ss.str();
 
-    std::cout << path << std::endl;
+    Game::Instance()->log(path);
 
     std::fstream roomFile(path.c_str());
 
     if(roomFile == NULL)
     {
         roomFile.close();
-        std::cout << "File Missing" << std::endl;
+        Game::Instance()->log("File Missing");
         return false;
     }
 
@@ -112,7 +112,7 @@ bool Room::load(GameState *const state)
 
         if(roomFile.fail())
         {
-            std::cout << "Room file flawed." << std::endl;
+            Game::Instance()->log("Room file flawed.");
             roomFile.close();
             return false;
         }

@@ -1,12 +1,12 @@
 #ifndef MAINSTATE_H
 #define	MAINSTATE_H
 
-#include "Engine/System/GameState.hpp"
+#include "Engine/System/State.hpp"
 
 class Player;
 class Room;
 
-class MainState : public GameState
+class MainState : public State
 {
 public:
     void     changeRoom(Vectori const& coords);
@@ -21,11 +21,11 @@ public:
     MainState();
     virtual ~MainState();
 private:
-    std::vector<Room*> _rooms;
+    std::vector<Room*> rooms_;
 
-    Room*              _currentRoom;
-    Player*            _player;
-    bool               _paused;
+    Room*   currentRoom_;
+    Player* player_;
+    bool    paused_;
 
     void checkCollisions(Entity*,Entity*);
     bool loadRooms();

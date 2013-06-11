@@ -1,6 +1,6 @@
 #include "BambooObject.hpp"
 
-#include "Engine/System/GameState.hpp"
+#include "Engine/System/State.hpp"
 #include "Engine/Graphics/Text.hpp"
 #include "Tile.hpp"
 

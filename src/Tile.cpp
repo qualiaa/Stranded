@@ -1,6 +1,5 @@
 #include "Tile.hpp"
 
-#include <iostream>
 #include "Engine/System/ServiceLocator.hpp"
 
 const int Tile::TILE_SIZE = 64;

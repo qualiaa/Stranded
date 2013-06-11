@@ -1,6 +1,5 @@
 #include "Player.hpp"
 
-#include <iostream>
 #include "Engine/System/ServiceLocator.hpp"
 #include "Engine/Graphics/Text.hpp"
 #include "MainState.hpp"
@@ -206,7 +205,7 @@ void Player::handleCollisions()
 { 
     if(!collide("bamboo").empty())
     {
-        std::cout << "Hit bamboo!" << std::endl;
+        //TODO something
     }
 
     std::vector<Entity*> collisionList = collide();

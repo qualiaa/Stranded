@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "Engine/Utility/Vector.hpp"
-#include "Engine/System/GameState.hpp"
+#include "Engine/System/State.hpp"
 #include "Tile.hpp"
 
 class Player;
@@ -12,7 +12,7 @@ class Player;
 class Room
 {
 public:
-    bool load(GameState *const state);
+    bool load(State *const state);
 
     void handleInput(SDL_KeyboardEvent *const);
     void update();

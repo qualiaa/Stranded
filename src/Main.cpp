@@ -7,7 +7,6 @@
  * Created on 17 December 2011, 04:26
  */
 
-#include <iostream>
 #include "Engine/System/Game.hpp"
 #include "MainState.hpp"
 
