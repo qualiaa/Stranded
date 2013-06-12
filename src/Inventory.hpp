@@ -21,6 +21,6 @@ public:
     void addItem(Items);
     //void draw();
 private:
-    int _items[NUM_ITEMS];
+    int items_[NUM_ITEMS];
 }; 
 #endif

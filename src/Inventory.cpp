@@ -4,7 +4,7 @@ Inventory::Inventory(GameState *state)
 {
     for (int i = 0; i < NUM_ITEMS; i++)
     {
-        _items[i] = 0;
+        items_[i] = 0;
     }
 }
 
@@ -15,7 +15,7 @@ Inventory::~Inventory()
 
 void Inventory::addItem(Items item)
 {
-    _items[item]++;
+    items_[item]++;
 }
 
 /*
@@ -23,7 +23,7 @@ void Inventory::draw()
 {
     for (int i = 0; i < NUM_ITEMS; i++)
     {
-        if(_items[i] != 0)
+        if(items_[i] != 0)
         {
             switch(i)
             {

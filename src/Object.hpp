@@ -9,7 +9,7 @@ class Object : public Entity
 {
 public:
     virtual void update() {}
-    
+
     Object(Vectorf const& pos, char const* texture);
     virtual ~Object();
 protected:

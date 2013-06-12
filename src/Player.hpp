@@ -16,14 +16,14 @@ public:
     Player(Vectorf const& pos, MainState*);
 private:
     void handleCollisions();
-    Animation    _anim;
-    unsigned int _rotation;
-    Vectori      _mapPos;
-    MainState*   _mState;
+    Animation    anim_;
+    unsigned int rotation_;
+    Vectori      mapPos_;
+    MainState*   mState_;
 
-    Vectorf      _vel;
-    Vectorf      _lastPos;
-    float      _speed;
+    Vectorf      vel_;
+    Vectorf      lastPos_;
+    float      speed_;
     void checkSides();
 };
 #endif

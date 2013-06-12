@@ -19,7 +19,6 @@
 #define ROOM_SIZE 10
 
 //TODO Replace this
-//{{{enum EntityType
 enum EntityType
 {
     NULL_ENTITY = 0,
@@ -43,60 +42,58 @@ enum EntityType
     TILE_SAND = 300,
     TILE_SAND_WATER = 400,
     TILE_WATER = 500,
-};//}}}
+};
 
 Room::Room(Vectori const& coords)
-:_coords(coords) { }
+:coords_(coords) { }
 
-//{{{Room::~Room()
 Room::~Room()
 {
     //TODO this will totally segfault right now
-    for(auto tile : _tiles)
+    for(auto tile : tiles_)
     {
         delete(tile);
     }
 
-    for(auto ent : _entities)
+    for(auto ent : entities_)
     {
         delete(ent);
     }
-}//}}}
+}
 
 /* Dear Christ this is a nightmare.
  * What the hell was I thinking? */
 
-//{{{bool Room::load(GameState *const state)
 bool Room::load(State *const state)
 {
-    Game::Instance()->log("Loading Room...");
+    Game::Instance()->log() << "Loading Room...";
 
     Vectorf tilePos = {0,0};
     int tileID;
     int objectID;
     int rotation;
-    int x = (int)_coords.x;
-    int y = (int)_coords.y;
+    int x = (int)coords_.x;
+    int y = (int)coords_.y;
 
     std::stringstream ss;
 
     ss << "res/Room_" << x << "-" << y << ".roo";
     std::string path = ss.str();
 
-    Game::Instance()->log(path);
+    Game::Instance()->log() << path;
 
     std::fstream roomFile(path.c_str());
 
     if(roomFile == NULL)
     {
         roomFile.close();
-        Game::Instance()->log("File Missing");
+        Game::Instance()->log() << "File Missing";
         return false;
     }
 
     float float1;
 
-    _tiles.reserve( ROOM_SIZE*ROOM_SIZE );
+    tiles_.reserve( ROOM_SIZE*ROOM_SIZE );
 
     Object* obj = NULL;
 
@@ -112,11 +109,11 @@ bool Room::load(State *const state)
 
         if(roomFile.fail())
         {
-            Game::Instance()->log("Room file flawed.");
+            Game::Instance()->log() << "Room file flawed.";
             roomFile.close();
             return false;
         }
-        _tiles.push_back(new Tile(tilePos, tileID, rotation));
+        tiles_.push_back(new Tile(tilePos, tileID, rotation));
 
         Vectorf objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
 
@@ -153,47 +150,45 @@ bool Room::load(State *const state)
         {
             obj->setPos( objPos );
             obj->setState( state );
-            _entities.push_back(obj);
+            entities_.push_back(obj);
         }
     }
 
     roomFile.close();
 
     return true;
-}//}}}
+}
 
 void Room::handleInput(SDL_KeyboardEvent *const ke) { }
 
-//{{{void Room::update()
 void Room::update()
 {
-    for (unsigned int i = 0; i < _tiles.size(); i++)
+    for (unsigned int i = 0; i < tiles_.size(); i++)
     {
-        _tiles[i]->update();
+        tiles_[i]->update();
     }
-    for (unsigned int i = 0; i < _entities.size(); i++)
+    for (unsigned int i = 0; i < entities_.size(); i++)
     {
-        _entities[i]->update();
+        entities_[i]->update();
     }
-}//}}}
+}
 
-//{{{void Room::draw(IRender *const render)
 void Room::draw(IRender *const render)
 {
-    for (unsigned int i = 0; i < _tiles.size(); i++)
+    for (unsigned int i = 0; i < tiles_.size(); i++)
     {
-        _tiles[i]->draw(render);
+        tiles_[i]->draw(render);
     }
 
     //TODO Get screen height from settings class
     for(unsigned int i = 0; i < 640; i++)
     {
-        for(auto entity : _entities )
+        for(auto entity : entities_ )
         {
             if(entity->getPos().y + entity->getHitBox().y == ( int ) i)
             {
                 entity->draw(render);
             }
-        } 
+        }
     }
-}//}}}
+}

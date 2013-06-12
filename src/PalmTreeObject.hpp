@@ -10,5 +10,5 @@ public:
     virtual ~PalmTreeObject();
 private:
 
-}; 
-#endif 
+};
+#endif

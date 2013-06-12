@@ -17,7 +17,7 @@ MainState::MainState()
     paused_(false)
 {
     bool initialized = true;
-    Game::Instance()->log("Loading main state");
+    Game::Instance()->log() << "Loading main state";
 
     /* Load graphics */
     IRender* render = ServiceLocator::getRender();
@@ -41,13 +41,13 @@ MainState::MainState()
     player_ = new Player({ static_cast<float>(8*Tile::TILE_SIZE),
                            static_cast<float>(8*Tile::TILE_SIZE) },
                            this);
-    //addEntity(_player);
+    //addEntity(player_);
 
-    Game::Instance()->log("Loading World...");
+    Game::Instance()->log() << "Loading World...";
     if(!loadRooms())
     {
         initialized = false;
-        Game::Instance()->log("Loading World failed.");
+        Game::Instance()->log() << "Loading World failed.";
     }
 
     if(!initialized)
@@ -59,7 +59,7 @@ MainState::MainState()
 
 MainState::~MainState()
 {
-    Game::Instance()->log("Unloading World...");
+    Game::Instance()->log() << "Unloading World...";
 
     for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
@@ -68,7 +68,7 @@ MainState::~MainState()
     rooms_.clear();
 
     delete player_;
-    _entities.clear();
+    entities_.clear();
 }
 
 bool MainState::loadRooms()
@@ -83,12 +83,11 @@ bool MainState::loadRooms()
         for(int j = 0; j < MAP_WIDTH; j++)
         {
             coords.x = j;
-            //_rooms[i*MAP_WIDTH+j] = new Room(coords,_player);
+            //rooms_[i*MAP_WIDTH+j] = new Room(coords,player_);
             rooms_.push_back(new Room(coords));
             if(!rooms_.back()->load(this))
             {
-                //TODO Make this work
-                //Game::Instance()->log("Loading Room (", coords.x, ", ", coords.y, ") failed.");
+                Game::Instance()->log() << "Loading Room (" << coords.x << ", " << coords.y << ") failed.";
                 return false;
             }
         }
@@ -105,17 +104,17 @@ void MainState::changeRoom(Vectori const& coords)
     std::vector<Entity*>& ents = currentRoom_->GetEntities();
     std::vector<Tile*>& tiles = currentRoom_->GetTiles();
 
-    _entities.clear();
-    _entities.reserve(ents.size() + tiles.size());
-    _entities.insert(_entities.end(), tiles.begin(), tiles.end());
-    _entities.insert(_entities.end(), ents.begin(), ents.end());
+    entities_.clear();
+    entities_.reserve(ents.size() + tiles.size());
+    entities_.insert(entities_.end(), tiles.begin(), tiles.end());
+    entities_.insert(entities_.end(), ents.begin(), ents.end());
     addEntity(player_);
 }
 
 Room const* MainState::currentRoom()
 {
     return currentRoom_;
-} 
+}
 
 void MainState::pause()
 {
@@ -179,17 +178,17 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
 
 /*void MainState::update()
 {
-    if(!_paused)
+    if(!paused_)
     {
-        _currentRoom->update();
+        currentRoom_->update();
 
-        for(unsigned int i = 0; i < _currentRoom->GetTiles().size(); ++i)
+        for(unsigned int i = 0; i < currentRoom_->GetTiles().size(); ++i)
         {
-            checkCollisions(_player,_currentRoom->GetTiles()[i]);
+            checkCollisions(player_,currentRoom_->GetTiles()[i]);
         }
-        for(unsigned int i = 0; i < _currentRoom->GetEntities().size(); ++i)
+        for(unsigned int i = 0; i < currentRoom_->GetEntities().size(); ++i)
         {
-            checkCollisions(_player,_currentRoom->GetEntities()[i]);
+            checkCollisions(player_,currentRoom_->GetEntities()[i]);
         }
 
         //GameState::update();
@@ -199,7 +198,7 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
 void MainState::draw(IRender* render)
 {
     //Find first non-tile element in (hopefully) sorted list
-    auto firstEnt = std::partition_point(_entities.begin(), _entities.end(),
+    auto firstEnt = std::partition_point(entities_.begin(), entities_.end(),
                                          [](Entity* ent)
     {
         return ent->getType() == "tile";
@@ -212,12 +211,12 @@ void MainState::draw(IRender* render)
     };
 
     //Sort all non-tile elements by bottom edge of hitbox
-    if(!std::is_sorted(firstEnt, _entities.end(), depthTest))
+    if(!std::is_sorted(firstEnt, entities_.end(), depthTest))
     {
-        std::sort(firstEnt, _entities.end(), depthTest);
+        std::sort(firstEnt, entities_.end(), depthTest);
     }
 
-    for(auto entity : _entities )
+    for(auto entity : entities_ )
     {
         entity->draw(render);
     }

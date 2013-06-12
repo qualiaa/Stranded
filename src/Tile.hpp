@@ -8,11 +8,11 @@ class Tile : public Entity
 {
 public:
     virtual void draw(IRender *const);
-    
+
     Tile (Vectorf const& pos, int tileID, unsigned int rotation);
 
     static const int TILE_SIZE;
 private:
-    Animation _tile;
-}; 
+    Animation tile_;
+};
 #endif

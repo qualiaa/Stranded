@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   SmallTreeObject.cpp
  * Author: jamie
- * 
+ *
  * Created on 05 January 2012, 23:28
  */
 
@@ -11,10 +11,10 @@
 SmallTreeObject::SmallTreeObject( Vectorf const& pos )
 :Object( pos, "smalltree" )
 {
-    _hitbox = { 18, Tile::TILE_SIZE - 8, 28, 9 };
-    _hitbox.y -= _hitbox.h;
-    _solid = true;
+    hitbox_ = { 18, Tile::TILE_SIZE - 8, 28, 9 };
+    hitbox_.y -= hitbox_.h;
+    solid_ = true;
 }
 
 SmallTreeObject::~SmallTreeObject() {
-} 
+}

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   SmallRockObject.hpp
  * Author: jamie
  *

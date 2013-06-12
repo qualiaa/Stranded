@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   SmallRockObject.cpp
  * Author: jamie
- * 
+ *
  * Created on 11 January 2012, 15:21
  */
 
@@ -10,8 +10,8 @@
 SmallRockObject::SmallRockObject(Vectorf const& pos )
 :Object( pos, "smallrock" )
 {
-    _hitbox = { 12, 30, 22, 18 };
-    _solid = true;
+    hitbox_ = { 12, 30, 22, 18 };
+    solid_ = true;
 }
 
 SmallRockObject::~SmallRockObject()

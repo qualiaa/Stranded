@@ -6,38 +6,38 @@
 
 BambooObject::BambooObject(Vectorf const& pos)
 :Object( pos, "bamboo" ),
- _anim(_texture, { static_cast<float>(Tile::TILE_SIZE), 
+ anim_(texture_, { static_cast<float>(Tile::TILE_SIZE), 
                    static_cast<float>(Tile::TILE_SIZE) })
 {
-    _hitbox.x = 14;
-    _hitbox.w = 24;
-    _hitbox.y = 42;
-    _hitbox.h = 8;
-    _solid = true;
-    _type = "bamboo";
+    hitbox_.x = 14;
+    hitbox_.w = 24;
+    hitbox_.y = 42;
+    hitbox_.h = 8;
+    solid_ = true;
+    type_ = "bamboo";
 
-    _anim.add("normal", {0}, 0);
-    _anim.add("taken",  {1}, 0);
-    _anim.select("normal",false); 
+    anim_.add("normal", {0}, 0);
+    anim_.add("taken",  {1}, 0);
+    anim_.select("normal",false); 
 }
 
 void BambooObject::update()
 {
     if(!collide("player").empty())
     {
-        _anim.select("taken",false);
-        _type  = "bamboo_taken";
-        if(_solid)
+        anim_.select("taken",false);
+        type_  = "bamboo_taken";
+        if(solid_)
         {
-            _state->addEntity(new Text({50,600},
+            state_->addEntity(new Text({50,600},
                                        "You found some bamboo!",
                                        1000));
-            _solid = false;
+            solid_ = false;
         }
     }
 }
 
 void BambooObject::draw(IRender* render)
 {
-    _anim.draw(render, _pos);
+    anim_.draw(render, pos_);
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   SmallTreeObject.hpp
  * Author: jamie
  *
