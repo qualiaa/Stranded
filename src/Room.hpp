@@ -26,7 +26,6 @@ public:
     ~Room();
 private:
     Vectori  _coords;
-    bool    _currentRoom;
 
     std::vector<Tile*>   _tiles;
     std::vector<Entity*> _entities;

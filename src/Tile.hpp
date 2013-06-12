@@ -14,6 +14,5 @@ public:
     static const int TILE_SIZE;
 private:
     Animation _tile;
-    Vectorf    _tilePos; 
 }; 
 #endif

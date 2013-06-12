@@ -46,7 +46,7 @@ enum EntityType
 };//}}}
 
 Room::Room(Vectori const& coords)
-:_coords(coords), _currentRoom(false) { }
+:_coords(coords) { }
 
 //{{{Room::~Room()
 Room::~Room()

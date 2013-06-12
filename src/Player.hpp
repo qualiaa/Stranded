@@ -18,7 +18,6 @@ private:
     void handleCollisions();
     Animation    _anim;
     unsigned int _rotation;
-    Rect         _lastHitBox;
     Vectori      _mapPos;
     MainState*   _mState;
 
