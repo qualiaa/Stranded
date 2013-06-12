@@ -23,7 +23,7 @@ MainState::MainState()
 //{{{MainState::~MainState()
 MainState::~MainState()
 {
-    Game::Instance()->log("Unloading World...");
+    Game::Instance()->log() << "Unloading World...";
 
     for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
@@ -38,7 +38,7 @@ MainState::~MainState()
 //{{{bool MainState::initialize()
 bool MainState::initialize()
 {
-    Game::Instance()->log("Loading main state");
+    Game::Instance()->log() << "Loading main state";
 
     if(!_initialized)
     {
@@ -64,7 +64,7 @@ bool MainState::initialize()
 
         if(!_initialized)
         {
-            Game::Instance()->log("Loading MainState failed");
+            Game::Instance()->log() << "Loading MainState failed";
             return false;
         }
 
@@ -74,13 +74,13 @@ bool MainState::initialize()
                              this );
         //addEntity(_player);
 
-        Game::Instance()->log("Loading World...");
+        Game::Instance()->log() << "Loading World...";
         if(!loadRooms())
         {
             _initialized = false;
-            Game::Instance()->log("Loading World failed.");
+            Game::Instance()->log() << "Loading World failed.";
         }
-        Game::Instance()->log("Loaded world successfully.");
+        Game::Instance()->log() << "Loaded world successfully.";
         changeRoom({0,0});
     }
 
