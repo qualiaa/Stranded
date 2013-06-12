@@ -14,7 +14,7 @@ int main()
 {
     if( Game::Instance()->initialize() )
     {
-        Game::Instance()->addState(new MainState()); 
+        Game::Instance()->makeState<MainState>();
         Game::Instance()->run();
     }
 

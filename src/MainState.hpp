@@ -16,8 +16,6 @@ public:
     virtual void     handleEvents(SDL_KeyboardEvent *const);
     virtual void     draw(IRender*);
 
-    virtual bool     initialize();
-
     MainState();
     virtual ~MainState();
 private:

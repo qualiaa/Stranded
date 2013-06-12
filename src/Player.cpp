@@ -5,7 +5,6 @@
 #include "MainState.hpp"
 #include "Room.hpp"
 
-//{{{Player::Player(Vectorf const& pos, MainState* mState)
 Player::Player(Vectorf const& pos, MainState* mState)
     :Entity(pos),
     _rotation(1),
@@ -24,9 +23,8 @@ Player::Player(Vectorf const& pos, MainState* mState)
     _anim.add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100);
     _anim.add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100);
     _anim.select("up");
-}//}}}
+}
 
-//{{{void Player::update()
 void Player::update()
 {
     //Mover::update();
@@ -56,10 +54,10 @@ void Player::update()
     {
         switch( _rotation )
         {
-            case 0: _anim.select("up");    break; 
-            case 1: _anim.select("right"); break; 
-            case 2: _anim.select("down");  break; 
-            case 3: _anim.select("left");  break; 
+            case 0: _anim.select("up");    break;
+            case 1: _anim.select("right"); break;
+            case 2: _anim.select("down");  break;
+            case 3: _anim.select("left");  break;
             default: break;
         }
 
@@ -71,21 +69,19 @@ void Player::update()
     }
 
     _lastPos = _pos;
-    
+
     _pos += _vel;
 
 
     checkSides();
     handleCollisions();
-}//}}}
+}
 
-//{{{void Player::draw(IRender *const render)
 void Player::draw(IRender *const render)
-{ 
+{
     _anim.draw(render, _pos);
-}//}}}
+}
 
-//{{{void Player::move(int rotation, bool moving)
 void Player::move(int rotation, bool moving)
 {
     if(moving)
@@ -128,10 +124,9 @@ void Player::move(int rotation, bool moving)
                 break;
         }
     }
-}//}}}
+}
 
 //TODO Remove magic numbers
-//{{{void Player::checkSides()
 void Player::checkSides()
 {
     if(_pos.x + _hitbox.x < 0)
@@ -198,11 +193,10 @@ void Player::checkSides()
             //_vel.y = 0;
         }
     }
-}//}}}
+}
 
-//{{{void Player::handleCollisions()
 void Player::handleCollisions()
-{ 
+{
     if(!collide("bamboo").empty())
     {
         //TODO something
@@ -218,5 +212,5 @@ void Player::handleCollisions()
 
             _anim.stop();
         }
-    } 
-}//}}}
+    }
+}

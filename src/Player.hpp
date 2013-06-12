@@ -12,7 +12,7 @@ public:
     void move(int rotation, bool moving);
     void update();
     virtual void draw( IRender *const );
-    
+
     Player(Vectorf const& pos, MainState*);
 private:
     void handleCollisions();
