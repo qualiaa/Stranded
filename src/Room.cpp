@@ -69,7 +69,7 @@ Room::~Room()
 //{{{bool Room::load(GameState *const state)
 bool Room::load(State *const state)
 {
-    Game::Instance()->log("Loading Room...");
+    Game::Instance()->log() << "Loading Room...";
 
     Vectorf tilePos = {0,0};
     int tileID;
@@ -83,14 +83,14 @@ bool Room::load(State *const state)
     ss << "res/Room_" << x << "-" << y << ".roo";
     std::string path = ss.str();
 
-    Game::Instance()->log(path);
+    Game::Instance()->log() << path;
 
     std::fstream roomFile(path.c_str());
 
     if(roomFile == NULL)
     {
         roomFile.close();
-        Game::Instance()->log("File Missing");
+        Game::Instance()->log() << "File Missing";
         return false;
     }
 
@@ -112,7 +112,7 @@ bool Room::load(State *const state)
 
         if(roomFile.fail())
         {
-            Game::Instance()->log("Room file flawed.");
+            Game::Instance()->log() << "Room file flawed.";
             roomFile.close();
             return false;
         }
