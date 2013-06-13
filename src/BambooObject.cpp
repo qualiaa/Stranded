@@ -29,9 +29,7 @@ void BambooObject::update()
         type_  = "bamboo_taken";
         if(solid_)
         {
-            state_->addEntity(new Text({50,600},
-                                       "You found some bamboo!",
-                                       1000));
+            state_->makeEntity<Text>(Vectorf{50,600}, "You found some bamboo!", 1000);
             solid_ = false;
         }
     }

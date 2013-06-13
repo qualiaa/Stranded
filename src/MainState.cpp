@@ -13,53 +13,47 @@
 
 MainState::MainState()
    :currentRoom_(NULL),
-    player_(NULL),
     paused_(false)
 {
     bool initialized = true;
-    Game::Instance()->log() << "Loading main state";
+    Game::Instance()->log() << "Loading main state" << std::endl;
 
     /* Load graphics */
     IRender* render = ServiceLocator::getRender();
 
-    initialized |= !render->loadImage( "font"      , "res/Font.png"           );
-    initialized |= !render->loadImage( "fontsmall" , "res/FontSmall.png"      );
-    initialized |= !render->loadImage( "grass"     , "res/GrassTiles.png"     );
-    initialized |= !render->loadImage( "sand"      , "res/SandTiles.png"      );
-    initialized |= !render->loadImage( "sandwater" , "res/SandWaterTiles.png" );
-    initialized |= !render->loadImage( "water"     , "res/WaterTiles.png"     );
-    initialized |= !render->loadImage( "player"    , "res/Player.png"         );
-    initialized |= !render->loadImage( "smalltree" , "res/SmallTree.png"      );
-    initialized |= !render->loadImage( "largetree" , "res/LargeTree.png"      );
-    initialized |= !render->loadImage( "oceanrock" , "res/OceanRock.png"      );
-    initialized |= !render->loadImage( "bamboo"    , "res/Bamboo.png"         );
-    initialized |= !render->loadImage( "palmtree"  , "res/PalmTree.png"       );
-    initialized |= !render->loadImage( "smallrock" , "res/SmallRock.png"      );
-    initialized |= !render->loadImage( "largerock" , "res/LargeRock.png"      );
-
-    //Create a new player
-    player_ = new Player({ static_cast<float>(8*Tile::TILE_SIZE),
-                           static_cast<float>(8*Tile::TILE_SIZE) },
-                           this);
-    //addEntity(player_);
-
-    Game::Instance()->log() << "Loading World...";
-    if(!loadRooms())
-    {
-        initialized = false;
-        Game::Instance()->log() << "Loading World failed.";
-    }
+    initialized &= render->loadImage( "font"      , "res/Font.png"           );
+    initialized &= render->loadImage( "fontsmall" , "res/FontSmall.png"      );
+    initialized &= render->loadImage( "grass"     , "res/GrassTiles.png"     );
+    initialized &= render->loadImage( "sand"      , "res/SandTiles.png"      );
+    initialized &= render->loadImage( "sandwater" , "res/SandWaterTiles.png" );
+    initialized &= render->loadImage( "water"     , "res/WaterTiles.png"     );
+    initialized &= render->loadImage( "player"    , "res/Player.png"         );
+    initialized &= render->loadImage( "smalltree" , "res/SmallTree.png"      );
+    initialized &= render->loadImage( "largetree" , "res/LargeTree.png"      );
+    initialized &= render->loadImage( "oceanrock" , "res/OceanRock.png"      );
+    initialized &= render->loadImage( "bamboo"    , "res/Bamboo.png"         );
+    initialized &= render->loadImage( "palmtree"  , "res/PalmTree.png"       );
+    initialized &= render->loadImage( "smallrock" , "res/SmallRock.png"      );
+    initialized &= render->loadImage( "largerock" , "res/LargeRock.png"      );
 
     if(!initialized)
     {
-        throw std::runtime_error("Loading MainState failed");
+        throw std::runtime_error("Loading images failed");
     }
-    changeRoom({0,0});
+
+    Game::Instance()->log() << "Loading World..." << std::endl;
+
+    loadRooms();
+    currentRoom_ = rooms_[0];
+    player_ = new Player({ static_cast<float>(8*Tile::TILE_SIZE),
+                           static_cast<float>(8*Tile::TILE_SIZE) },
+                           this);
+    currentRoom_->insertEntity(std::unique_ptr<Player>(player_));
 }
 
 MainState::~MainState()
 {
-    Game::Instance()->log() << "Unloading World...";
+    Game::Instance()->log() << "Unloading World..." << std::endl;
 
     for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
@@ -67,11 +61,10 @@ MainState::~MainState()
     }
     rooms_.clear();
 
-    delete player_;
     entities_.clear();
 }
 
-bool MainState::loadRooms()
+void MainState::loadRooms()
 {
     rooms_.reserve(MAP_WIDTH*MAP_HEIGHT);
 
@@ -85,30 +78,19 @@ bool MainState::loadRooms()
             coords.x = j;
             //rooms_[i*MAP_WIDTH+j] = new Room(coords,player_);
             rooms_.push_back(new Room(coords));
-            if(!rooms_.back()->load(this))
-            {
-                Game::Instance()->log() << "Loading Room (" << coords.x << ", " << coords.y << ") failed.";
-                return false;
-            }
         }
     }
-    return true;
 }
 
 void MainState::changeRoom(Vectori const& coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 
-    currentRoom_ = rooms_[coords.y*MAP_WIDTH + coords.x];
+    std::unique_ptr<Entity> playerPtr = currentRoom_->releaseEntity(player_);
 
-    std::vector<Entity*>& ents = currentRoom_->GetEntities();
-    std::vector<Tile*>& tiles = currentRoom_->GetTiles();
+    currentRoom_ = rooms_[coords.y*MAP_WIDTH + coords.x]; 
 
-    entities_.clear();
-    entities_.reserve(ents.size() + tiles.size());
-    entities_.insert(entities_.end(), tiles.begin(), tiles.end());
-    entities_.insert(entities_.end(), ents.begin(), ents.end());
-    addEntity(player_);
+    currentRoom_->insertEntity(std::move(playerPtr));
 }
 
 Room const* MainState::currentRoom()
@@ -134,8 +116,8 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
     {
         switch(ke->keysym.sym)
         {
-            //TODO Improve this
             case SDLK_w:
+                Game::Instance()->log() << "Moving player" << std::endl;
                 player_->move(0, true);
                 break;
             case SDLK_s:
@@ -176,27 +158,17 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
     }
 }
 
-/*void MainState::update()
+void MainState::update()
 {
     if(!paused_)
     {
-        currentRoom_->update();
-
-        for(unsigned int i = 0; i < currentRoom_->GetTiles().size(); ++i)
-        {
-            checkCollisions(player_,currentRoom_->GetTiles()[i]);
-        }
-        for(unsigned int i = 0; i < currentRoom_->GetEntities().size(); ++i)
-        {
-            checkCollisions(player_,currentRoom_->GetEntities()[i]);
-        }
-
-        //GameState::update();
+        currentRoom_->update(); 
     }
-}*/
+}
 
 void MainState::draw(IRender* render)
 {
+    /*
     //Find first non-tile element in (hopefully) sorted list
     auto firstEnt = std::partition_point(entities_.begin(), entities_.end(),
                                          [](Entity* ent)
@@ -219,5 +191,6 @@ void MainState::draw(IRender* render)
     for(auto entity : entities_ )
     {
         entity->draw(render);
-    }
+    }*/
+    currentRoom_->draw(render);
 }

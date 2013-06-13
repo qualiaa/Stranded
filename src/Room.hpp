@@ -3,31 +3,32 @@
 #define	ROOM_H
 
 #include <vector>
+#include <memory>
 #include "Engine/Utility/Vector.hpp"
 #include "Engine/System/State.hpp"
+#include "Player.hpp"
 #include "Tile.hpp"
 
 class Player;
 
-class Room
+class Room : public State
 {
 public:
-    bool load(State *const state);
+    //bool load(State *const state);
 
-    void handleInput(SDL_KeyboardEvent *const);
-    void update();
-    void draw(IRender *const render);
+    //void handleInput(SDL_KeyboardEvent *const);
+    //void update();
+    void draw(IRender *const render); 
 
-    std::vector<Tile*>&   GetTiles()    { return tiles_; }
-    std::vector<Entity*>& GetEntities() { return entities_; }
+    static const int ROOM_SIZE = 10;
+
+    //std::vector<std::unique_ptr<Tile>>&   GetTiles()    { return tiles_; }
+    //std::vector<std::unique_ptr<Entity>>& GetEntities() { return entities_; }
 
     Room(Vectori const& coords);
 
     ~Room();
 private:
     Vectori  coords_;
-
-    std::vector<Tile*>   tiles_;
-    std::vector<Entity*> entities_;
 };
 #endif

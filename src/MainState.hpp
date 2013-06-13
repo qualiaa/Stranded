@@ -11,10 +11,11 @@ class MainState : public State
 public:
     void     changeRoom(Vectori const& coords);
 
-    Room const*      currentRoom();
+    Room const* currentRoom();
 
-    virtual void     handleEvents(SDL_KeyboardEvent *const);
-    virtual void     draw(IRender*);
+    virtual void handleEvents(SDL_KeyboardEvent *const) override;
+    virtual void update() override;
+    virtual void draw(IRender*) override;
 
     MainState();
     virtual ~MainState();
@@ -26,7 +27,7 @@ private:
     bool    paused_;
 
     void checkCollisions(Entity*,Entity*);
-    bool loadRooms();
+    void loadRooms();
     void pause();
 
     MainState           (MainState const&);
