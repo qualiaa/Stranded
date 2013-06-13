@@ -95,7 +95,7 @@ Room::Room(Vectori const& coords)
             roomFile.close();
             throw std::runtime_error("Room file flawed");
         }
-        tiles.push_back(std::unique_ptr<Tile>(new Tile(tilePos, tileID, rotation)));
+        tiles.emplace_back(new Tile(tilePos, tileID, rotation));
 
         Vectorf objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
 
@@ -124,15 +124,15 @@ Room::Room(Vectori const& coords)
                 break;
             default:
                 //obj = new Object( {}, "" );
-                obj = NULL;
+                obj = nullptr;
                 break;
         }
 
-        if(obj != NULL)
+        if(obj != nullptr)
         {
             obj->setPos(objPos);
             obj->setState(this);
-            entities.push_back(std::unique_ptr<Entity>(obj));
+            entities.emplace_back(obj);
         }
     }
 
