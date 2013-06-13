@@ -12,6 +12,7 @@ endif(NOT MSVC)
 
 set(CMAKE_BUILD_TYPE Debug)
 
+option(Debug "Debug mode" ON)
 if(NOT MSVC)
     option(Warn "Compile using all warnings" ON)
 endif(NOT MSVC)
@@ -19,6 +20,10 @@ endif(NOT MSVC)
 if(Warn)
     set (CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS}")
 endif(Warn)
+
+if(Debug)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEBUG")
+endif(Debug)
 
 set (CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}" )
 
