@@ -45,7 +45,7 @@ enum EntityType
 Room::Room(Vectori const& coords)
 :coords_(coords)
 {
-    //Game::Instance()->log() << "Loading Room...";
+    //Game::log() << "Loading Room...";
 
     std::vector<std::unique_ptr<Tile>> tiles;
     std::vector<std::unique_ptr<Entity>> entities;
@@ -61,14 +61,14 @@ Room::Room(Vectori const& coords)
     ss << "res/Room_" << x << "-" << y << ".roo";
     std::string path = ss.str();
 
-    Game::Instance()->log() << path << std::endl;
+    Game::log() << path << std::endl;
 
     std::fstream roomFile(path.c_str());
 
     if(roomFile == NULL)
     {
         roomFile.close();
-        //Game::Instance()->log() << "File Missing";
+        //Game::log() << "File Missing";
         throw std::runtime_error("Room file missing");
     }
 
@@ -91,7 +91,7 @@ Room::Room(Vectori const& coords)
 
         if(roomFile.fail())
         {
-            //Game::Instance()->log() << "Room file flawed." << std::endl;
+            //Game::log() << "Room file flawed." << std::endl;
             roomFile.close();
             throw std::runtime_error("Room file flawed");
         }
@@ -155,7 +155,7 @@ Room::~Room() { }
 
 /*bool Room::load(State *const state)
 {
-    Game::Instance()->log() << "Loading Room...";
+    Game::log() << "Loading Room...";
 
     Vectorf tilePos = {0,0};
     int tileID;
@@ -169,14 +169,14 @@ Room::~Room() { }
     ss << "res/Room_" << x << "-" << y << ".roo";
     std::string path = ss.str();
 
-    Game::Instance()->log() << path;
+    Game::log() << path;
 
     std::fstream roomFile(path.c_str());
 
     if(roomFile == NULL)
     {
         roomFile.close();
-        Game::Instance()->log() << "File Missing";
+        Game::log() << "File Missing";
         return false;
     }
 
@@ -198,7 +198,7 @@ Room::~Room() { }
 
         if(roomFile.fail())
         {
-            Game::Instance()->log() << "Room file flawed.";
+            Game::log() << "Room file flawed.";
             roomFile.close();
             return false;
         }

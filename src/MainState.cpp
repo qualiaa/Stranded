@@ -16,7 +16,7 @@ MainState::MainState()
     paused_(false)
 {
     bool initialized = true;
-    Game::Instance()->log() << "Loading main state" << std::endl;
+    Game::log() << "Loading main state" << std::endl;
 
     /* Load graphics */
     IRender* render = ServiceLocator::getRender();
@@ -41,7 +41,7 @@ MainState::MainState()
         throw std::runtime_error("Loading images failed");
     }
 
-    Game::Instance()->log() << "Loading World..." << std::endl;
+    Game::log() << "Loading World..." << std::endl;
 
     loadRooms();
     currentRoom_ = rooms_[0];
@@ -53,7 +53,7 @@ MainState::MainState()
 
 MainState::~MainState()
 {
-    Game::Instance()->log() << "Unloading World..." << std::endl;
+    Game::log() << "Unloading World..." << std::endl;
 
     for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
@@ -117,7 +117,6 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
         switch(ke->keysym.sym)
         {
             case SDLK_w:
-                Game::Instance()->log() << "Moving player" << std::endl;
                 player_->move(0, true);
                 break;
             case SDLK_s:

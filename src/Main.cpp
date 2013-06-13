@@ -12,13 +12,12 @@
 
 int main()
 {
-    if( Game::Instance()->initialize() )
+    if(Game::initialize())
     {
-        Game::Instance()->makeState<MainState>();
-        Game::Instance()->run();
+        Game::makeState<MainState>();
+        Game::run();
+        Game::close();
     }
-
-    delete(Game::Instance());
 
     return 0;
 }
