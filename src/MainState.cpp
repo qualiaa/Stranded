@@ -45,10 +45,9 @@ MainState::MainState()
 
     loadRooms();
     currentRoom_ = rooms_[0];
-    player_ = new Player({ static_cast<float>(8*Tile::TILE_SIZE),
-                           static_cast<float>(8*Tile::TILE_SIZE) },
-                           this);
-    currentRoom_->insertEntity(std::unique_ptr<Player>(player_));
+    const float playerPos = 8*Tile::TILE_SIZE;
+    player_ = currentRoom_->makeEntity<Player>(Vectorf{playerPos, playerPos},
+                                               this);
 }
 
 MainState::~MainState()
@@ -86,11 +85,10 @@ void MainState::changeRoom(Vectori const& coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 
-    std::unique_ptr<Entity> playerPtr = currentRoom_->releaseEntity(player_);
-
+    Room* lastRoom = currentRoom_;
     currentRoom_ = rooms_[coords.y*MAP_WIDTH + coords.x]; 
 
-    currentRoom_->insertEntity(std::move(playerPtr));
+    lastRoom->moveEntity(currentRoom_, player_);
 }
 
 Room const* MainState::currentRoom()
