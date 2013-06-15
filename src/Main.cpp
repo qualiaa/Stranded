@@ -12,7 +12,7 @@
 
 int main()
 {
-    if(Game::initialize())
+    if(Game::initialize({640, 640}))
     {
         Game::makeState<MainState>();
         Game::run();
