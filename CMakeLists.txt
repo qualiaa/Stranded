@@ -4,7 +4,11 @@ project(Stranded)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
-include(cotire)
+
+option(Cotire "Use Cotire" ON)
+if(Cotire)
+    include(cotire)
+endif(Cotire)
 
 if (NOT MSVC)
     set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
