@@ -45,7 +45,7 @@ enum EntityType
 Room::Room(Vectori const& coords)
 :coords_(coords)
 {
-    //Game::log() << "Loading Room...";
+    //Game::log << "Loading Room..." << std::endl;
 
     std::vector<std::unique_ptr<Tile>> tiles;
     std::vector<std::unique_ptr<Entity>> entities;
@@ -61,14 +61,14 @@ Room::Room(Vectori const& coords)
     ss << "res/Room_" << x << "-" << y << ".roo";
     std::string path = ss.str();
 
-    Game::log() << path << std::endl;
+    Game::log << path << std::endl;
 
     std::fstream roomFile(path.c_str());
 
     if(roomFile == NULL)
     {
         roomFile.close();
-        //Game::log() << "File Missing";
+        //Game::log << "File Missing" << std::endl;
         throw std::runtime_error("Room file missing");
     }
 
@@ -91,7 +91,7 @@ Room::Room(Vectori const& coords)
 
         if(roomFile.fail())
         {
-            //Game::log() << "Room file flawed." << std::endl;
+            //Game::log << "Room file flawed." << std::endl;
             roomFile.close();
             throw std::runtime_error("Room file flawed");
         }
@@ -149,106 +149,6 @@ Room::Room(Vectori const& coords)
 }
 
 Room::~Room() { }
-
-/* Dear Christ this is a nightmare.
- * What the hell was I thinking? */
-
-/*bool Room::load(State *const state)
-{
-    Game::log() << "Loading Room...";
-
-    Vectorf tilePos = {0,0};
-    int tileID;
-    int objectID;
-    int rotation;
-    int x = (int)coords_.x;
-    int y = (int)coords_.y;
-
-    std::stringstream ss;
-
-    ss << "res/Room_" << x << "-" << y << ".roo";
-    std::string path = ss.str();
-
-    Game::log() << path;
-
-    std::fstream roomFile(path.c_str());
-
-    if(roomFile == NULL)
-    {
-        roomFile.close();
-        Game::log() << "File Missing";
-        return false;
-    }
-
-    float float1;
-
-    tiles_.reserve( ROOM_SIZE*ROOM_SIZE );
-
-    Object* obj = NULL;
-
-    for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; ++i)
-    {
-        float1    = i + 1; //WHAT THE FUCK
-        tilePos.x = i % ROOM_SIZE;
-        tilePos.y = ceil(float1/ROOM_SIZE) - 1;
-
-        roomFile >> tileID  ; roomFile.ignore(1,':');
-        roomFile >> rotation; roomFile.ignore(1,'(');
-        roomFile >> objectID; roomFile.ignore(1,')');
-
-        if(roomFile.fail())
-        {
-            Game::log() << "Room file flawed.";
-            roomFile.close();
-            return false;
-        }
-        tiles_.push_back(new Tile(tilePos, tileID, rotation));
-
-        Vectorf objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
-
-        switch(objectID)
-        {
-            case NULL_ENTITY:
-                obj = NULL;
-                break;
-            case ENT_BAMBOO:
-                obj = new BambooObject( {} );
-                break;
-            case ENT_TREE_PALM:
-                obj = new PalmTreeObject( {} );
-                break;
-            case ENT_TREE_SMALL:
-                obj = new SmallTreeObject( {} );
-                break;
-            case ENT_TREE_LARGE:
-                obj = new LargeTreeObject( {} );
-                break;
-            case ENT_ROCK_LARGE:
-                obj = new LargeRockObject( {} );
-                break;
-            case ENT_ROCK_SMALL:
-                obj = new SmallRockObject( {} );
-                break;
-            default:
-                //obj = new Object( {}, "" );
-                obj = NULL;
-                break;
-        }
-
-        if(obj != NULL)
-        {
-            obj->setPos( objPos );
-            obj->setState( state );
-            entities_.push_back(obj);
-        }
-    }
-
-    roomFile.close();
-
-    return true;
-} */
-
-//void Room::handleInput(SDL_KeyboardEvent *const ke) { }
 
 void Room::draw(IRender *const render)
 {
