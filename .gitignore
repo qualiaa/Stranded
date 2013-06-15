@@ -16,7 +16,10 @@
 *.gch
 *.pch
 
-build/
+build*/
 # Vim temporary files
 *.swp
 *~
+
+#Qt Creator temporary files
+*.user
