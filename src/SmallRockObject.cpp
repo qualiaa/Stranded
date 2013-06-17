@@ -10,8 +10,8 @@
 SmallRockObject::SmallRockObject(Vectorf const& pos )
 :Object( pos, "smallrock" )
 {
-    hitbox_ = { 12, 30, 22, 18 };
-    solid_ = true;
+    setHitbox({ 12, 30, 22, 18 });
+    setSolid(true);
 }
 
 SmallRockObject::~SmallRockObject()

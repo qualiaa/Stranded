@@ -11,13 +11,12 @@ Player::Player(Vectorf const& pos, MainState* mState)
     mapPos_({0, 0}),
     mState_(mState)
 {
-    texture_ = ServiceLocator::getRender()->getTexture("player");
-    hitbox_ = { 21, 58, 21, 5 };
-
-    type_ = "player";
+    setTexture(ServiceLocator::getRender()->getTexture("player"));
+    setHitbox({ 21, 58, 21, 5 }); 
+    setType("player");
     speed_ = 5;
 
-    anim_ = Animation( texture_, { 64, 64 } );
+    anim_ = Animation( getTexture(), { 64, 64 } );
     anim_.add("up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100);
     anim_.add("right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100);
     anim_.add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100);
@@ -68,9 +67,9 @@ void Player::update()
         anim_.stop();
     }
 
-    lastPos_ = pos_;
+    lastPos_ = getPos();
 
-    pos_ += vel_;
+    setPos(lastPos_ + vel_);
 
 
     checkSides();
@@ -79,7 +78,7 @@ void Player::update()
 
 void Player::draw(IRender *const render)
 {
-    anim_.draw(render, pos_);
+    anim_.draw(render, getPos());
 }
 
 void Player::move(int rotation, bool moving)
@@ -129,70 +128,75 @@ void Player::move(int rotation, bool moving)
 //TODO Remove magic numbers
 void Player::checkSides()
 {
-    if(pos_.x + hitbox_.x < 0)
+    Vectorf pos = getPos();
+    Rect const& hitbox = getHitbox();
+
+    if(pos.x + hitbox.x < 0)
     {
         if(mapPos_.x > 0)
         {
             mapPos_.x = mapPos_.x - 1;//Move player to next room
-            pos_.x = 576 + 21;
+            pos.x = 576 + 21;
             lastPos_.x = 700;
 
             mState_->changeRoom(mapPos_);
         }
         else
         {
-            pos_.x = lastPos_.x;
+            pos.x = lastPos_.x;
             //vel_.x = 0;
         }
     }
-    if(pos_.x + hitbox_.x + hitbox_.w >= 640)
+    else if(pos.x + hitbox.x + hitbox.w >= 640)
     {
         if(mapPos_.x < 3)
         {
             mapPos_.x = mapPos_.x + 1;//Move player to next room
-            pos_.x = 0 - 21;
+            pos.x = 0 - 21;
             lastPos_.x = -100;
 
             mState_->changeRoom(mapPos_);
         }
         else
         {
-            pos_.x = lastPos_.x;
+            pos.x = lastPos_.x;
             //vel_.x = 0;
         }
     }
-    if(pos_.y + hitbox_.y < 0)
+    else if(pos.y + hitbox.y < 0)
     {
         if(mapPos_.y > 0)
         {
             mapPos_.y = mapPos_.y - 1; //Move player to next room
-            pos_.y = 640 - 64;
+            pos.y = 640 - 64;
             lastPos_.y = 700;
 
             mState_->changeRoom(mapPos_);
         }
         else
         {
-            pos_.y = lastPos_.y;
+            pos.y = lastPos_.y;
             //vel_.y = 0;
         }
     }
-    if(pos_.y + hitbox_.y + hitbox_.h >= 640)
+    else if(pos.y + hitbox.y + hitbox.h >= 640)
     {
         if(mapPos_.y < 3)
         {
             mapPos_.y = mapPos_.y + 1; //Move player to next room
-            pos_.y = 0 - 58;
+            pos.y = 0 - 58;
             lastPos_.y = -100;
 
             mState_->changeRoom(mapPos_);
         }
         else
         {
-            pos_.y = lastPos_.y;
+            pos.y = lastPos_.y;
             //vel_.y = 0;
         }
     }
+
+    setPos(pos);
 }
 
 void Player::handleCollisions()
@@ -208,7 +212,7 @@ void Player::handleCollisions()
     {
         if(ent->isSolid())
         {
-            pos_ = lastPos_;
+            setPos(lastPos_);
 
             anim_.stop();
         }

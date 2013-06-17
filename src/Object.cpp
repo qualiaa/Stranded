@@ -9,7 +9,7 @@ Object::Object(Vectorf const& pos, char const* texture)
 {
     if( strcmp( texture, "" ) )
     {
-        texture_ = ServiceLocator::getRender()->getTexture( texture );
+        setTexture(ServiceLocator::getRender()->getTexture( texture ));
     }
 }
 
