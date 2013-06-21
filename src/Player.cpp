@@ -16,7 +16,7 @@ Player::Player(Vectorf const& pos, MainState* mState)
     setType("player");
     speed_ = 5;
 
-    anim_ = Animation( getTexture(), { 64, 64 } );
+    anim_ = tank::Animation( getTexture(), { 64, 64 } );
     anim_.add("up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100);
     anim_.add("right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100);
     anim_.add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100);

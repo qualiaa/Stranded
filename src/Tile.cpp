@@ -37,7 +37,7 @@ Tile::Tile(Vectorf const& pos, int tileID, unsigned int rotation)
 
     setTexture(ServiceLocator::getRender()->getTexture(texture.c_str()));
 
-    tile_ = Animation(getTexture(), { TILE_SIZE, TILE_SIZE });
+    tile_ = tank::Animation(getTexture(), { TILE_SIZE, TILE_SIZE });
     tile_.add("tile", { rotation }, 0);
     tile_.select("tile", false );
 }

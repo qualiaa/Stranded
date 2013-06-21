@@ -19,7 +19,7 @@ public:
 
     BambooObject(Vectorf const& pos);
 private:
-    Animation anim_; 
+    tank::Animation anim_;
 };
 
 #endif	/* BAMBOOOBJECT_H */

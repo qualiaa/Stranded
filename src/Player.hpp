@@ -16,7 +16,7 @@ public:
     Player(Vectorf const& pos, MainState*);
 private:
     void handleCollisions();
-    Animation    anim_;
+    tank::Animation    anim_;
     unsigned int rotation_;
     Vectori      mapPos_;
     MainState*   mState_;

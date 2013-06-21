@@ -13,6 +13,6 @@ public:
 
     static const int TILE_SIZE;
 private:
-    Animation tile_;
+    tank::Animation tile_;
 };
 #endif
