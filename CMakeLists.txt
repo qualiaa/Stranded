@@ -10,6 +10,9 @@ find_package(SDL_image REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 include_directories(${SDL_IMAGE_INCLUDE_DIRS})
 
+find_package(SFML 2.0 COMPONENTS audio REQUIRED)
+include_directories(${SFML_INCLUDE_DIR})
+
 if (NOT APPLE)
     option(Cotire "Use Cotire" ON)
 endif(NOT APPLE)
