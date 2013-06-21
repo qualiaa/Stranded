@@ -16,10 +16,10 @@ MainState::MainState()
     paused_(false)
 {
     bool initialized = true;
-    Game::log << "Loading main state" << std::endl;
+    tank::Game::log << "Loading main state" << std::endl;
 
     /* Load graphics */
-    IRender* render = ServiceLocator::getRender();
+    tank::IRender* render = tank::ServiceLocator::getRender();
 
     initialized &= render->loadImage( "font"      , "res/Font.png"           );
     initialized &= render->loadImage( "fontsmall" , "res/FontSmall.png"      );
@@ -41,7 +41,7 @@ MainState::MainState()
         throw std::runtime_error("Loading images failed");
     }
 
-    Game::log << "Loading World..." << std::endl;
+    tank::Game::log << "Loading World..." << std::endl;
 
     loadRooms();
     currentRoom_ = rooms_[0];
@@ -52,7 +52,7 @@ MainState::MainState()
 
 MainState::~MainState()
 {
-    Game::log << "Unloading World..." << std::endl;
+    tank::Game::log << "Unloading World..." << std::endl;
 
     for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
@@ -163,7 +163,7 @@ void MainState::update()
     }
 }
 
-void MainState::draw(IRender* render)
+void MainState::draw(tank::IRender* render)
 {
     /*
     //Find first non-tile element in (hopefully) sorted list

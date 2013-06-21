@@ -11,14 +11,14 @@
 
 class Player;
 
-class Room : public State
+class Room : public tank::State
 {
 public:
     //bool load(State *const state);
 
     //void handleInput(SDL_KeyboardEvent *const);
     //void update();
-    void draw(IRender *const render); 
+    void draw(tank::IRender *const render);
 
     static const int ROOM_SIZE = 10;
 

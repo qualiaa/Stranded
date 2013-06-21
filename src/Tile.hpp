@@ -4,10 +4,10 @@
 #include "Engine/System/Entity.hpp"
 #include "Engine/Graphics/Animation.hpp"
 
-class Tile : public Entity
+class Tile : public tank::Entity
 {
 public:
-    virtual void draw(IRender *const);
+    virtual void draw(tank::IRender *const);
 
     Tile (Vectorf const& pos, int tileID, unsigned int rotation);
 

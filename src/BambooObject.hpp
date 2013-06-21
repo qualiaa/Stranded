@@ -15,7 +15,7 @@ class BambooObject : public Object
 {
 public:
     virtual void update();
-    virtual void draw(IRender*);
+    virtual void draw(tank::IRender*);
 
     BambooObject(Vectorf const& pos);
 private:

@@ -48,7 +48,7 @@ Room::Room(Vectori const& coords)
     //Game::log << "Loading Room..." << std::endl;
 
     std::vector<std::unique_ptr<Tile>> tiles;
-    std::vector<std::unique_ptr<Entity>> entities;
+    std::vector<std::unique_ptr<tank::Entity>> entities;
     Vectorf tilePos = {0,0};
     int tileID;
     int objectID;
@@ -61,7 +61,7 @@ Room::Room(Vectori const& coords)
     ss << "res/Room_" << x << "-" << y << ".roo";
     std::string path = ss.str();
 
-    Game::log << path << std::endl;
+    tank::Game::log << path << std::endl;
 
     std::fstream roomFile(path.c_str());
 
@@ -150,7 +150,7 @@ Room::Room(Vectori const& coords)
 
 Room::~Room() { }
 
-void Room::draw(IRender *const render)
+void Room::draw(tank::IRender *const render)
 {
     //TODO make this work again
     /*auto firstEnt = std::partition_point(entities_.begin(), entities_.end(),

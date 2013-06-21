@@ -6,12 +6,12 @@
 
 class MainState;
 
-class Player : public Entity
+class Player : public tank::Entity
 {
 public:
     void move(int rotation, bool moving);
     void update();
-    virtual void draw( IRender *const );
+    virtual void draw( tank::IRender *const );
 
     Player(Vectorf const& pos, MainState*);
 private:

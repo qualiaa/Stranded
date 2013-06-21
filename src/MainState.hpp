@@ -6,7 +6,7 @@
 class Player;
 class Room;
 
-class MainState : public State
+class MainState : public tank::State
 {
 public:
     void     changeRoom(Vectori const& coords);
@@ -15,7 +15,7 @@ public:
 
     virtual void handleEvents(SDL_KeyboardEvent *const) override;
     virtual void update() override;
-    virtual void draw(IRender*) override;
+    virtual void draw(tank::IRender*) override;
 
     MainState();
     virtual ~MainState();
@@ -26,7 +26,7 @@ private:
     Player* player_;
     bool    paused_;
 
-    void checkCollisions(Entity*,Entity*);
+    void checkCollisions(tank::Entity*,tank::Entity*);
     void loadRooms();
     void pause();
 

@@ -5,7 +5,7 @@
 #include "Engine/System/Entity.hpp"
 #include <string>
 
-class Object : public Entity
+class Object : public tank::Entity
 {
 public:
     virtual void update() {}

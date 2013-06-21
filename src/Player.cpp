@@ -11,7 +11,7 @@ Player::Player(Vectorf const& pos, MainState* mState)
     mapPos_({0, 0}),
     mState_(mState)
 {
-    setTexture(ServiceLocator::getRender()->getTexture("player"));
+    setTexture(tank::ServiceLocator::getRender()->getTexture("player"));
     setHitbox({ 21, 58, 21, 5 }); 
     setType("player");
     speed_ = 5;
@@ -76,7 +76,7 @@ void Player::update()
     handleCollisions();
 }
 
-void Player::draw(IRender *const render)
+void Player::draw(tank::IRender *const render)
 {
     anim_.draw(render, getPos());
 }
