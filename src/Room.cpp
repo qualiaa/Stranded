@@ -65,7 +65,7 @@ Room::Room(tank::Vectori const& coords)
 
     std::fstream roomFile(path.c_str());
 
-    if(roomFile == NULL)
+    if(not roomFile)
     {
         roomFile.close();
         //Game::log << "File Missing" << std::endl;

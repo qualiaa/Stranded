@@ -5,7 +5,15 @@ project(Stranded)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-option(Cotire "Use Cotire" ON)
+find_package(SDL REQUIRED) 
+find_package(SDL_image REQUIRED) 
+include_directories(${SDL_INCLUDE_DIR})
+include_directories(${SDL_IMAGE_INCLUDE_DIRS})
+
+if (NOT APPLE)
+    option(Cotire "Use Cotire" ON)
+endif(NOT APPLE)
+
 if(Cotire)
     include(cotire)
 endif(Cotire)
@@ -13,6 +21,11 @@ endif(Cotire)
 if (NOT MSVC)
     set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 endif(NOT MSVC)
+
+if (APPLE)
+    set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++ ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_LD_FLAGS "-stdlib=libc++ ${CMAKE_LD_FLAGS}")
+endif(APPLE)
 
 set(CMAKE_BUILD_TYPE Debug)
 
