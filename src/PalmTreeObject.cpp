@@ -8,10 +8,10 @@
 #include "PalmTreeObject.hpp"
 #include "Tile.hpp"
 
-PalmTreeObject::PalmTreeObject( Vectorf const& pos )
+PalmTreeObject::PalmTreeObject(tank::Vectorf const& pos )
 :Object( pos, "palmtree" )
 {
-    Rect hb = { 30, Tile::TILE_SIZE * 2 - 4, 16, 6 };
+    tank::Rect hb = { 30, Tile::TILE_SIZE * 2 - 4, 16, 6 };
     hb.y -= hb.h;
     setHitbox(hb);
 

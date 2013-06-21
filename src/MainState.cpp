@@ -46,7 +46,7 @@ MainState::MainState()
     loadRooms();
     currentRoom_ = rooms_[0];
     const float playerPos = 8*Tile::TILE_SIZE;
-    player_ = currentRoom_->makeEntity<Player>(Vectorf{playerPos, playerPos},
+    player_ = currentRoom_->makeEntity<Player>(tank::Vectorf{playerPos, playerPos},
                                                this);
 }
 
@@ -67,7 +67,7 @@ void MainState::loadRooms()
 {
     rooms_.reserve(MAP_WIDTH*MAP_HEIGHT);
 
-    Vectori coords({0,0});
+    tank::Vectori coords({0,0});
 
     for(int i = 0; i < MAP_HEIGHT; i++)
     {
@@ -81,7 +81,7 @@ void MainState::loadRooms()
     }
 }
 
-void MainState::changeRoom(Vectori const& coords)
+void MainState::changeRoom(tank::Vectori const& coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 

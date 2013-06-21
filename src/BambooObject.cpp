@@ -4,7 +4,7 @@
 #include "Engine/Graphics/Text.hpp"
 #include "Tile.hpp"
 
-BambooObject::BambooObject(Vectorf const& pos)
+BambooObject::BambooObject(tank::Vectorf const& pos)
 :Object( pos, "bamboo" ),
  anim_(getTexture(), { static_cast<float>(Tile::TILE_SIZE), 
                        static_cast<float>(Tile::TILE_SIZE) })
@@ -26,7 +26,7 @@ void BambooObject::update()
         setType("bamboo_taken");
         if(isSolid())
         {
-            getState()->makeEntity<tank::Text>(Vectorf{50,600}, "You found some bamboo!", 1000);
+            getState()->makeEntity<tank::Text>(tank::Vectorf{50,600}, "You found some bamboo!", 1000);
             setSolid(true);
         }
     }

@@ -9,7 +9,7 @@ class Room;
 class MainState : public tank::State
 {
 public:
-    void     changeRoom(Vectori const& coords);
+    void     changeRoom(tank::Vectori const& coords);
 
     Room const* currentRoom();
 

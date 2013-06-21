@@ -13,16 +13,16 @@ public:
     void update();
     virtual void draw( tank::IRender *const );
 
-    Player(Vectorf const& pos, MainState*);
+    Player(tank::Vectorf const& pos, MainState*);
 private:
     void handleCollisions();
     tank::Animation    anim_;
     unsigned int rotation_;
-    Vectori      mapPos_;
+    tank::Vectori      mapPos_;
     MainState*   mState_;
 
-    Vectorf      vel_;
-    Vectorf      lastPos_;
+    tank::Vectorf      vel_;
+    tank::Vectorf      lastPos_;
     float      speed_;
     void checkSides();
 };

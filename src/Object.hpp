@@ -10,7 +10,7 @@ class Object : public tank::Entity
 public:
     virtual void update() {}
 
-    Object(Vectorf const& pos, char const* texture);
+    Object(tank::Vectorf const& pos, char const* texture);
     virtual ~Object();
 protected:
 };

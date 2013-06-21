@@ -8,10 +8,10 @@
 #include "SmallTreeObject.hpp"
 #include "Tile.hpp"
 
-SmallTreeObject::SmallTreeObject( Vectorf const& pos )
+SmallTreeObject::SmallTreeObject(tank::Vectorf const& pos )
 :Object( pos, "smalltree" )
 {
-    Rect hb = { 18, Tile::TILE_SIZE - 8, 28, 9 };
+    tank::Rect hb = { 18, Tile::TILE_SIZE - 8, 28, 9 };
     hb.y -= hb.h;
 
     setHitbox(hb);

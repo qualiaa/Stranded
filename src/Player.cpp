@@ -5,7 +5,7 @@
 #include "MainState.hpp"
 #include "Room.hpp"
 
-Player::Player(Vectorf const& pos, MainState* mState)
+Player::Player(tank::Vectorf const& pos, MainState* mState)
     :Entity(pos),
     rotation_(1),
     mapPos_({0, 0}),
@@ -128,8 +128,8 @@ void Player::move(int rotation, bool moving)
 //TODO Remove magic numbers
 void Player::checkSides()
 {
-    Vectorf pos = getPos();
-    Rect const& hitbox = getHitbox();
+    tank::Vectorf pos = getPos();
+    tank::Rect const& hitbox = getHitbox();
 
     if(pos.x + hitbox.x < 0)
     {

@@ -9,7 +9,7 @@ class Tile : public tank::Entity
 public:
     virtual void draw(tank::IRender *const);
 
-    Tile (Vectorf const& pos, int tileID, unsigned int rotation);
+    Tile (tank::Vectorf const& pos, int tileID, unsigned int rotation);
 
     static const int TILE_SIZE;
 private:

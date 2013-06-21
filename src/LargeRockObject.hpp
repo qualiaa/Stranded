@@ -13,7 +13,7 @@
 class LargeRockObject : public Object
 {
 public:
-    LargeRockObject(Vectorf const& pos);
+    LargeRockObject(tank::Vectorf const& pos);
     virtual ~LargeRockObject();
 private:
 

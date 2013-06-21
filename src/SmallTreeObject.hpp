@@ -13,7 +13,7 @@
 class SmallTreeObject : public Object
 {
 public:
-    SmallTreeObject( Vectorf const& pos );
+    SmallTreeObject(tank::Vectorf const& pos );
     virtual ~SmallTreeObject();
 private:
 

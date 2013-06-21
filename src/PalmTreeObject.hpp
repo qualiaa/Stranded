@@ -6,7 +6,7 @@
 class PalmTreeObject : public Object
 {
 public:
-    PalmTreeObject( Vectorf const& pos );
+    PalmTreeObject(tank::Vectorf const& pos );
     virtual ~PalmTreeObject();
 private:
 

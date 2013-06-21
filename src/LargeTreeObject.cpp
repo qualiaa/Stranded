@@ -2,7 +2,7 @@
 
 #include "Tile.hpp"
 
-LargeTreeObject::LargeTreeObject(Vectorf const& pos)
+LargeTreeObject::LargeTreeObject(tank::Vectorf const& pos)
 :Object( pos, "largetree" )
 {
     const int hbHeight = 9;

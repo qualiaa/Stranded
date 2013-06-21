@@ -13,7 +13,7 @@
 class LargeTreeObject: public Object
 {
 public:
-    LargeTreeObject(Vectorf const& pos);
+    LargeTreeObject(tank::Vectorf const& pos);
     virtual ~LargeTreeObject();
 private:
 

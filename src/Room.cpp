@@ -42,14 +42,14 @@ enum EntityType
     TILE_WATER = 500,
 };
 
-Room::Room(Vectori const& coords)
+Room::Room(tank::Vectori const& coords)
 :coords_(coords)
 {
     //Game::log << "Loading Room..." << std::endl;
 
     std::vector<std::unique_ptr<Tile>> tiles;
     std::vector<std::unique_ptr<tank::Entity>> entities;
-    Vectorf tilePos = {0,0};
+    tank::Vectorf tilePos = {0,0};
     int tileID;
     int objectID;
     int rotation;
@@ -97,7 +97,7 @@ Room::Room(Vectori const& coords)
         }
         tiles.emplace_back(new Tile(tilePos, tileID, rotation));
 
-        Vectorf objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
+        tank::Vectorf objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
 
         switch(objectID)
         {

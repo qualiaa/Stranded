@@ -25,10 +25,10 @@ public:
     //std::vector<std::unique_ptr<Tile>>&   GetTiles()    { return tiles_; }
     //std::vector<std::unique_ptr<Entity>>& GetEntities() { return entities_; }
 
-    Room(Vectori const& coords);
+    Room(tank::Vectori const& coords);
 
     ~Room();
 private:
-    Vectori  coords_;
+    tank::Vectori  coords_;
 };
 #endif

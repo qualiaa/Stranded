@@ -4,7 +4,7 @@
 
 const int Tile::TILE_SIZE = 64;
 
-Tile::Tile(Vectorf const& pos, int tileID, unsigned int rotation)
+Tile::Tile(tank::Vectorf const& pos, int tileID, unsigned int rotation)
     :Entity(pos * static_cast<float>(TILE_SIZE))
 {
     setHitbox({ 0, 0, TILE_SIZE, TILE_SIZE });

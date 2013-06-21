@@ -17,7 +17,7 @@ public:
     virtual void update();
     virtual void draw(tank::IRender*);
 
-    BambooObject(Vectorf const& pos);
+    BambooObject(tank::Vectorf const& pos);
 private:
     tank::Animation anim_;
 };

@@ -13,7 +13,7 @@
 class SmallRockObject : public Object
 {
 public:
-    SmallRockObject(Vectorf const& pos );
+    SmallRockObject(tank::Vectorf const& pos );
     virtual ~SmallRockObject();
 private:
 

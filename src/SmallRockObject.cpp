@@ -7,7 +7,7 @@
 
 #include "SmallRockObject.hpp"
 
-SmallRockObject::SmallRockObject(Vectorf const& pos )
+SmallRockObject::SmallRockObject(tank::Vectorf const& pos )
 :Object( pos, "smallrock" )
 {
     setHitbox({ 12, 30, 22, 18 });

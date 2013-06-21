@@ -7,7 +7,7 @@
 
 #include "LargeRockObject.hpp"
 
-LargeRockObject::LargeRockObject(Vectorf const& pos)
+LargeRockObject::LargeRockObject(tank::Vectorf const& pos)
     :Object(pos, "largerock")
 {
     setHitbox({ 12, 12, 42, 32 });
