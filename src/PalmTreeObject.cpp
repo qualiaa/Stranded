@@ -6,17 +6,18 @@
  */
 
 #include "PalmTreeObject.hpp"
+
+#include "Engine/Graphics/Image.hpp"
+#include "MainState.hpp"
 #include "Tile.hpp"
 
-PalmTreeObject::PalmTreeObject( Vectorf const& pos )
-:Object( pos, "palmtree" )
+PalmTreeObject::PalmTreeObject(tank::Vectorf pos)
+    : tank::Entity(pos)
 {
-    Rect hb = { 30, Tile::TILE_SIZE * 2 - 4, 16, 6 };
+    setGraphic<tank::Image>(MainState::palmtree);
+    tank::Rect hb = { 30, Tile::TILE_SIZE * 2 - 4, 16, 6 };
     hb.y -= hb.h;
     setHitbox(hb);
 
     setSolid(true);
-}
-
-PalmTreeObject::~PalmTreeObject() {
 }

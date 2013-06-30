@@ -1,20 +1,11 @@
-/*
- * File:   SmallRockObject.cpp
- * Author: jamie
- *
- * Created on 11 January 2012, 15:21
- */
-
 #include "SmallRockObject.hpp"
+#include "Engine/Graphics/Image.hpp"
+#include "MainState.hpp"
 
-SmallRockObject::SmallRockObject(Vectorf const& pos )
-:Object( pos, "smallrock" )
+SmallRockObject::SmallRockObject(tank::Vectorf pos)
+    : tank::Entity(pos)
 {
+    setGraphic<tank::Image>(MainState::smallrock);
     setHitbox({ 12, 30, 22, 18 });
     setSolid(true);
 }
-
-SmallRockObject::~SmallRockObject()
-{
-}
-

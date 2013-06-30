@@ -1,23 +1,12 @@
-/*
- * File:   SmallRockObject.hpp
- * Author: jamie
- *
- * Created on 11 January 2012, 15:21
- */
-
 #ifndef SMALLROCKOBJECT_H
 #define	SMALLROCKOBJECT_H
 
-#include "Object.hpp"
+#include "Engine/System/Entity.hpp"
 
-class SmallRockObject : public Object
+class SmallRockObject : public tank::Entity
 {
 public:
-    SmallRockObject(Vectorf const& pos );
-    virtual ~SmallRockObject();
-private:
-
+    SmallRockObject(tank::Vectorf pos);
 };
 
 #endif	/* SMALLROCKOBJECT_H */
-

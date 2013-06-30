@@ -8,18 +8,15 @@
 #ifndef BAMBOOOBJECT_H
 #define	BAMBOOOBJECT_H
 
-#include "Engine/Graphics/Animation.hpp"
-#include "Object.hpp"
+#include "Engine/System/Entity.hpp"
 
-class BambooObject : public Object
+class BambooObject : public tank::Entity
 {
 public:
     virtual void update();
-    virtual void draw(IRender*);
 
-    BambooObject(Vectorf const& pos);
+    BambooObject(tank::Vectorf pos);
 private:
-    Animation anim_; 
 };
 
 #endif	/* BAMBOOOBJECT_H */

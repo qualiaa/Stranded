@@ -1,22 +1,12 @@
-/*
- * File:   LargeRockObject.hpp
- * Author: jamie
- *
- * Created on 11 January 2012, 14:52
- */
-
 #ifndef LARGEROCKOBJECT_H
 #define	LARGEROCKOBJECT_H
 
-#include "Object.hpp"
+#include "Engine/System/Entity.hpp"
 
-class LargeRockObject : public Object
+class LargeRockObject : public tank::Entity
 {
 public:
-    LargeRockObject(Vectorf const& pos);
-    virtual ~LargeRockObject();
-private:
-
+    LargeRockObject(tank::Vectorf pos);
 };
 
 #endif	/* LARGEROCKOBJECT_H */

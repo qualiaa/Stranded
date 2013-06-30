@@ -1,22 +1,16 @@
-/*
- * File:   SmallTreeObject.cpp
- * Author: jamie
- *
- * Created on 05 January 2012, 23:28
- */
-
 #include "SmallTreeObject.hpp"
+
+#include "Engine/Graphics/Image.hpp"
+#include "MainState.hpp"
 #include "Tile.hpp"
 
-SmallTreeObject::SmallTreeObject( Vectorf const& pos )
-:Object( pos, "smalltree" )
+SmallTreeObject::SmallTreeObject(tank::Vectorf pos)
+    : tank::Entity(pos)
 {
-    Rect hb = { 18, Tile::TILE_SIZE - 8, 28, 9 };
+    setGraphic<tank::Image>(MainState::smallrock);
+    tank::Rect hb = { 18, Tile::TILE_SIZE - 8, 28, 9 };
     hb.y -= hb.h;
 
     setHitbox(hb);
     setSolid(true);
-}
-
-SmallTreeObject::~SmallTreeObject() {
 }

@@ -5,10 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <memory>
-#include "Engine/System/Game.hpp"
-#include "Engine/Utility/Vector.hpp"
 #include "Player.hpp"
-#include "Object.hpp"
 #include "LargeTreeObject.hpp"
 #include "SmallTreeObject.hpp"
 #include "PalmTreeObject.hpp"
@@ -42,14 +39,12 @@ enum EntityType
     TILE_WATER = 500,
 };
 
-Room::Room(Vectori const& coords)
+Room::Room(tank::Vectori const& coords)
 :coords_(coords)
 {
-    //Game::log << "Loading Room..." << std::endl;
-
     std::vector<std::unique_ptr<Tile>> tiles;
-    std::vector<std::unique_ptr<Entity>> entities;
-    Vectorf tilePos = {0,0};
+    std::vector<std::unique_ptr<tank::Entity>> entities;
+    tank::Vectorf tilePos = {0,0};
     int tileID;
     int objectID;
     int rotation;
@@ -61,14 +56,11 @@ Room::Room(Vectori const& coords)
     ss << "res/Room_" << x << "-" << y << ".roo";
     std::string path = ss.str();
 
-    Game::log << path << std::endl;
-
     std::fstream roomFile(path.c_str());
 
     if(roomFile == NULL)
     {
         roomFile.close();
-        //Game::log << "File Missing" << std::endl;
         throw std::runtime_error("Room file missing");
     }
 
@@ -77,7 +69,7 @@ Room::Room(Vectori const& coords)
     tiles.reserve( ROOM_SIZE*ROOM_SIZE );
 
     //TODO this could probably be unique with obj.reset used each time
-    Object* obj = NULL;
+    tank::Entity* obj = NULL;
 
     for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; ++i)
     {
@@ -91,13 +83,12 @@ Room::Room(Vectori const& coords)
 
         if(roomFile.fail())
         {
-            //Game::log << "Room file flawed." << std::endl;
             roomFile.close();
             throw std::runtime_error("Room file flawed");
         }
         tiles.emplace_back(new Tile(tilePos, tileID, rotation));
 
-        Vectorf objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
+        tank::Vectorf objPos = { tilePos.x*Tile::TILE_SIZE,tilePos.y*Tile::TILE_SIZE };
 
         switch(objectID)
         {
@@ -149,30 +140,3 @@ Room::Room(Vectori const& coords)
 }
 
 Room::~Room() { }
-
-void Room::draw(IRender *const render)
-{
-    //TODO make this work again
-    /*auto firstEnt = std::partition_point(entities_.begin(), entities_.end(),
-                                         [](Entity* ent)
-    {
-        return ent->getType() == "tile";
-    });
-
-    auto depthTest = [](Entity* A, Entity* B)
-    {
-        return A->getPos().y + A->getHitBox().y <
-               B->getPos().y + B->getHitBox().y;
-    };
-
-    //Sort all non-tile elements by bottom edge of hitbox
-    if(!std::is_sorted(firstEnt, entities_.end(), depthTest))
-    {
-        std::sort(firstEnt, entities_.end(), depthTest);
-    }*/
-
-    for(auto& entity : entities_ )
-    {
-        entity->draw(render);
-    } 
-}

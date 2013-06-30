@@ -12,11 +12,11 @@
 
 int main()
 {
-    if(Game::initialize({640, 640}))
+    if(tank::Game::initialize({640, 640}))
     {
-        Game::makeState<MainState>();
-        Game::run();
-        Game::close();
+        tank::Game::makeState<MainState>();
+        tank::Game::run();
+        tank::Game::close();
     }
 
     return 0;

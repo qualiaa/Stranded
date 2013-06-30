@@ -1,33 +1,30 @@
 #include "Player.hpp"
 
-#include "Engine/System/ServiceLocator.hpp"
-#include "Engine/Graphics/Text.hpp"
+#include "Engine/Graphics/Animation.hpp"
 #include "MainState.hpp"
 #include "Room.hpp"
 
-Player::Player(Vectorf const& pos, MainState* mState)
-    :Entity(pos),
-    rotation_(1),
-    mapPos_({0, 0}),
-    mState_(mState)
+Player::Player(tank::Vectorf pos, MainState* mState)
+    : tank::Entity(pos)
+    , rotation_(1)
+    , mapPos_({0, 0})
+    , mState_(mState)
 {
-    setTexture(ServiceLocator::getRender()->getTexture("player"));
-    setHitbox({ 21, 58, 21, 5 }); 
+    anim_ = setGraphic<tank::Animation>(MainState::player,
+                                        tank::Vector<unsigned int>{ 64, 64 });
+    setHitbox({ 21, 58, 21, 5 });
     setType("player");
     speed_ = 5;
 
-    anim_ = Animation( getTexture(), { 64, 64 } );
-    anim_.add("up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100);
-    anim_.add("right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100);
-    anim_.add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100);
-    anim_.add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100);
-    anim_.select("up");
+    anim_->add("up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100);
+    anim_->add("right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100);
+    anim_->add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100);
+    anim_->add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100);
+    anim_->select("up");
 }
 
 void Player::update()
 {
-    //Mover::update();
-
     bool moving = false;
     if(vel_.x > 0)
     {
@@ -53,18 +50,18 @@ void Player::update()
     {
         switch( rotation_ )
         {
-            case 0: anim_.select("up");    break;
-            case 1: anim_.select("right"); break;
-            case 2: anim_.select("down");  break;
-            case 3: anim_.select("left");  break;
+            case 0: anim_->select("up");    break;
+            case 1: anim_->select("right"); break;
+            case 2: anim_->select("down");  break;
+            case 3: anim_->select("left");  break;
             default: break;
         }
 
-        anim_.play();
+        anim_->play();
     }
     else
     {
-        anim_.stop();
+        anim_->stop();
     }
 
     lastPos_ = getPos();
@@ -74,11 +71,6 @@ void Player::update()
 
     checkSides();
     handleCollisions();
-}
-
-void Player::draw(IRender *const render)
-{
-    anim_.draw(render, getPos());
 }
 
 void Player::move(int rotation, bool moving)
@@ -128,8 +120,8 @@ void Player::move(int rotation, bool moving)
 //TODO Remove magic numbers
 void Player::checkSides()
 {
-    Vectorf pos = getPos();
-    Rect const& hitbox = getHitbox();
+    tank::Vectorf pos = getPos();
+    tank::Rect const& hitbox = getHitbox();
 
     if(pos.x + hitbox.x < 0)
     {
@@ -214,7 +206,7 @@ void Player::handleCollisions()
         {
             setPos(lastPos_);
 
-            anim_.stop();
+            anim_->stop();
         }
     }
 }

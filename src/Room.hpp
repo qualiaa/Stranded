@@ -1,4 +1,3 @@
-#pragma once
 #ifndef ROOM_H
 #define	ROOM_H
 
@@ -11,24 +10,22 @@
 
 class Player;
 
-class Room : public State
+class Room : public tank::State
 {
 public:
     //bool load(State *const state);
 
     //void handleInput(SDL_KeyboardEvent *const);
     //void update();
-    void draw(IRender *const render); 
-
     static const int ROOM_SIZE = 10;
 
     //std::vector<std::unique_ptr<Tile>>&   GetTiles()    { return tiles_; }
     //std::vector<std::unique_ptr<Entity>>& GetEntities() { return entities_; }
 
-    Room(Vectori const& coords);
+    Room(tank::Vectori const& coords);
 
     ~Room();
 private:
-    Vectori  coords_;
+    tank::Vectori  coords_;
 };
 #endif
