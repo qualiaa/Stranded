@@ -10,6 +10,7 @@ BambooObject::BambooObject(tank::Vectorf pos)
 {
 
     setGraphic<tank::Image>(MainState::bamboo);
+    getGraphic().setSize({64.f, 64.f});
     getGraphic().setClip({0, 0, 64, 64});
     setHitbox({14, 42, 24, 8});
     setSolid(true);
