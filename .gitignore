@@ -23,3 +23,5 @@ build*/
 
 #Qt Creator temporary files
 *.user
+
+*.orig
