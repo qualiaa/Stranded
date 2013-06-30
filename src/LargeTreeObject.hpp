@@ -1,20 +1,12 @@
-/*
- * File:   LargeTreeObject.hpp
- * Author: jamie
- *
- * Created on 05 January 2012, 23:35
- */
-
 #ifndef LARGETREEOBJECT_H
 #define	LARGETREEOBJECT_H
 
-#include "Object.hpp"
+#include "Engine/System/Entity.hpp"
 
-class LargeTreeObject: public Object
+class LargeTreeObject : public tank::Entity
 {
 public:
-    LargeTreeObject(Vectorf const& pos);
-    virtual ~LargeTreeObject();
+    LargeTreeObject(tank::Vectorf pos);
 private:
 
 };

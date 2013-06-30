@@ -1,14 +1,11 @@
 #ifndef PALMTREEOBJECT_H
 #define	PALMTREEOBJECT_H
 
-#include "Object.hpp"
+#include "Engine/System/Entity.hpp"
 
-class PalmTreeObject : public Object
+class PalmTreeObject : public tank::Entity
 {
 public:
-    PalmTreeObject( Vectorf const& pos );
-    virtual ~PalmTreeObject();
-private:
-
+    PalmTreeObject(tank::Vectorf pos );
 };
 #endif

@@ -1,7 +1,8 @@
 #include "MainState.hpp"
 
 #include <algorithm>
-#include "Engine/System/ServiceLocator.hpp"
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
 #include "Engine/System/Game.hpp"
 #include "Room.hpp"
 #include "Player.hpp"
@@ -15,44 +16,36 @@ MainState::MainState()
    :currentRoom_(NULL),
     paused_(false)
 {
-    bool initialized = true;
-    Game::log << "Loading main state" << std::endl;
+    tank::Game::log << "Loading main state" << std::endl;
 
     /* Load graphics */
-    IRender* render = ServiceLocator::getRender();
+    font.load("res/Font.png");
+    fontsmall.load("res/FontSmall.png");
+    grass.load("res/GrassTiles.png");
+    sand.load("res/SandTiles.png");
+    sandwater.load("res/SandWaterTiles.png");
+    water.load("res/WaterTiles.png");
+    player.load("res/Player.png");
+    smalltree.load("res/SmallTree.png");
+    largetree.load("res/LargeTree.png");
+    oceanrock.load("res/OceanRock.png");
+    bamboo.load("res/Bamboo.png");
+    palmtree.load("res/PalmTree.png");
+    smallrock.load("res/SmallRock.png");
+    largerock.load("res/LargeRock.png");
 
-    initialized &= render->loadImage( "font"      , "res/Font.png"           );
-    initialized &= render->loadImage( "fontsmall" , "res/FontSmall.png"      );
-    initialized &= render->loadImage( "grass"     , "res/GrassTiles.png"     );
-    initialized &= render->loadImage( "sand"      , "res/SandTiles.png"      );
-    initialized &= render->loadImage( "sandwater" , "res/SandWaterTiles.png" );
-    initialized &= render->loadImage( "water"     , "res/WaterTiles.png"     );
-    initialized &= render->loadImage( "player"    , "res/Player.png"         );
-    initialized &= render->loadImage( "smalltree" , "res/SmallTree.png"      );
-    initialized &= render->loadImage( "largetree" , "res/LargeTree.png"      );
-    initialized &= render->loadImage( "oceanrock" , "res/OceanRock.png"      );
-    initialized &= render->loadImage( "bamboo"    , "res/Bamboo.png"         );
-    initialized &= render->loadImage( "palmtree"  , "res/PalmTree.png"       );
-    initialized &= render->loadImage( "smallrock" , "res/SmallRock.png"      );
-    initialized &= render->loadImage( "largerock" , "res/LargeRock.png"      );
-
-    if(!initialized)
-    {
-        throw std::runtime_error("Loading images failed");
-    }
-
-    Game::log << "Loading World..." << std::endl;
+    tank::Game::log << "Loading World..." << std::endl;
 
     loadRooms();
     currentRoom_ = rooms_[0];
-    const float playerPos = 8*Tile::TILE_SIZE;
-    player_ = currentRoom_->makeEntity<Player>(Vectorf{playerPos, playerPos},
+    const float playerPos = 8 * Tile::TILE_SIZE;
+    player_ = currentRoom_->makeEntity<Player>(tank::Vectorf{playerPos, playerPos},
                                                this);
 }
 
 MainState::~MainState()
 {
-    Game::log << "Unloading World..." << std::endl;
+    tank::Game::log << "Unloading World..." << std::endl;
 
     for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
@@ -67,7 +60,7 @@ void MainState::loadRooms()
 {
     rooms_.reserve(MAP_WIDTH*MAP_HEIGHT);
 
-    Vectori coords({0,0});
+    tank::Vectori coords({0,0});
 
     for(int i = 0; i < MAP_HEIGHT; i++)
     {
@@ -81,12 +74,12 @@ void MainState::loadRooms()
     }
 }
 
-void MainState::changeRoom(Vectori const& coords)
+void MainState::changeRoom(tank::Vectori coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 
     Room* lastRoom = currentRoom_;
-    currentRoom_ = rooms_[coords.y*MAP_WIDTH + coords.x]; 
+    currentRoom_ = rooms_[coords.y*MAP_WIDTH + coords.x];
 
     lastRoom->moveEntity(currentRoom_, player_);
 }
@@ -108,25 +101,26 @@ void MainState::pause()
     }
 }
 
-void MainState::handleEvents(SDL_KeyboardEvent *const ke)
+void MainState::handleEvents(sf::Keyboard::Key ke)
 {
-    if(ke->type == SDL_KEYDOWN)
+    bool pressed = sf::Keyboard::isKeyPressed(ke);
+    if(pressed)
     {
-        switch(ke->keysym.sym)
+        switch(ke)
         {
-            case SDLK_w:
+            case sf::Keyboard::W:
                 player_->move(0, true);
                 break;
-            case SDLK_s:
+            case sf::Keyboard::S:
                 player_->move(2, true);
                 break;
-            case SDLK_a:
+            case sf::Keyboard::A:
                 player_->move(3, true);
                 break;
-            case SDLK_d:
+            case sf::Keyboard::D:
                 player_->move(1, true);
                 break;
-            case SDLK_p:
+            case sf::Keyboard::P:
                 pause();
                 break;
             default:
@@ -135,18 +129,18 @@ void MainState::handleEvents(SDL_KeyboardEvent *const ke)
     }
     else
     {
-        switch(ke->keysym.sym)
+        switch(ke)
         {
-            case SDLK_w:
+            case sf::Keyboard::W:
                 player_->move(0, false);
                 break;
-            case SDLK_s:
+            case sf::Keyboard::S:
                 player_->move(2, false);
                 break;
-            case SDLK_a:
+            case sf::Keyboard::A:
                 player_->move(3, false);
                 break;
-            case SDLK_d:
+            case sf::Keyboard::D:
                 player_->move(1, false);
                 break;
             default:
@@ -159,35 +153,27 @@ void MainState::update()
 {
     if(!paused_)
     {
-        currentRoom_->update(); 
+        currentRoom_->update();
     }
 }
 
-void MainState::draw(IRender* render)
+void MainState::draw()
 {
-    /*
-    //Find first non-tile element in (hopefully) sorted list
-    auto firstEnt = std::partition_point(entities_.begin(), entities_.end(),
-                                         [](Entity* ent)
-    {
-        return ent->getType() == "tile";
-    });
-
-    auto depthTest = [](Entity* A, Entity* B)
-    {
-        return A->getPos().y + A->getHitBox().y <
-               B->getPos().y + B->getHitBox().y;
-    };
-
-    //Sort all non-tile elements by bottom edge of hitbox
-    if(!std::is_sorted(firstEnt, entities_.end(), depthTest))
-    {
-        std::sort(firstEnt, entities_.end(), depthTest);
-    }
-
-    for(auto entity : entities_ )
-    {
-        entity->draw(render);
-    }*/
-    currentRoom_->draw(render);
+    currentRoom_->draw();
 }
+
+tank::Image MainState::font;
+tank::Image MainState::fontsmall;
+tank::Image MainState::grass;
+tank::Image MainState::sand;
+tank::Image MainState::sandwater;
+tank::Image MainState::water;
+tank::Image MainState::player;
+tank::Image MainState::smalltree;
+tank::Image MainState::largetree;
+tank::Image MainState::oceanrock;
+tank::Image MainState::bamboo;
+tank::Image MainState::palmtree;
+tank::Image MainState::smallrock;
+tank::Image MainState::largerock;
+

@@ -6,24 +6,23 @@
 
 class MainState;
 
-class Player : public Entity
+class Player : public tank::Entity
 {
 public:
     void move(int rotation, bool moving);
-    void update();
-    virtual void draw( IRender *const );
+    virtual void update() override;
 
-    Player(Vectorf const& pos, MainState*);
+    Player(tank::Vectorf pos, MainState*);
 private:
     void handleCollisions();
-    Animation    anim_;
+    tank::Animation* anim_;
     unsigned int rotation_;
-    Vectori      mapPos_;
-    MainState*   mState_;
+    tank::Vectori mapPos_;
+    MainState* mState_;
 
-    Vectorf      vel_;
-    Vectorf      lastPos_;
-    float      speed_;
+    tank::Vectorf vel_;
+    tank::Vectorf lastPos_;
+    float speed_;
     void checkSides();
 };
 #endif
