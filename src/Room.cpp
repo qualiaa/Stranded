@@ -39,7 +39,7 @@ enum EntityType
     TILE_WATER = 500,
 };
 
-Room::Room(tank::Vectori const& coords)
+Room::Room(tank::Vectori coords)
 :coords_(coords)
 {
     std::vector<std::unique_ptr<Tile>> tiles;
@@ -58,7 +58,7 @@ Room::Room(tank::Vectori const& coords)
 
     std::fstream roomFile(path.c_str());
 
-    if(roomFile == NULL)
+    if(not roomFile)
     {
         roomFile.close();
         throw std::runtime_error("Room file missing");

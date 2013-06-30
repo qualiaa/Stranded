@@ -10,3 +10,4 @@ public:
 };
 
 #endif	/* SMALLROCKOBJECT_H */
+

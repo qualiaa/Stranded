@@ -176,4 +176,3 @@ tank::Image MainState::bamboo;
 tank::Image MainState::palmtree;
 tank::Image MainState::smallrock;
 tank::Image MainState::largerock;
-

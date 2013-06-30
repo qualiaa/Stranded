@@ -9,9 +9,12 @@
 
 #include "Engine/System/Game.hpp"
 #include "MainState.hpp"
+#include "Engine/Audio/Music.hpp"
 
 int main()
 {
+    tank::Music music {"res/music.ogg"};
+    music.play();
     if(tank::Game::initialize({640, 640}))
     {
         tank::Game::makeState<MainState>();

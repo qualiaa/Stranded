@@ -10,3 +10,4 @@ public:
 };
 
 #endif	/* SMALLTREEOBJECT_H */
+
