@@ -19,7 +19,6 @@ int main()
     {
         tank::Game::makeState<MainState>();
         tank::Game::run();
-        tank::Game::close();
     }
 
     return 0;
