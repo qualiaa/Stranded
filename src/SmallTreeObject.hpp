@@ -1,9 +1,9 @@
 #ifndef SMALLTREEOBJECT_H
 #define	SMALLTREEOBJECT_H
 
-#include "Engine/System/Entity.hpp"
+#include "Object.hpp"
 
-class SmallTreeObject : public tank::Entity
+class SmallTreeObject : public Object
 {
 public:
     SmallTreeObject(tank::Vectorf pos);

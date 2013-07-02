@@ -1,9 +1,9 @@
 #ifndef PALMTREEOBJECT_H
 #define	PALMTREEOBJECT_H
 
-#include "Engine/System/Entity.hpp"
+#include "Object.hpp"
 
-class PalmTreeObject : public tank::Entity
+class PalmTreeObject : public Object
 {
 public:
     PalmTreeObject(tank::Vectorf pos );

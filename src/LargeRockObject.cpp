@@ -4,7 +4,7 @@
 #include "MainState.hpp"
 
 LargeRockObject::LargeRockObject(tank::Vectorf pos)
-    : tank::Entity(pos)
+    : Object(pos)
 {
     setGraphic<tank::Image>(MainState::largerock);
     setHitbox({ 12, 12, 42, 32 });

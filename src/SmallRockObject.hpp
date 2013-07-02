@@ -1,9 +1,9 @@
 #ifndef SMALLROCKOBJECT_H
 #define	SMALLROCKOBJECT_H
 
-#include "Engine/System/Entity.hpp"
+#include "Object.hpp"
 
-class SmallRockObject : public tank::Entity
+class SmallRockObject : public Object
 {
 public:
     SmallRockObject(tank::Vectorf pos);

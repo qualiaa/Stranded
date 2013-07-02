@@ -11,6 +11,7 @@ Tile::Tile(tank::Vectorf pos, int tileID, unsigned int rotation)
 {
     setHitbox({ 0, 0, TILE_SIZE, TILE_SIZE });
     setType("tile");
+    setLayer(-100);
 
     tank::Image* image;
 

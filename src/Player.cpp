@@ -5,7 +5,7 @@
 #include "Room.hpp"
 
 Player::Player(tank::Vectorf pos, MainState* mState)
-    : tank::Entity(pos)
+    : Object(pos)
     , rotation_(1)
     , mapPos_({0, 0})
     , mState_(mState)
@@ -67,6 +67,7 @@ void Player::update()
     lastPos_ = getPos();
 
     setPos(lastPos_ + vel_);
+    setLayer(getHitbox().y + getPos().y);
 
 
     checkSides();
@@ -127,7 +128,7 @@ void Player::checkSides()
     {
         if(mapPos_.x > 0)
         {
-            mapPos_.x = mapPos_.x - 1;//Move player to next room
+            mapPos_.x = mapPos_.x - 1; //Move player to next room
             pos.x = 576 + 21;
             lastPos_.x = 700;
 

@@ -1,9 +1,9 @@
 #ifndef LARGEROCKOBJECT_H
 #define	LARGEROCKOBJECT_H
 
-#include "Engine/System/Entity.hpp"
+#include "Object.hpp"
 
-class LargeRockObject : public tank::Entity
+class LargeRockObject : public Object
 {
 public:
     LargeRockObject(tank::Vectorf pos);

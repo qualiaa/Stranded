@@ -2,11 +2,11 @@
 #define	PLAYER_H
 
 #include "Engine/Graphics/Animation.hpp"
-#include "Engine/System/Entity.hpp"
+#include "Object.hpp"
 
 class MainState;
 
-class Player : public tank::Entity
+class Player : public Object
 {
 public:
     void move(int rotation, bool moving);

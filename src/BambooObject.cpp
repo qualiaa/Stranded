@@ -6,7 +6,7 @@
 #include "MainState.hpp"
 
 BambooObject::BambooObject(tank::Vectorf pos)
-    : tank::Entity(pos)
+    : Object(pos)
 {
 
     setGraphic<tank::Image>(MainState::bamboo);

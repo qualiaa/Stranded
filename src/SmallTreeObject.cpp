@@ -5,7 +5,7 @@
 #include "Tile.hpp"
 
 SmallTreeObject::SmallTreeObject(tank::Vectorf pos)
-    : tank::Entity(pos)
+    : Object(pos)
 {
     setGraphic<tank::Image>(MainState::smallrock);
     tank::Rect hb = { 18, Tile::TILE_SIZE - 8, 28, 9 };

@@ -5,6 +5,7 @@
 #include <string>
 #include <algorithm>
 #include <memory>
+#include "Object.hpp"
 #include "Player.hpp"
 #include "LargeTreeObject.hpp"
 #include "SmallTreeObject.hpp"
@@ -40,20 +41,17 @@ enum EntityType
 };
 
 Room::Room(tank::Vectori coords)
-:coords_(coords)
 {
     std::vector<std::unique_ptr<Tile>> tiles;
     std::vector<std::unique_ptr<tank::Entity>> entities;
     tank::Vectorf tilePos = {0,0};
     int tileID;
-    int objectID;
     int rotation;
-    int x = (int)coords_.x;
-    int y = (int)coords_.y;
+    int objectID;
 
     std::stringstream ss;
 
-    ss << "res/Room_" << x << "-" << y << ".roo";
+    ss << "res/Room_" << coords.x << "-" << coords.y << ".roo";
     std::string path = ss.str();
 
     std::fstream roomFile(path.c_str());
@@ -69,7 +67,7 @@ Room::Room(tank::Vectori coords)
     tiles.reserve( ROOM_SIZE*ROOM_SIZE );
 
     //TODO this could probably be unique with obj.reset used each time
-    tank::Entity* obj = NULL;
+    Object* obj = NULL;
 
     for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; ++i)
     {
@@ -119,7 +117,7 @@ Room::Room(tank::Vectori coords)
                 break;
         }
 
-        if(obj != nullptr)
+        if(obj)
         {
             obj->setPos(objPos);
             obj->setState(this);

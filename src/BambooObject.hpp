@@ -1,9 +1,9 @@
 #ifndef BAMBOOOBJECT_H
 #define	BAMBOOOBJECT_H
 
-#include "Engine/System/Entity.hpp"
+#include "Object.hpp"
 
-class BambooObject : public tank::Entity
+class BambooObject : public Object
 {
 public:
     virtual void update();

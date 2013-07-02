@@ -18,7 +18,5 @@ public:
     Room(tank::Vectori coords);
 
     ~Room();
-private:
-    tank::Vectori  coords_;
 };
 #endif
