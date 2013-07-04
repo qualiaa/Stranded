@@ -42,10 +42,4 @@ Tile::Tile(tank::Vectorf pos, int tileID, unsigned int rotation)
     setGraphic<tank::Image>(*image);
     getGraphic().setSize({64.f, 64.f});
     getGraphic().setClip({static_cast<int>(rotation) * 64, 0, 64 ,64});
-
-    /*
-    tile_ = Animation(getTexture(), { TILE_SIZE, TILE_SIZE });
-    tile_.add("tile", { rotation }, 0);
-    tile_.select("tile", false );
-    */
 }

@@ -26,27 +26,27 @@ Player::Player(tank::Vectorf pos, MainState* mState)
 void Player::update()
 {
     bool moving = false;
-    if(vel_.x > 0)
+    if (vel_.x > 0)
     {
         rotation_ = 1;
         moving = true;
     }
-    else if(vel_.x < 0)
+    else if (vel_.x < 0)
     {
         rotation_ = 3;
         moving = true;
     }
-    if(vel_.y > 0)
+    if (vel_.y > 0)
     {
         rotation_ = 2;
         moving = true;
     }
-    else if(vel_.y < 0)
+    else if (vel_.y < 0)
     {
         rotation_ = 0;
         moving = true;
     }
-    if(moving)
+    if (moving)
     {
         switch( rotation_ )
         {
@@ -76,7 +76,7 @@ void Player::update()
 
 void Player::move(int rotation, bool moving)
 {
-    if(moving)
+    if (moving)
     {
         switch(rotation)
         {
@@ -124,9 +124,9 @@ void Player::checkSides()
     tank::Vectorf pos = getPos();
     tank::Rect const& hitbox = getHitbox();
 
-    if(pos.x + hitbox.x < 0)
+    if (pos.x + hitbox.x < 0)
     {
-        if(mapPos_.x > 0)
+        if (mapPos_.x > 0)
         {
             mapPos_.x = mapPos_.x - 1; //Move player to next room
             pos.x = 576 + 21;
@@ -140,9 +140,9 @@ void Player::checkSides()
             //vel_.x = 0;
         }
     }
-    else if(pos.x + hitbox.x + hitbox.w >= 640)
+    else if (pos.x + hitbox.x + hitbox.w >= 640)
     {
-        if(mapPos_.x < 3)
+        if (mapPos_.x < 3)
         {
             mapPos_.x = mapPos_.x + 1;//Move player to next room
             pos.x = 0 - 21;
@@ -156,9 +156,9 @@ void Player::checkSides()
             //vel_.x = 0;
         }
     }
-    else if(pos.y + hitbox.y < 0)
+    else if (pos.y + hitbox.y < 0)
     {
-        if(mapPos_.y > 0)
+        if (mapPos_.y > 0)
         {
             mapPos_.y = mapPos_.y - 1; //Move player to next room
             pos.y = 640 - 64;
@@ -172,9 +172,9 @@ void Player::checkSides()
             //vel_.y = 0;
         }
     }
-    else if(pos.y + hitbox.y + hitbox.h >= 640)
+    else if (pos.y + hitbox.y + hitbox.h >= 640)
     {
-        if(mapPos_.y < 3)
+        if (mapPos_.y < 3)
         {
             mapPos_.y = mapPos_.y + 1; //Move player to next room
             pos.y = 0 - 58;
@@ -194,7 +194,7 @@ void Player::checkSides()
 
 void Player::handleCollisions()
 {
-    if(!collide("bamboo").empty())
+    if (!collide("bamboo").empty())
     {
         //TODO something
     }
@@ -203,7 +203,7 @@ void Player::handleCollisions()
 
     for(auto ent : collisionList)
     {
-        if(ent->isSolid())
+        if (ent->isSolid())
         {
             setPos(lastPos_);
 
