@@ -70,8 +70,8 @@ void Player::update()
     setLayer(getHitbox().y + getPos().y);
 
 
-    checkSides();
     handleCollisions();
+    checkSides();
 }
 
 void Player::move(int rotation, bool moving)
@@ -137,7 +137,6 @@ void Player::checkSides()
         else
         {
             pos.x = lastPos_.x;
-            //vel_.x = 0;
         }
     }
     else if (pos.x + hitbox.x + hitbox.w >= 640)
@@ -153,7 +152,6 @@ void Player::checkSides()
         else
         {
             pos.x = lastPos_.x;
-            //vel_.x = 0;
         }
     }
     else if (pos.y + hitbox.y < 0)
@@ -169,7 +167,6 @@ void Player::checkSides()
         else
         {
             pos.y = lastPos_.y;
-            //vel_.y = 0;
         }
     }
     else if (pos.y + hitbox.y + hitbox.h >= 640)
@@ -185,7 +182,6 @@ void Player::checkSides()
         else
         {
             pos.y = lastPos_.y;
-            //vel_.y = 0;
         }
     }
 
