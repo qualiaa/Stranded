@@ -6,7 +6,7 @@ Object::Object(tank::Vectorf pos)
     : tank::Entity(pos)
 { }
 
-void Object::setHitbox(tank::Rect hb)
+void Object::setHitbox(tank::Rectd hb)
 {
     Entity::setHitbox(hb);
 

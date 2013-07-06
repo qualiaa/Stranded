@@ -10,7 +10,7 @@ class Object : public tank::Entity
 public:
     Object(tank::Vectorf pos);
 
-    virtual void setHitbox(tank::Rect) override;
+    virtual void setHitbox(tank::Rectd) override;
     virtual void setPos(tank::Vectorf) override;
 };
 #endif /* OBJECT_HPP */

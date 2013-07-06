@@ -11,7 +11,7 @@ LargeTreeObject::LargeTreeObject(tank::Vectorf pos)
 {
     makeGraphic<tank::Image>(MainState::largetree);
     const int hbHeight = 9;
-    setHitbox({ 18, Tile::TILE_SIZE * 2 - 8 - hbHeight, 28, hbHeight});
+    setHitbox({ 18, static_cast<double>(Tile::TILE_SIZE) * 2 - 8 - hbHeight, 28, hbHeight});
 
     setSolid(true);
 }

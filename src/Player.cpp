@@ -122,7 +122,7 @@ void Player::move(int rotation, bool moving)
 void Player::checkSides()
 {
     tank::Vectorf pos = getPos();
-    tank::Rect const& hitbox = getHitbox();
+    tank::Rectd const& hitbox = getHitbox();
 
     if (pos.x + hitbox.x < 0)
     {
