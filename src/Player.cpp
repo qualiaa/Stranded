@@ -10,7 +10,7 @@ Player::Player(tank::Vectorf pos, MainState* mState)
     , mapPos_({0, 0})
     , mState_(mState)
 {
-    anim_ = setGraphic<tank::Animation>(MainState::player,
+    anim_ = makeGraphic<tank::Animation>(MainState::player,
                                         tank::Vector<unsigned int>{ 64, 64 });
     setHitbox({ 21, 58, 21, 5 });
     setType("player");

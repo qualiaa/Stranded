@@ -14,7 +14,7 @@
 PalmTreeObject::PalmTreeObject(tank::Vectorf pos)
     : Object(pos)
 {
-    setGraphic<tank::Image>(MainState::palmtree);
+    makeGraphic<tank::Image>(MainState::palmtree);
     tank::Rect hb = { 30, Tile::TILE_SIZE * 2 - 4, 16, 6 };
     hb.y -= hb.h;
     setHitbox(hb);

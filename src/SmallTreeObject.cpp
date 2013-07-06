@@ -7,7 +7,7 @@
 SmallTreeObject::SmallTreeObject(tank::Vectorf pos)
     : Object(pos)
 {
-    setGraphic<tank::Image>(MainState::smallrock);
+    makeGraphic<tank::Image>(MainState::smallrock);
     tank::Rect hb = { 18, Tile::TILE_SIZE - 8, 28, 9 };
     hb.y -= hb.h;
 

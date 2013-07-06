@@ -6,7 +6,7 @@
 LargeRockObject::LargeRockObject(tank::Vectorf pos)
     : Object(pos)
 {
-    setGraphic<tank::Image>(MainState::largerock);
+    makeGraphic<tank::Image>(MainState::largerock);
     setHitbox({ 12, 12, 42, 32 });
     setSolid(true);
 }
