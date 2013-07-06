@@ -1,6 +1,6 @@
 #include "Inventory.hpp"
 
-Inventory::Inventory(GameState *state) 
+Inventory::Inventory()
 {
     for (int i = 0; i < NUM_ITEMS; i++)
     {
@@ -8,9 +8,8 @@ Inventory::Inventory(GameState *state)
     }
 }
 
-Inventory::~Inventory() 
+Inventory::~Inventory()
 {
-    
 }
 
 void Inventory::addItem(Items item)

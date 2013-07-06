@@ -7,7 +7,7 @@ class GameState;
 class Inventory
 {
 public:
-    Inventory(GameState *state);
+    Inventory();
     virtual ~Inventory();
 
     enum Items
@@ -15,12 +15,12 @@ public:
         NULL_ITEM,
         ITEM_BAMBOO,
         ITEM_COCONUT,
-        NUM_ITEMS            
+        NUM_ITEMS
     };
 
     void addItem(Items);
     //void draw();
 private:
     int items_[NUM_ITEMS];
-}; 
+};
 #endif
