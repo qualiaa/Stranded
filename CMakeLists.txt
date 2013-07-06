@@ -1,6 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 project(Stranded)
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 find_package(SFML 2.0 REQUIRED system window audio graphics)
 find_package(OpenGL REQUIRED)
@@ -8,13 +9,17 @@ find_package(GLEW REQUIRED)
 find_package(Threads REQUIRED)
 find_package(Boost 1.53.0 REQUIRED)
 
-include_directories(${Boost_INCLUDE_DIRS})
-include_directories(${SFML_INCLUDE_DIRS})
-include_directories(${OpenGL_INCLUDE_DIRS})
-include_directories(${GLEW_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIR})
+include_directories(${SFML_INCLUDE_DIR})
+include_directories(${OPENGL_INCLUDE_DIR})
+include_directories(${GLEW_INCLUDE_DIR})
+
+message("Boost_INCLUDE_DIR ${Boost_INCLUDE_DIR}")
+message("SFML_INCLUDE_DIR ${SFML_INCLUDE_DIR}")
+message("OPENGL_INCLUDE_DIR ${OPENGL_INCLUDE_DIR}")
+message("GLEW_INCLUDE_DIR ${GLEW_INCLUDE_DIR}")
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
-set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 option(COTIRE "Use Cotire" ON)
 if(COTIRE)
