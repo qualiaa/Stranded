@@ -40,6 +40,5 @@ Tile::Tile(tank::Vectorf pos, int tileID, unsigned int rotation)
     }
 
     makeGraphic <tank::Image>(*image);
-    getGraphic()->setSize({64.f, 64.f});
     getGraphic()->setClip({rotation * 64, 0, 64 ,64});
 }
