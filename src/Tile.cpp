@@ -1,5 +1,6 @@
 #include "Tile.hpp"
 
+#include <stdexcept>
 #include "Engine/Graphics/Animation.hpp"
 #include "Engine/System/Game.hpp"
 #include "MainState.hpp"
