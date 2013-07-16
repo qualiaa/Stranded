@@ -195,7 +195,7 @@ void Player::handleCollisions()
         //TODO something
     }
 
-    std::vector<Entity*> collisionList = collide();
+    std::vector<std::shared_ptr<Entity>> collisionList = collide();
 
     for(auto ent : collisionList)
     {
