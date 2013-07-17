@@ -38,7 +38,7 @@ public:
     MainState();
     virtual ~MainState();
 private:
-    std::vector<tank::observing_ptr<Room>> rooms_;
+    std::vector<std::unique_ptr<Room>> rooms_;
 
     tank::observing_ptr<Room>   currentRoom_;
     tank::observing_ptr<Player> player_;

@@ -50,9 +50,8 @@ MainState::MainState()
 MainState::~MainState()
 {
     tank::Game::log << "Unloading World..." << std::endl;
-
-    // TODO WHAT THE FUCK?!
-    /*for (unsigned int i = 0; i < rooms_.size(); ++i)
+    /*
+    for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
         delete(rooms_[i]);
     }*/
@@ -74,7 +73,7 @@ void MainState::loadRooms()
         {
             coords.x = j;
             //rooms_[i*MAP_WIDTH+j] = new Room(coords,player_);
-            rooms_.push_back(new Room(coords));
+            rooms_.emplace_back(new Room(coords));
         }
     }
 }
