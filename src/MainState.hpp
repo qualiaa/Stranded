@@ -41,7 +41,7 @@ private:
     std::vector<Room*> rooms_;
 
     Room*   currentRoom_;
-    std::shared_ptr<Player> player_;
+    Player* player_;
     bool    paused_;
 
     void loadRooms();
