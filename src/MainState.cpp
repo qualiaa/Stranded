@@ -15,7 +15,7 @@
 #define MAP_HEIGHT 4
 
 MainState::MainState()
-   :currentRoom_(NULL),
+   :currentRoom_(nullptr),
     paused_(false)
 {
     tank::Game::log << "Loading main state" << std::endl;
@@ -51,10 +51,11 @@ MainState::~MainState()
 {
     tank::Game::log << "Unloading World..." << std::endl;
 
-    for (unsigned int i = 0; i < rooms_.size(); ++i)
+    // TODO WHAT THE FUCK?!
+    /*for (unsigned int i = 0; i < rooms_.size(); ++i)
     {
         delete(rooms_[i]);
-    }
+    }*/
     rooms_.clear();
 
     entities_.clear();
@@ -82,13 +83,13 @@ void MainState::changeRoom(tank::Vectori coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 
-    Room* lastRoom = currentRoom_;
+    tank::observing_ptr<Room> lastRoom = currentRoom_;
     currentRoom_ = rooms_[coords.y*MAP_WIDTH + coords.x];
 
     lastRoom->moveEntity(currentRoom_, player_);
 }
 
-Room const* MainState::currentRoom()
+const tank::observing_ptr<Room> MainState::currentRoom()
 {
     return currentRoom_;
 }

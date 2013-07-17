@@ -4,7 +4,7 @@
 #include "MainState.hpp"
 #include "Room.hpp"
 
-Player::Player(tank::Vectorf pos, MainState* mState)
+Player::Player(tank::Vectorf pos, tank::observing_ptr<MainState> mState)
     : Object(pos)
     , rotation_(1)
     , mapPos_({0, 0})
@@ -195,7 +195,7 @@ void Player::handleCollisions()
         //TODO something
     }
 
-    std::vector<Entity*> collisionList = collide();
+    std::vector<tank::observing_ptr<Entity>> collisionList = collide();
 
     for(auto ent : collisionList)
     {

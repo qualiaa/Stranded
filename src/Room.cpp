@@ -68,7 +68,7 @@ Room::Room(tank::Vectori coords)
     tiles.reserve( ROOM_SIZE*ROOM_SIZE );
 
     //TODO this could probably be unique with obj.reset used each time
-    Object* obj = NULL;
+    Object* obj = nullptr;
 
     for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; ++i)
     {
@@ -92,7 +92,7 @@ Room::Room(tank::Vectori coords)
         switch(objectID)
         {
             case NULL_ENTITY:
-                obj = NULL;
+                obj = nullptr;
                 break;
             case ENT_BAMBOO:
                 obj = new BambooObject( {} );

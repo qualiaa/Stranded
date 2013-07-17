@@ -29,7 +29,7 @@ public:
 
     void changeRoom(tank::Vectori coords);
 
-    Room const* currentRoom();
+    const tank::observing_ptr<Room> currentRoom();
 
     virtual void handleEvents(sf::Keyboard::Key) override;
     virtual void update() override;
@@ -38,10 +38,10 @@ public:
     MainState();
     virtual ~MainState();
 private:
-    std::vector<Room*> rooms_;
+    std::vector<tank::observing_ptr<Room>> rooms_;
 
-    Room*   currentRoom_;
-    Player* player_;
+    tank::observing_ptr<Room>   currentRoom_;
+    tank::observing_ptr<Player> player_;
     bool    paused_;
 
     void loadRooms();

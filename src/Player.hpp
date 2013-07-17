@@ -12,13 +12,13 @@ public:
     void move(int rotation, bool moving);
     virtual void update() override;
 
-    Player(tank::Vectorf pos, MainState*);
+    Player(tank::Vectorf pos, tank::observing_ptr<MainState>);
 private:
     void handleCollisions();
-    tank::Animation* anim_;
+    tank::observing_ptr<tank::Animation> anim_;
     unsigned int rotation_;
     tank::Vectori mapPos_;
-    MainState* mState_;
+    tank::observing_ptr<MainState> mState_;
 
     tank::Vectorf vel_;
     tank::Vectorf lastPos_;
