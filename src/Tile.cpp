@@ -1,8 +1,8 @@
 #include "Tile.hpp"
 
 #include <stdexcept>
-#include "Engine/Graphics/Animation.hpp"
-#include "Engine/System/Game.hpp"
+#include <Tank/Graphics/Animation.hpp>
+#include <Tank/System/Game.hpp>
 #include "MainState.hpp"
 
 const int Tile::TILE_SIZE = 64;

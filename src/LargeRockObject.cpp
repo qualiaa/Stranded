@@ -1,6 +1,6 @@
 #include "LargeRockObject.hpp"
 
-#include "Engine/Graphics/Image.hpp"
+#include <Tank/Graphics/Image.hpp>
 #include "MainState.hpp"
 
 LargeRockObject::LargeRockObject(tank::Vectorf pos)

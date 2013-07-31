@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
-#include "Engine/System/Game.hpp"
-#include "Engine/System/Entity.hpp"
-#include "Engine/Graphics/BitmapText.hpp"
+#include <Tank/System/Game.hpp>
+#include <Tank/System/Entity.hpp>
+#include <Tank/Graphics/BitmapText.hpp>
 #include "Room.hpp"
 #include "Player.hpp"
 #include "Tile.hpp"

@@ -1,10 +1,10 @@
 #include "LargeTreeObject.hpp"
 
-#include "Engine/Graphics/Image.hpp"
+#include <Tank/Graphics/Image.hpp>
 #include "MainState.hpp"
 #include "Tile.hpp"
 
-#include "Engine/System/Game.hpp"
+#include <Tank/System/Game.hpp>
 
 LargeTreeObject::LargeTreeObject(tank::Vectorf pos)
     : Object(pos)

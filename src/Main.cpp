@@ -7,9 +7,9 @@
  * Created on 17 December 2011, 04:26
  */
 
-#include "Engine/System/Game.hpp"
+#include <Tank/System/Game.hpp>
 #include "MainState.hpp"
-#include "Engine/Audio/Music.hpp"
+#include <Tank/Audio/Music.hpp>
 
 int main()
 {

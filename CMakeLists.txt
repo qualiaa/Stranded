@@ -8,9 +8,11 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(Threads REQUIRED)
 find_package(Boost 1.53.0 REQUIRED)
+add_subdirectory(Tank)
 
 include_directories(${Boost_INCLUDE_DIR})
 include_directories(${SFML_INCLUDE_DIR})
+include_directories(${TANK_INCLUDE_DIRS})
 
 message("Boost_INCLUDE_DIR ${Boost_INCLUDE_DIR}")
 message("SFML_INCLUDE_DIR ${SFML_INCLUDE_DIR}")

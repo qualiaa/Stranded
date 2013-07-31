@@ -7,7 +7,7 @@
 
 #include "PalmTreeObject.hpp"
 
-#include "Engine/Graphics/Image.hpp"
+#include <Tank/Graphics/Image.hpp>
 #include "MainState.hpp"
 #include "Tile.hpp"
 

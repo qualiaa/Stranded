@@ -1,7 +1,7 @@
 #include "BambooObject.hpp"
 
-#include "Engine/System/State.hpp"
-#include "Engine/Graphics/Text.hpp"
+#include <Tank/System/State.hpp>
+#include <Tank/Graphics/Text.hpp>
 #include "Tile.hpp"
 #include "MainState.hpp"
 

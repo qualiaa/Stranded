@@ -1,5 +1,5 @@
 #include "SmallRockObject.hpp"
-#include "Engine/Graphics/Image.hpp"
+#include <Tank/Graphics/Image.hpp>
 #include "MainState.hpp"
 
 SmallRockObject::SmallRockObject(tank::Vectorf pos)

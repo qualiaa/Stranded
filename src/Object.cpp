@@ -1,6 +1,6 @@
 #include "Object.hpp"
 
-#include "Engine/System/Game.hpp"
+#include <Tank/System/Game.hpp>
 
 Object::Object(tank::Vectorf pos)
     : tank::Entity(pos)

@@ -1,9 +1,9 @@
 #ifndef MAINSTATE_H
 #define	MAINSTATE_H
 
-#include "Engine/System/State.hpp"
-#include "Engine/Utility/Vector.hpp"
-#include "Engine/Graphics/Image.hpp"
+#include <Tank/System/State.hpp>
+#include <Tank/Utility/Vector.hpp>
+#include <Tank/Graphics/Image.hpp>
 
 class Player;
 class Room;
