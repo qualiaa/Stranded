@@ -40,7 +40,7 @@ if(NOT MSVC)
 endif(NOT MSVC)
 
 if(WARN)
-    set (CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS}")
+    set (CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS} -Wno-mismatched-tags")
 endif(WARN)
 
 set (CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}" )
