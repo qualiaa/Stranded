@@ -1,6 +1,5 @@
 #include "Player.hpp"
 
-#include <Tank/Graphics/Animation.hpp>
 #include "MainState.hpp"
 #include "Room.hpp"
 
@@ -10,7 +9,7 @@ Player::Player(tank::Vectorf pos, tank::observing_ptr<MainState> mState)
     , mapPos_({0, 0})
     , mState_(mState)
 {
-    anim_ = makeGraphic<tank::Animation>(MainState::player,
+    anim_ = makeGraphic<tank::FrameList>(MainState::player,
                                         tank::Vector<unsigned int>{ 64, 64 });
     setHitbox({ 21, 58, 21, 5 });
     setType("player");
@@ -57,7 +56,7 @@ void Player::update()
             default: break;
         }
 
-        anim_->play();
+        anim_->start();
     }
     else
     {

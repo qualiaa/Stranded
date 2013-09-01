@@ -1,7 +1,7 @@
-#ifndef PLAYER_H
-#define	PLAYER_H
+#ifndef PLAYER_HPP
+#define	PLAYER_HPP
 
-#include <Tank/Graphics/Animation.hpp>
+#include <Tank/Graphics/FrameList.hpp>
 #include "Object.hpp"
 
 class MainState;
@@ -15,7 +15,7 @@ public:
     Player(tank::Vectorf pos, tank::observing_ptr<MainState>);
 private:
     void handleCollisions();
-    tank::observing_ptr<tank::Animation> anim_;
+    tank::observing_ptr<tank::FrameList> anim_;
     unsigned int rotation_;
     tank::Vectori mapPos_;
     tank::observing_ptr<MainState> mState_;
@@ -25,4 +25,5 @@ private:
     float speed_;
     void checkSides();
 };
-#endif
+
+#endif /* PLAYER_HPP */

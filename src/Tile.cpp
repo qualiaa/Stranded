@@ -1,7 +1,7 @@
 #include "Tile.hpp"
 
 #include <stdexcept>
-#include <Tank/Graphics/Animation.hpp>
+#include <Tank/Graphics/Image.hpp>
 #include <Tank/System/Game.hpp>
 #include "MainState.hpp"
 
