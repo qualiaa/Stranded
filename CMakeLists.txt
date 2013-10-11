@@ -4,8 +4,6 @@ project(Stranded)
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 find_package(SFML 2.0 REQUIRED system window audio graphics)
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
 find_package(Threads REQUIRED)
 find_package(Boost 1.53.0 REQUIRED)
 add_subdirectory(Tank)
