@@ -31,8 +31,6 @@ if (APPLE)
     set(CMAKE_LD_FLAGS "-stdlib=libc++ ${CMAKE_LD_FLAGS}")
 endif(APPLE)
 
-set(CMAKE_BUILD_TYPE Debug)
-
 if(NOT MSVC)
     option(WARN "Compile using all warnings" ON)
 endif(NOT MSVC)
