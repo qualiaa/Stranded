@@ -1,5 +1,7 @@
 #include "Player.hpp"
 
+#include <iostream>
+#include <Tank/System/Keyboard.hpp>
 #include "MainState.hpp"
 #include "Room.hpp"
 
@@ -8,6 +10,8 @@ Player::Player(tank::Vectorf pos, tank::observing_ptr<MainState> mState)
     , rotation_(1)
     , mapPos_({0, 0})
     , mState_(mState)
+    , vel_ { 0.f, 0.f }
+    , lastPos_ { 0.f, 0.f }
 {
     anim_ = makeGraphic<tank::FrameList>(MainState::player,
                                         tank::Vector<unsigned int>{ 64, 64 });
@@ -20,11 +24,25 @@ Player::Player(tank::Vectorf pos, tank::observing_ptr<MainState> mState)
     anim_->add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100);
     anim_->add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100);
     anim_->select("up");
+
+    upCon = mState_->eventHandler.connect(tank::Keyboard::KeyPressed(tank::Key::W),
+                                [this](){ vel_.y -= speed_; });
+    leftCon = mState_->eventHandler.connect(tank::Keyboard::KeyPressed(tank::Key::A),
+                                [this](){ vel_.x -= speed_; });
+    downCon = mState_->eventHandler.connect(tank::Keyboard::KeyPressed(tank::Key::S),
+                                [this](){ vel_.y += speed_; });
+    rightCon = mState_->eventHandler.connect(tank::Keyboard::KeyPressed(tank::Key::D),
+                                [this](){ vel_.x += speed_; });
 }
 
+
+void Player::onAdded()
+{
+}
 void Player::update()
 {
     bool moving = false;
+
     if (vel_.x > 0)
     {
         rotation_ = 1;
@@ -47,7 +65,7 @@ void Player::update()
     }
     if (moving)
     {
-        switch( rotation_ )
+        switch(rotation_)
         {
             case 0: anim_->select("up");    break;
             case 1: anim_->select("right"); break;
@@ -67,7 +85,6 @@ void Player::update()
 
     setPos(lastPos_ + vel_);
     setLayer(getHitbox().y + getPos().y);
-
 
     handleCollisions();
     checkSides();
@@ -142,7 +159,7 @@ void Player::checkSides()
     {
         if (mapPos_.x < 3)
         {
-            mapPos_.x = mapPos_.x + 1;//Move player to next room
+            mapPos_.x = mapPos_.x + 1; //Move player to next room
             pos.x = 0 - 21;
             lastPos_.x = -100;
 
