@@ -36,7 +36,10 @@ if(NOT MSVC)
 endif(NOT MSVC)
 
 if(WARN)
-    set (CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS} -Wno-mismatched-tags")
+    set (CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS}")
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-mismatched-tags")
+    endif()
 endif(WARN)
 
 set (CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}" )
