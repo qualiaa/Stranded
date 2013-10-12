@@ -1,5 +1,4 @@
 #include "MainState.hpp"
-
 #include <algorithm>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
@@ -102,54 +101,6 @@ void MainState::pause()
     else
     {
         paused_ = true;
-    }
-}
-
-void MainState::handleEvents(sf::Keyboard::Key ke)
-{
-    bool pressed = sf::Keyboard::isKeyPressed(ke);
-    if(pressed)
-    {
-        switch(ke)
-        {
-            case sf::Keyboard::W:
-                player_->move(0, true);
-                break;
-            case sf::Keyboard::S:
-                player_->move(2, true);
-                break;
-            case sf::Keyboard::A:
-                player_->move(3, true);
-                break;
-            case sf::Keyboard::D:
-                player_->move(1, true);
-                break;
-            case sf::Keyboard::P:
-                pause();
-                break;
-            default:
-                break;
-        }
-    }
-    else
-    {
-        switch(ke)
-        {
-            case sf::Keyboard::W:
-                player_->move(0, false);
-                break;
-            case sf::Keyboard::S:
-                player_->move(2, false);
-                break;
-            case sf::Keyboard::A:
-                player_->move(3, false);
-                break;
-            case sf::Keyboard::D:
-                player_->move(1, false);
-                break;
-            default:
-                break;
-        }
     }
 }
 

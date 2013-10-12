@@ -31,7 +31,6 @@ public:
 
     const tank::observing_ptr<Room> currentRoom();
 
-    virtual void handleEvents(sf::Keyboard::Key) override;
     virtual void update() override;
     virtual void draw() override;
 
