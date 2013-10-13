@@ -25,13 +25,13 @@ Player::Player(tank::Vectorf pos, tank::observing_ptr<MainState> mState)
     anim_->add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100);
     anim_->select("up");
 
-    upCon = mState_->eventHandler.connect(tank::Keyboard::KeyPressed(tank::Key::W),
+    upCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::W),
                                 [this](){ vel_.y -= speed_; });
-    leftCon = mState_->eventHandler.connect(tank::Keyboard::KeyPressed(tank::Key::A),
+    leftCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::A),
                                 [this](){ vel_.x -= speed_; });
-    downCon = mState_->eventHandler.connect(tank::Keyboard::KeyPressed(tank::Key::S),
+    downCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::S),
                                 [this](){ vel_.y += speed_; });
-    rightCon = mState_->eventHandler.connect(tank::Keyboard::KeyPressed(tank::Key::D),
+    rightCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::D),
                                 [this](){ vel_.x += speed_; });
 }
 
