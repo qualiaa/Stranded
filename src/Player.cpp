@@ -1,6 +1,5 @@
 #include "Player.hpp"
 
-#include <iostream>
 #include <Tank/System/Keyboard.hpp>
 #include "MainState.hpp"
 #include "Room.hpp"
