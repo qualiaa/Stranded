@@ -6,17 +6,12 @@
 
 Player::Player(tank::Vectorf pos, tank::observing_ptr<MainState> mState)
     : Object(pos)
-    , rotation_(1)
-    , mapPos_({0, 0})
     , mState_(mState)
-    , vel_ { 0.f, 0.f }
-    , lastPos_ { 0.f, 0.f }
 {
     anim_ = makeGraphic<tank::FrameList>(MainState::player,
                                         tank::Vector<unsigned int>{ 64, 64 });
     setHitbox({ 21, 58, 21, 5 });
     setType("player");
-    speed_ = 5;
 
     anim_->add("up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100);
     anim_->add("right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100);
@@ -25,19 +20,15 @@ Player::Player(tank::Vectorf pos, tank::observing_ptr<MainState> mState)
     anim_->select("up");
 
     upCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::W),
-                                [this](){ vel_.y -= speed_; });
+                                [&](){ vel_.y = -speed_; });
     leftCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::A),
-                                [this](){ vel_.x -= speed_; });
+                                [&](){ vel_.x = -speed_; });
     downCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::S),
-                                [this](){ vel_.y += speed_; });
+                                [&](){ vel_.y = speed_; });
     rightCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::D),
-                                [this](){ vel_.x += speed_; });
+                                [&](){ vel_.x = speed_; });
 }
 
-
-void Player::onAdded()
-{
-}
 void Player::update()
 {
     bool moving = false;
@@ -82,55 +73,23 @@ void Player::update()
 
     lastPos_ = getPos();
 
-    setPos(lastPos_ + vel_);
+    if(not moveBy(vel_, [&](){
+        auto collisionList = collide();
+        for(auto ent : collisionList)
+        {
+            if (ent->isSolid()) return true;
+        }
+        return false;
+        }))
+    {
+        anim_->stop();
+    }
     setLayer(getHitbox().y + getPos().y);
 
     handleCollisions();
     checkSides();
-}
 
-void Player::move(int rotation, bool moving)
-{
-    if (moving)
-    {
-        switch(rotation)
-        {
-            case 0:
-                vel_.y -= speed_;
-                break;
-            case 1:
-                vel_.x += speed_;
-                break;
-            case 2:
-                vel_.y += speed_;
-                break;
-            case 3:
-                vel_.x -= speed_;
-                break;
-            default:
-                break;
-        }
-    }
-    else
-    {
-        switch(rotation)
-        {
-            case 0:
-                vel_.y += speed_;
-                break;
-            case 1:
-                vel_.x -= speed_;
-                break;
-            case 2:
-                vel_.y -= speed_;
-                break;
-            case 3:
-                vel_.x += speed_;
-                break;
-            default:
-                break;
-        }
-    }
+    vel_ = {};
 }
 
 //TODO Remove magic numbers
@@ -208,17 +167,5 @@ void Player::handleCollisions()
     if (!collide("bamboo").empty())
     {
         //TODO something
-    }
-
-    std::vector<tank::observing_ptr<Entity>> collisionList = collide();
-
-    for(auto ent : collisionList)
-    {
-        if (ent->isSolid())
-        {
-            setPos(lastPos_);
-
-            anim_->stop();
-        }
     }
 }
