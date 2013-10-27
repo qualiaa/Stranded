@@ -7,5 +7,5 @@ SmallRockObject::SmallRockObject(tank::Vectorf pos)
 {
     makeGraphic<tank::Image>(MainState::smallrock);
     setHitbox({ 12, 30, 30, 20 });
-    setSolid(true);
+    setType("solid");
 }

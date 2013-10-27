@@ -16,9 +16,9 @@ BambooObject::BambooObject(tank::Vectorf pos)
 
 void BambooObject::update()
 {
-    if(!collide("player").empty())
+    if(!collide({"player"}).empty())
     {
-        if(getType() == "bamboo")
+        if(isType("bamboo"));
         {
             getGraphic()->setClip({64, 0, 64, 64});
             setType("bamboo_taken");

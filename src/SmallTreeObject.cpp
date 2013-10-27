@@ -12,5 +12,5 @@ SmallTreeObject::SmallTreeObject(tank::Vectorf pos)
     hb.y -= hb.h;
 
     setHitbox(hb);
-    setSolid(true);
+    setType("solid");
 }

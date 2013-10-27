@@ -11,7 +11,7 @@ Tile::Tile(tank::Vectorf pos, int tileID, unsigned int rotation)
     : tank::Entity(pos * static_cast<float>(TILE_SIZE))
 {
     setHitbox({ 0, 0, TILE_SIZE, TILE_SIZE });
-    setType("tile");
+    addType("tile");
     setLayer(-100);
 
     tank::Image* image;
@@ -29,11 +29,11 @@ Tile::Tile(tank::Vectorf pos, int tileID, unsigned int rotation)
             break;
         case 400:
             image = &MainState::sandwater;
-            setSolid(true);
+            addType("solid");
             break;
         case 500:
             image = &MainState::water;
-            setSolid(true);
+            addType("solid");
             break;
         default:
             throw std::runtime_error("Unknown tileID");

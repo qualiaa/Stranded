@@ -74,12 +74,7 @@ void Player::update()
     lastPos_ = getPos();
 
     if(not moveBy(vel_, [&](){
-        auto collisionList = collide();
-        for(auto ent : collisionList)
-        {
-            if (ent->isSolid()) return true;
-        }
-        return false;
+        return not collide({"solid"}).empty();
         }))
     {
         anim_->stop();
@@ -164,7 +159,7 @@ void Player::checkSides()
 
 void Player::handleCollisions()
 {
-    if (!collide("bamboo").empty())
+    if (!collide({{"bamboo"}}).empty())
     {
         //TODO something
     }
