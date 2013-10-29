@@ -3,6 +3,7 @@
 
 #include <Tank/System/State.hpp>
 #include <Tank/Utility/Vector.hpp>
+#include <Tank/Graphics/Font.hpp>
 #include <Tank/Graphics/Image.hpp>
 
 class Player;
@@ -13,6 +14,7 @@ class MainState : public tank::State
 public:
     //Images
     static tank::Image font;
+    static tank::Font ttffont;
     static tank::Image fontsmall;
     static tank::Image grass;
     static tank::Image sand;

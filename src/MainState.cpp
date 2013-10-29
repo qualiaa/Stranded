@@ -4,6 +4,7 @@
 #include <SFML/Window/Event.hpp>
 #include <Tank/System/Game.hpp>
 #include <Tank/System/Entity.hpp>
+#include <Tank/Graphics/Text.hpp>
 #include <Tank/Graphics/BitmapText.hpp>
 #include "Room.hpp"
 #include "Player.hpp"
@@ -21,6 +22,7 @@ MainState::MainState()
 
     /* Load graphics */
     font.load("res/Font.png");
+    ttffont.loadFromFile("res/Vera.ttf");
     fontsmall.load("res/FontSmall.png");
     grass.load("res/GrassTiles.png");
     sand.load("res/SandTiles.png");
@@ -44,6 +46,7 @@ MainState::MainState()
                                                this);
 
     makeEntity<tank::Entity>(tank::Vectorf{10.f, 10.f})->makeGraphic<tank::BitmapText>(font, tank::Vectoru{50, 50})->setText("HELLO");
+    makeEntity<tank::Entity>(tank::Vectorf{40.f, 40.f})->makeGraphic<tank::Text>(ttffont)->setText("HELLO");
 }
 
 MainState::~MainState()
@@ -119,6 +122,7 @@ void MainState::draw()
 }
 
 tank::Image MainState::font;
+tank::Font MainState::ttffont;
 tank::Image MainState::fontsmall;
 tank::Image MainState::grass;
 tank::Image MainState::sand;
