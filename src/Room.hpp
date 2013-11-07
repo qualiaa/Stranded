@@ -4,13 +4,13 @@
 #include <vector>
 #include <memory>
 #include <Tank/Utility/Vector.hpp>
-#include <Tank/System/State.hpp>
+#include <Tank/System/World.hpp>
 #include "Player.hpp"
 #include "Tile.hpp"
 
 class Player;
 
-class Room : public tank::State
+class Room : public tank::World
 {
 public:
     static const int ROOM_SIZE = 10;

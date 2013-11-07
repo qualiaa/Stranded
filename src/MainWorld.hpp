@@ -1,7 +1,7 @@
 #ifndef MAINSTATE_H
 #define	MAINSTATE_H
 
-#include <Tank/System/State.hpp>
+#include <Tank/System/World.hpp>
 #include <Tank/Utility/Vector.hpp>
 #include <Tank/Graphics/Font.hpp>
 #include <Tank/Graphics/Image.hpp>
@@ -9,7 +9,7 @@
 class Player;
 class Room;
 
-class MainState : public tank::State
+class MainWorld : public tank::World
 {
 public:
     //Images
@@ -36,8 +36,8 @@ public:
     virtual void update() override;
     virtual void draw() override;
 
-    MainState();
-    virtual ~MainState();
+    MainWorld();
+    virtual ~MainWorld();
 private:
     std::vector<std::unique_ptr<Room>> rooms_;
 
@@ -48,7 +48,7 @@ private:
     void loadRooms();
     void pause();
 
-    MainState           (MainState const&);
-    MainState& operator=(MainState const&);
+    MainWorld           (MainWorld const&);
+    MainWorld& operator=(MainWorld const&);
 };
 #endif

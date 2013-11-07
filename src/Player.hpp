@@ -5,11 +5,11 @@
 #include <Tank/System/EventHandler.hpp>
 #include "Object.hpp"
 
-class MainState;
+class MainWorld;
 
 class Player : public Object
 {
-    tank::observing_ptr<MainState> mState_;
+    tank::observing_ptr<MainWorld> mState_;
     tank::observing_ptr<tank::FrameList> anim_;
     float speed_ {5};
     unsigned int rotation_ {1};
@@ -25,7 +25,7 @@ public:
 
     virtual void update() override;
 
-    Player(tank::Vectorf pos, tank::observing_ptr<MainState>);
+    Player(tank::Vectorf pos, tank::observing_ptr<MainWorld>);
 
 private:
     void handleCollisions();

@@ -1,4 +1,4 @@
-#include "MainState.hpp"
+#include "MainWorld.hpp"
 #include <algorithm>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
@@ -14,7 +14,7 @@
 #define MAP_WIDTH 4
 #define MAP_HEIGHT 4
 
-MainState::MainState()
+MainWorld::MainWorld()
    :currentRoom_(nullptr),
     paused_(false)
 {
@@ -49,7 +49,7 @@ MainState::MainState()
     makeEntity<tank::Entity>(tank::Vectorf{40.f, 40.f})->makeGraphic<tank::Text>(ttffont)->setText("HELLO");
 }
 
-MainState::~MainState()
+MainWorld::~MainWorld()
 {
     tank::Game::log << "Unloading World..." << std::endl;
     /*
@@ -62,7 +62,7 @@ MainState::~MainState()
     entities_.clear();
 }
 
-void MainState::loadRooms()
+void MainWorld::loadRooms()
 {
     rooms_.reserve(MAP_WIDTH*MAP_HEIGHT);
 
@@ -80,7 +80,7 @@ void MainState::loadRooms()
     }
 }
 
-void MainState::changeRoom(tank::Vectori coords)
+void MainWorld::changeRoom(tank::Vectori coords)
 {
     if(coords.x == MAP_WIDTH || coords.y == MAP_HEIGHT) return;
 
@@ -90,12 +90,12 @@ void MainState::changeRoom(tank::Vectori coords)
     lastRoom->moveEntity(currentRoom_, player_);
 }
 
-const tank::observing_ptr<Room> MainState::currentRoom()
+const tank::observing_ptr<Room> MainWorld::currentRoom()
 {
     return currentRoom_;
 }
 
-void MainState::pause()
+void MainWorld::pause()
 {
     if(paused_)
     {
@@ -107,7 +107,7 @@ void MainState::pause()
     }
 }
 
-void MainState::update()
+void MainWorld::update()
 {
     if(!paused_)
     {
@@ -115,24 +115,24 @@ void MainState::update()
     }
 }
 
-void MainState::draw()
+void MainWorld::draw()
 {
     currentRoom_->draw();
-    tank::State::draw();
+    tank::World::draw();
 }
 
-tank::Image MainState::font;
-tank::Font MainState::ttffont;
-tank::Image MainState::fontsmall;
-tank::Image MainState::grass;
-tank::Image MainState::sand;
-tank::Image MainState::sandwater;
-tank::Image MainState::water;
-tank::Image MainState::player;
-tank::Image MainState::smalltree;
-tank::Image MainState::largetree;
-tank::Image MainState::oceanrock;
-tank::Image MainState::bamboo;
-tank::Image MainState::palmtree;
-tank::Image MainState::smallrock;
-tank::Image MainState::largerock;
+tank::Image MainWorld::font;
+tank::Font MainWorld::ttffont;
+tank::Image MainWorld::fontsmall;
+tank::Image MainWorld::grass;
+tank::Image MainWorld::sand;
+tank::Image MainWorld::sandwater;
+tank::Image MainWorld::water;
+tank::Image MainWorld::player;
+tank::Image MainWorld::smalltree;
+tank::Image MainWorld::largetree;
+tank::Image MainWorld::oceanrock;
+tank::Image MainWorld::bamboo;
+tank::Image MainWorld::palmtree;
+tank::Image MainWorld::smallrock;
+tank::Image MainWorld::largerock;

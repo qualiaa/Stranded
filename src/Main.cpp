@@ -8,7 +8,7 @@
  */
 
 #include <Tank/System/Game.hpp>
-#include "MainState.hpp"
+#include "MainWorld.hpp"
 #include <Tank/Audio/Music.hpp>
 
 int main()
@@ -17,7 +17,7 @@ int main()
     music.play();
     if(tank::Game::initialize({640, 640}))
     {
-        tank::Game::makeState<MainState>();
+        tank::Game::makeWorld<MainWorld>();
         tank::Game::run();
     }
 

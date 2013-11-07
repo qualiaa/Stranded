@@ -1,14 +1,14 @@
 #include "Player.hpp"
 
 #include <Tank/System/Keyboard.hpp>
-#include "MainState.hpp"
+#include "MainWorld.hpp"
 #include "Room.hpp"
 
-Player::Player(tank::Vectorf pos, tank::observing_ptr<MainState> mState)
+Player::Player(tank::Vectorf pos, tank::observing_ptr<MainWorld> mState)
     : Object(pos)
     , mState_(mState)
 {
-    anim_ = makeGraphic<tank::FrameList>(MainState::player,
+    anim_ = makeGraphic<tank::FrameList>(MainWorld::player,
                                         tank::Vector<unsigned int>{ 64, 64 });
     setHitbox({ 21, 58, 21, 5 });
     setType("player");

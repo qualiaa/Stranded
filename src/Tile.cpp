@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <Tank/Graphics/Image.hpp>
 #include <Tank/System/Game.hpp>
-#include "MainState.hpp"
+#include "MainWorld.hpp"
 
 const int Tile::TILE_SIZE = 64;
 
@@ -19,20 +19,20 @@ Tile::Tile(tank::Vectorf pos, int tileID, unsigned int rotation)
     switch( tileID )
     {
         case 100:
-            image = &MainState::grass;
+            image = &MainWorld::grass;
             break;
         /*case 200:
             //texture = "woodland";
             break;*/
         case 300:
-            image = &MainState::sand;
+            image = &MainWorld::sand;
             break;
         case 400:
-            image = &MainState::sandwater;
+            image = &MainWorld::sandwater;
             addType("solid");
             break;
         case 500:
-            image = &MainState::water;
+            image = &MainWorld::water;
             addType("solid");
             break;
         default:

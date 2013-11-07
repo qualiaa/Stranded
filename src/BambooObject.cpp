@@ -1,14 +1,14 @@
 #include "BambooObject.hpp"
 
-#include <Tank/System/State.hpp>
+#include <Tank/System/World.hpp>
 #include <Tank/Graphics/Text.hpp>
 #include "Tile.hpp"
-#include "MainState.hpp"
+#include "MainWorld.hpp"
 
 BambooObject::BambooObject(tank::Vectorf pos)
     : Object(pos)
 {
-    makeGraphic<tank::Image>(MainState::bamboo);
+    makeGraphic<tank::Image>(MainWorld::bamboo);
     getGraphic()->setClip({0, 0, 64, 64});
     setHitbox({14, 42, 24, 8});
     setType("bamboo");

@@ -121,7 +121,7 @@ Room::Room(tank::Vectori coords)
         if(obj)
         {
             obj->setPos(objPos);
-            obj->setState(this);
+            obj->setWorld(this);
             entities.emplace_back(obj);
         }
     }
