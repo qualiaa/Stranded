@@ -5,6 +5,7 @@
 
 class BambooObject : public Object
 {
+    tank::observing_ptr<tank::Image> bambooImage_;
 public:
     virtual void update();
 

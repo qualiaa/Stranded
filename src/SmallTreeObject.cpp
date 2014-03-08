@@ -7,7 +7,7 @@
 SmallTreeObject::SmallTreeObject(tank::Vectorf pos)
     : Object(pos)
 {
-    makeGraphic<tank::Image>(MainWorld::smallrock);
+    makeGraphic(MainWorld::smallrock);
     tank::Rectd hb = { 18, static_cast<double>(Tile::TILE_SIZE) - 8, 28, 9 };
     hb.y -= hb.h;
 

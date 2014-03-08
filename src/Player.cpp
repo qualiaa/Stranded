@@ -13,20 +13,22 @@ Player::Player(tank::Vectorf pos, tank::observing_ptr<MainWorld> mState)
     setHitbox({ 21, 58, 21, 5 });
     setType("player");
 
-    anim_->add("up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, 100);
-    anim_->add("right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 },         100);
-    anim_->add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, 100);
-    anim_->add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     100);
+    const auto time = std::chrono::milliseconds(100);
+
+    anim_->add("up",    {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10 }, time);
+    anim_->add("right", { 11, 13, 14, 15, 16, 17, 18, 19, 20 }, time);
+    anim_->add("down",  { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 }, time);
+    anim_->add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 }, time);
     anim_->select("up");
 
-    upCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::W),
-                                [&](){ vel_.y = -speed_; });
-    leftCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::A),
-                                [&](){ vel_.x = -speed_; });
-    downCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::S),
-                                [&](){ vel_.y = speed_; });
-    rightCon = mState_->eventHandler.connect(tank::Keyboard::KeyDown(tank::Key::D),
-                                [&](){ vel_.x = speed_; });
+    upCon = mState->eventHandler().connect(tank::Keyboard::KeyDown(tank::Key::W),
+            [this](){ vel_.y = -speed_; });
+    rightCon = mState->eventHandler().connect(tank::Keyboard::KeyDown(tank::Key::A),
+            [this](){ vel_.x = -speed_; });
+    downCon = mState->eventHandler().connect(tank::Keyboard::KeyDown(tank::Key::S),
+            [this](){ vel_.y = speed_; });
+    leftCon = mState->eventHandler().connect(tank::Keyboard::KeyDown(tank::Key::D),
+            [this](){ vel_.x = speed_; });
 }
 
 void Player::update()
@@ -73,12 +75,14 @@ void Player::update()
 
     lastPos_ = getPos();
 
-    if(not moveBy(vel_, [&](){
-        return not collide({"solid"}).empty();
+    if(not moveBy(vel_,
+        [&](){
+            return not collide({"solid"}).empty();
         }))
     {
         anim_->stop();
     }
+
     setLayer(getHitbox().y + getPos().y);
 
     handleCollisions();
