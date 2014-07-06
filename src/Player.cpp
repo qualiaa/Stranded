@@ -9,7 +9,7 @@ Player::Player(tank::Vectorf pos, tank::observing_ptr<MainWorld> mState)
     , mState_(mState)
 {
     anim_ = makeGraphic<tank::FrameList>(MainWorld::player,
-                                        tank::Vector<unsigned int>{ 64, 64 });
+                                         tank::Vector<unsigned int>{ 64, 64 });
     setHitbox({ 21, 58, 21, 5 });
     setType("player");
 
@@ -77,7 +77,7 @@ void Player::update()
 
     if(not moveBy(vel_,
         [&](){
-            return not collide({"solid"}).empty();
+            return not collide("solid").empty();
         }))
     {
         anim_->stop();
@@ -163,7 +163,7 @@ void Player::checkSides()
 
 void Player::handleCollisions()
 {
-    if (!collide({{"bamboo"}}).empty())
+    if (!collide("bamboo").empty())
     {
         //TODO something
     }

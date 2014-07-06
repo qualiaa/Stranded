@@ -16,7 +16,7 @@ BambooObject::BambooObject(tank::Vectorf pos)
 
 void BambooObject::update()
 {
-    if(!collide({"player"}).empty())
+    if(!collide("player").empty())
     {
         if(isType("bamboo"))
         {
