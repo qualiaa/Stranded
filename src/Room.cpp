@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <algorithm>
 #include <memory>
@@ -63,18 +64,15 @@ Room::Room(tank::Vectori coords)
         throw std::runtime_error("Room file missing");
     }
 
-    float float1;
-
     tiles.reserve( ROOM_SIZE*ROOM_SIZE );
 
     //TODO this could probably be unique with obj.reset used each time
-    Object* obj = nullptr;
+    std::unique_ptr<Object> obj = nullptr;
 
     for(int i = 0; i < ROOM_SIZE*ROOM_SIZE; ++i)
     {
-        float1    = i + 1; //WHAT THE FUCK
         tilePos.x = i % ROOM_SIZE;
-        tilePos.y = ceil(float1/ROOM_SIZE) - 1;
+        tilePos.y = ceil(static_cast<float>(i + 1)/ROOM_SIZE) - 1;
 
         roomFile >> tileID  ; roomFile.ignore(1,':');
         roomFile >> rotation; roomFile.ignore(1,'(');
@@ -92,29 +90,29 @@ Room::Room(tank::Vectori coords)
         switch(objectID)
         {
             case NULL_ENTITY:
-                obj = nullptr;
+                obj.reset(nullptr);
                 break;
             case ENT_BAMBOO:
-                obj = new BambooObject( {} );
+                obj.reset(new BambooObject( {} ));
                 break;
             case ENT_TREE_PALM:
-                obj = new PalmTreeObject( {} );
+                obj.reset(new PalmTreeObject( {} ));
                 break;
             case ENT_TREE_SMALL:
-                obj = new SmallTreeObject( {} );
+                obj.reset(new SmallTreeObject( {} ));
                 break;
             case ENT_TREE_LARGE:
-                obj = new LargeTreeObject( {} );
+                obj.reset(new LargeTreeObject( {} ));
                 break;
             case ENT_ROCK_LARGE:
-                obj = new LargeRockObject( {} );
+                obj.reset(new LargeRockObject( {} ));
                 break;
             case ENT_ROCK_SMALL:
-                obj = new SmallRockObject( {} );
+                obj.reset(new SmallRockObject( {} ));
                 break;
             default:
-                //obj = new Object( {}, "" );
-                obj = nullptr;
+                //obj.reset(new Object( {}, "" ));
+                obj.reset(nullptr);
                 break;
         }
 
@@ -122,7 +120,7 @@ Room::Room(tank::Vectori coords)
         {
             obj->setPos(objPos);
             obj->setWorld(this);
-            entities.emplace_back(obj);
+            entities.push_back(std::move(obj));
         }
     }
 
