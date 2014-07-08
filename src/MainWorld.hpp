@@ -47,8 +47,5 @@ private:
 
     void loadRooms();
     void pause();
-
-    MainWorld           (MainWorld const&);
-    MainWorld& operator=(MainWorld const&);
 };
 #endif
