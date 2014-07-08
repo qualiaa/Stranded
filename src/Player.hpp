@@ -16,12 +16,9 @@ class Player : public Object
     tank::Vectorf vel_ {};
     tank::Vectorf lastPos_ {};
     tank::Vectori mapPos_ {};
+    std::unique_ptr<tank::EventHandler::Connection> a, up, right, down, left;
 
 public:
-    std::unique_ptr<tank::EventHandler::Connection> upCon;
-    std::unique_ptr<tank::EventHandler::Connection> rightCon;
-    std::unique_ptr<tank::EventHandler::Connection> downCon;
-    std::unique_ptr<tank::EventHandler::Connection> leftCon;
 
     virtual void update() override;
 

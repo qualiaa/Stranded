@@ -1,5 +1,6 @@
 #include "Player.hpp"
 
+#include <iostream>
 #include <Tank/System/Keyboard.hpp>
 #include "MainWorld.hpp"
 #include "Room.hpp"
@@ -22,14 +23,16 @@ Player::Player(tank::Vectorf pos, tank::observing_ptr<MainWorld> mState)
     anim_->add("left",  { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 },     time);
     anim_->select("up");
 
-    upCon = mState->eventHandler().connect(Kbd::KeyDown(tank::Key::W),
+    up    = mState->eventHandler.connect(Kbd::KeyDown(tank::Key::W),
             [this](){ vel_.y = -speed_; });
-    rightCon = mState->eventHandler().connect(Kbd::KeyDown(tank::Key::A),
+    right = mState->eventHandler.connect(Kbd::KeyDown(tank::Key::A),
             [this](){ vel_.x = -speed_; });
-    downCon = mState->eventHandler().connect(Kbd::KeyDown(tank::Key::S),
+    down  = mState->eventHandler.connect(Kbd::KeyDown(tank::Key::S),
             [this](){ vel_.y = speed_; });
-    leftCon = mState->eventHandler().connect(Kbd::KeyDown(tank::Key::D),
+    left  = mState->eventHandler.connect(Kbd::KeyDown(tank::Key::D),
             [this](){ vel_.x = speed_; });
+    a     = mState->eventHandler.connect(Kbd::KeyPress(tank::Key::Space),
+            [](){ std::cout << "Spacebar :D" << std::endl; });
 }
 
 void Player::update()
